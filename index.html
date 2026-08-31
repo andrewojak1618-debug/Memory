@@ -8,31 +8,138 @@
     <title>Memory</title>
   </head>
   <body>
-    <main class="home">
-      <section class="home__content" aria-labelledby="home-title">
-        <header class="home__headline">
-          <p class="home__eyebrow">It’s play time.</p>
-          <h1 class="home__title" id="home-title">Ready to play?</h1>
-        </header>
+    <main class="app">
+      <section class="home" id="home-view" aria-labelledby="home-title">
+        <div class="home__content">
+          <header class="home__headline">
+            <p class="home__eyebrow">It’s play time.</p>
+            <h1 class="home__title" id="home-title">Ready to play?</h1>
+          </header>
 
-        <button class="play-button" type="button">
-          <img
-            class="play-button__icon"
-            src="/assets/icons/controller.svg"
-            alt=""
-            aria-hidden="true"
-          />
-          <span>Play</span>
-          <span class="play-button__arrow" aria-hidden="true">→</span>
-        </button>
+          <button class="play-button" id="play-button" type="button">
+            <img
+              class="play-button__icon"
+              src="/assets/icons/controller.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>Play</span>
+            <span class="play-button__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <img
+          class="home__controller"
+          src="/assets/icons/controller.svg"
+          alt=""
+          aria-hidden="true"
+        />
       </section>
 
-      <img
-        class="home__controller"
-        src="/assets/icons/controller.svg"
-        alt=""
-        aria-hidden="true"
-      />
+      <section
+        class="settings"
+        id="settings-view"
+        aria-labelledby="settings-title"
+        hidden
+      >
+        <div class="settings__panel">
+          <header class="settings__header">
+            <span class="settings__marker" aria-hidden="true"></span>
+            <h2 class="settings__title" id="settings-title" tabindex="-1">
+              Settings
+            </h2>
+          </header>
+
+          <div class="settings__layout">
+            <form class="settings__form">
+              <fieldset class="setting-group setting-group--theme">
+                <legend class="setting-group__title">
+                  <img
+                    class="setting-group__icon"
+                    src="/assets/icons/palette-game-themes.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <span>Game theme</span>
+                </legend>
+                <label class="setting-option">
+                  <input type="radio" name="theme" value="code-vibes" checked />
+                  <span>Code Vibes</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="setting-group setting-group--player">
+                <legend class="setting-group__title">
+                  <img
+                    class="setting-group__icon"
+                    src="/assets/icons/chess-pawn-blue.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <span>Choose player</span>
+                </legend>
+                <label class="setting-option">
+                  <input type="radio" name="player" value="blue" checked />
+                  <span>Blue</span>
+                </label>
+                <label class="setting-option">
+                  <input type="radio" name="player" value="orange" />
+                  <span>Orange</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="setting-group setting-group--board">
+                <legend class="setting-group__title">
+                  <img
+                    class="setting-group__icon"
+                    src="/assets/icons/style-board-size.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <span>Board size</span>
+                </legend>
+                <label class="setting-option">
+                  <input type="radio" name="board-size" value="4x4" checked />
+                  <span>4 × 4 – 16 cards</span>
+                </label>
+                <label class="setting-option">
+                  <input type="radio" name="board-size" value="4x6" />
+                  <span>4 × 6 – 24 cards</span>
+                </label>
+                <label class="setting-option">
+                  <input type="radio" name="board-size" value="6x6" />
+                  <span>6 × 6 – 36 cards</span>
+                </label>
+              </fieldset>
+            </form>
+
+            <aside class="settings__preview" aria-label="Code Vibes preview">
+              <figure class="theme-preview">
+                <img
+                  class="theme-preview__card theme-preview__card--back"
+                  src="/assets/images/code-vibes-card-back.png"
+                  alt="Back of a Code Vibes memory card"
+                />
+                <img
+                  class="theme-preview__card theme-preview__card--front"
+                  src="/assets/images/code-vibes-card-front.png"
+                  alt="Code Vibes memory card with a Git symbol"
+                />
+                <figcaption>Code Vibes</figcaption>
+              </figure>
+            </aside>
+          </div>
+
+          <footer class="settings__footer">
+            <ol class="settings__steps" aria-label="Game setup steps">
+              <li>Game theme</li>
+              <li>Player</li>
+              <li>Board size</li>
+            </ol>
+            <button class="start-button" type="button" disabled>Start</button>
+          </footer>
+        </div>
+      </section>
     </main>
 
     <script type="module" src="/src/main.ts"></script>

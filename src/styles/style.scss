@@ -3,6 +3,10 @@ $color-surface: #3a3b3b;
 $color-text: #f8f8f4;
 $color-accent: #fff45c;
 $color-focus: #4bd0c1;
+$color-settings-background: #dededc;
+$color-settings-text: #303131;
+$color-pink: #ec3fb9;
+$color-blue: #097fc5;
 
 * {
   box-sizing: border-box;
@@ -23,6 +27,10 @@ body {
 
 button {
   font: inherit;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .home {
@@ -141,6 +149,250 @@ button {
   }
 }
 
+.settings {
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 3rem);
+  color: $color-settings-text;
+  background-color: $color-settings-background;
+
+  &__panel {
+    width: min(100%, 1180px);
+    min-height: calc(100vh - clamp(2rem, 6vw, 6rem));
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 5.5rem);
+    background-color: #fff;
+  }
+
+  &__header {
+    position: relative;
+    width: fit-content;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  &__marker {
+    position: absolute;
+    top: 50%;
+    left: -1.5rem;
+    width: 0.65rem;
+    aspect-ratio: 1;
+    background-color: $color-accent;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &__title {
+    margin: 0;
+    border-bottom: 0.3rem solid $color-accent;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.15;
+  }
+
+  &__title:focus {
+    outline: none;
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.85fr) minmax(20rem, 1.15fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  &__form {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  &__preview {
+    display: grid;
+    min-height: 24rem;
+    border-radius: 0.75rem;
+    background-color: $color-background;
+    place-items: center;
+  }
+
+  &__footer {
+    display: flex;
+    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.25rem;
+  }
+
+  &__steps {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+      padding: 0.55rem 1.25rem;
+      border-right: 0.18rem solid $color-accent;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.setting-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  &__title {
+    display: flex;
+    margin-bottom: 0.7rem;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 24px;
+    font-weight: 700;
+    transform: translateX(-40px);
+  }
+
+  &__title::before {
+    display: inline-block;
+    width: 1.15rem;
+    margin-right: 0;
+    color: $color-pink;
+    content: '◆';
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  &--theme &__title::before {
+    display: none;
+  }
+
+  &--player &__title::before {
+    display: none;
+  }
+
+  &--board &__title::before {
+    display: none;
+  }
+
+  &__icon {
+    width: 27px;
+    height: 27px;
+  }
+
+  &--player &__title::before {
+    color: $color-focus;
+  }
+
+  &--board &__title::before {
+    color: #5367ed;
+  }
+}
+
+.setting-option {
+  display: flex;
+  width: fit-content;
+  padding: 0.35rem 0.25rem;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-focus, 0.12);
+  }
+
+  > input {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    accent-color: $color-blue;
+  }
+
+  > input:focus-visible {
+    outline: 3px solid $color-focus;
+    outline-offset: 3px;
+  }
+
+  > input:checked + span {
+    font-weight: 700;
+  }
+}
+
+.theme-preview {
+  position: relative;
+  width: min(78%, 24rem);
+  min-height: 19rem;
+  margin: 0;
+
+  &__card {
+    position: absolute;
+    top: 50%;
+    width: 62%;
+    height: auto;
+  }
+
+  &__card--back {
+    left: 4%;
+    z-index: 1;
+    transform: translateY(-56%) rotate(-7deg);
+  }
+
+  &__card--front {
+    right: 2%;
+    transform: translateY(-40%) rotate(8deg);
+  }
+
+  > figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: $color-text;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+.start-button {
+  min-height: 2.7rem;
+  padding: 0.65rem 1.2rem;
+  border: 0;
+  color: $color-settings-text;
+  background-color: $color-accent;
+  font-weight: 700;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 1100px) {
+  .home__title {
+    width: auto;
+    height: auto;
+    font-size: clamp(4.5rem, 12vw, 8.5rem);
+    line-height: 1;
+  }
+}
+
+@media (max-width: 850px) {
+  .settings {
+    &__layout {
+      grid-template-columns: 1fr;
+    }
+
+    &__preview {
+      min-height: 20rem;
+    }
+
+    &__footer {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    &__steps {
+      justify-content: center;
+    }
+  }
+}
+
 @media (max-width: 560px) {
   .home {
     &__content {
@@ -159,6 +411,25 @@ button {
     &__controller {
       bottom: calc(-5rem + 110px);
       left: calc(-7rem + 100px);
+    }
+  }
+
+  .settings {
+    padding: 0;
+
+    &__panel {
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+
+    &__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      > li {
+        padding-inline: 0.5rem;
+        text-align: center;
+      }
     }
   }
 }
