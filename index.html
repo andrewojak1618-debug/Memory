@@ -50,8 +50,9 @@
             </h2>
           </header>
 
-          <div class="settings__layout">
-            <form class="settings__form">
+          <div class="settings__context">
+            <div class="settings__layout">
+              <form class="settings__form">
               <fieldset class="setting-group setting-group--theme">
                 <legend class="setting-group__title">
                   <img
@@ -100,44 +101,46 @@
                 </legend>
                 <label class="setting-option">
                   <input type="radio" name="board-size" value="4x4" checked />
-                  <span>4 × 4 – 16 cards</span>
+                  <span>16 cards</span>
                 </label>
                 <label class="setting-option">
                   <input type="radio" name="board-size" value="4x6" />
-                  <span>4 × 6 – 24 cards</span>
+                  <span>24 cards</span>
                 </label>
                 <label class="setting-option">
                   <input type="radio" name="board-size" value="6x6" />
-                  <span>6 × 6 – 36 cards</span>
+                  <span>36 cards</span>
                 </label>
               </fieldset>
-            </form>
+              </form>
 
-            <aside class="settings__preview" aria-label="Code Vibes preview">
-              <figure class="theme-preview">
-                <img
-                  class="theme-preview__card theme-preview__card--back"
-                  src="/assets/images/code-vibes-card-back.png"
-                  alt="Back of a Code Vibes memory card"
-                />
-                <img
-                  class="theme-preview__card theme-preview__card--front"
-                  src="/assets/images/code-vibes-card-front.png"
-                  alt="Code Vibes memory card with a Git symbol"
-                />
-                <figcaption>Code Vibes</figcaption>
-              </figure>
-            </aside>
+              <aside class="settings__preview" aria-label="Code Vibes preview">
+              <div class="theme-preview-container">
+                <figure class="theme-preview">
+                  <img
+                    class="theme-preview__card theme-preview__card--back"
+                    src="/assets/images/code-vibes-card-back.png"
+                    alt="Back of a Code Vibes memory card"
+                  />
+                  <img
+                    class="theme-preview__card theme-preview__card--front"
+                    src="/assets/images/code-vibes-card-front.png"
+                    alt="Code Vibes memory card with a Git symbol"
+                  />
+                </figure>
+              </div>
+              </aside>
+            </div>
+
+            <footer class="settings__footer">
+              <ol class="settings__steps" aria-label="Game setup steps">
+                <li>Game theme</li>
+                <li>Player</li>
+                <li>Board size</li>
+              </ol>
+              <button class="start-button" type="button" disabled>Start</button>
+            </footer>
           </div>
-
-          <footer class="settings__footer">
-            <ol class="settings__steps" aria-label="Game setup steps">
-              <li>Game theme</li>
-              <li>Player</li>
-              <li>Board size</li>
-            </ol>
-            <button class="start-button" type="button" disabled>Start</button>
-          </footer>
         </div>
       </section>
     </main>

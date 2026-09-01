@@ -7,6 +7,9 @@ $color-settings-background: #dededc;
 $color-settings-text: #303131;
 $color-pink: #ec3fb9;
 $color-blue: #097fc5;
+$settings-context-width: 1103px;
+$settings-context-height: 539px;
+$settings-footer-height: 70px;
 
 * {
   box-sizing: border-box;
@@ -156,7 +159,7 @@ button {
   background-color: $color-settings-background;
 
   &__panel {
-    width: min(100%, 1180px);
+    width: min(100%, 1480px);
     min-height: calc(100vh - clamp(2rem, 6vw, 6rem));
     margin: 0 auto;
     padding: clamp(2rem, 5vw, 5.5rem);
@@ -165,24 +168,28 @@ button {
 
   &__header {
     position: relative;
-    width: fit-content;
-    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    width: $settings-context-width;
+    margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+    transform: translateX(-40px);
   }
 
   &__marker {
     position: absolute;
-    top: 50%;
-    left: -1.5rem;
-    width: 0.65rem;
+    top: calc(100% - 3px);
+    left: -0.575rem;
+    width: 0.8125rem;
     aspect-ratio: 1;
     background-color: $color-accent;
     transform: translateY(-50%) rotate(45deg);
   }
 
   &__title {
+    width: fit-content;
     margin: 0;
     border-bottom: 0.3rem solid $color-accent;
-    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 700;
     line-height: 1.15;
   }
 
@@ -190,8 +197,16 @@ button {
     outline: none;
   }
 
+  &__context {
+    width: $settings-context-width;
+    height: $settings-context-height;
+    margin: 0 auto;
+  }
+
   &__layout {
     display: grid;
+    width: 100%;
+    height: calc($settings-context-height - $settings-footer-height);
     grid-template-columns: minmax(16rem, 0.85fr) minmax(20rem, 1.15fr);
     align-items: center;
     gap: clamp(3rem, 8vw, 8rem);
@@ -200,19 +215,24 @@ button {
   &__form {
     display: grid;
     gap: 2.25rem;
+    transform: translateY(-50px);
   }
 
   &__preview {
     display: grid;
-    min-height: 24rem;
+    width: 460px;
+    height: 412px;
     border-radius: 0.75rem;
     background-color: $color-background;
+    align-self: start;
+    justify-self: end;
     place-items: center;
   }
 
   &__footer {
     display: flex;
-    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+    width: 100%;
+    height: $settings-footer-height;
     align-items: center;
     justify-content: flex-end;
     gap: 1.25rem;
@@ -314,17 +334,26 @@ button {
   }
 }
 
+.theme-preview-container {
+  display: grid;
+  width: 430px;
+  max-width: 100%;
+  height: 378px;
+  place-items: center;
+}
+
 .theme-preview {
   position: relative;
-  width: min(78%, 24rem);
-  min-height: 19rem;
+  width: 338px;
+  max-width: 100%;
+  height: 238px;
   margin: 0;
 
   &__card {
     position: absolute;
     top: 50%;
-    width: 62%;
-    height: auto;
+    width: 180px;
+    height: 180px;
   }
 
   &__card--back {
@@ -372,6 +401,22 @@ button {
   }
 }
 
+@media (max-width: 1300px) {
+  .settings {
+    &__header,
+    &__context,
+    &__layout,
+    &__footer {
+      width: 100%;
+      height: auto;
+    }
+
+    &__footer {
+      margin-top: 2.5rem;
+    }
+  }
+}
+
 @media (max-width: 850px) {
   .settings {
     &__layout {
@@ -379,6 +424,7 @@ button {
     }
 
     &__preview {
+      width: 100%;
       min-height: 20rem;
     }
 
