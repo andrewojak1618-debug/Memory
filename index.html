@@ -42,19 +42,14 @@
         aria-labelledby="settings_title"
         hidden
       >
-        <div>
-          <h1
-            class="settings__header"
-            id="settings_title"
-            tabindex="-1"
-          >
-            <span class="settings__marker" aria-hidden="true"></span>
-            <span class="settings__title">Settings</span>
-          </h1>
+        <h1 class="settings__header" id="settings_title" tabindex="-1">
+          <span class="settings__marker" aria-hidden="true"></span>
+          <span class="settings__title">Settings</span>
+        </h1>
 
-          <div class="settings__context">
-            <div class="settings__layout">
-              <form class="settings__form" id="settings_form">
+        <div class="settings__context">
+          <div class="settings__layout">
+            <form class="settings__form" id="settings_form">
               <fieldset class="setting_group setting_group_theme">
                 <legend class="setting_group__title">
                   <img
@@ -75,57 +70,101 @@
 
               <div class="player_board_container">
                 <fieldset class="setting_group setting_group_player">
-                <legend class="setting_group__title">
-                  <img
-                    class="setting_group__icon"
-                    src="/assets/icons/chess-pawn-blue.svg"
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <span>Choose player</span>
-                </legend>
-                <div class="setting_options">
-                  <label class="setting_option">
-                    <input type="radio" name="player" value="blue" />
-                    <span>Blue</span>
-                  </label>
-                  <label class="setting_option">
-                    <input type="radio" name="player" value="orange" />
-                    <span>Orange</span>
-                  </label>
-                </div>
+                  <legend class="setting_group__title">
+                    <img
+                      class="setting_group__icon"
+                      src="/assets/icons/chess-pawn-blue.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span>Choose player</span>
+                  </legend>
+                  <div class="setting_options">
+                    <label class="setting_option">
+                      <input type="radio" name="player" value="blue" />
+                      <span>Blue</span>
+                    </label>
+                    <label class="setting_option">
+                      <input type="radio" name="player" value="orange" />
+                      <span>Orange</span>
+                    </label>
+                  </div>
                 </fieldset>
 
                 <fieldset class="setting_group setting_group_board">
-                <legend class="setting_group__title">
-                  <img
-                    class="setting_group__icon"
-                    src="/assets/icons/style-board-size.svg"
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <span>Board size</span>
-                </legend>
-                <div class="setting_options">
-                  <label class="setting_option">
-                    <input type="radio" name="board_size" value="4x4" />
-                    <span>16 cards</span>
-                  </label>
-                  <label class="setting_option">
-                    <input type="radio" name="board_size" value="4x6" />
-                    <span>24 cards</span>
-                  </label>
-                  <label class="setting_option">
-                    <input type="radio" name="board_size" value="6x6" />
-                    <span>36 cards</span>
-                  </label>
-                </div>
+                  <legend class="setting_group__title">
+                    <img
+                      class="setting_group__icon"
+                      src="/assets/icons/style-board-size.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span>Board size</span>
+                  </legend>
+                  <div class="setting_options">
+                    <label class="setting_option">
+                      <input type="radio" name="board_size" value="4x4" />
+                      <span>16 cards</span>
+                    </label>
+                    <label class="setting_option">
+                      <input type="radio" name="board_size" value="4x6" />
+                      <span>24 cards</span>
+                    </label>
+                    <label class="setting_option">
+                      <input type="radio" name="board_size" value="6x6" />
+                      <span>36 cards</span>
+                    </label>
+                  </div>
                 </fieldset>
               </div>
-              </form>
+            </form>
 
-              <aside class="settings__preview" aria-label="Code Vibes preview">
+            <aside class="settings__preview" aria-label="Code Vibes preview">
               <div class="theme_preview_container">
+                <div class="theme_preview_header" aria-hidden="true">
+                  <div class="theme_preview_header__left">
+                    <div class="theme_preview_header__left_first">
+                      <img
+                        class="theme_preview_header__arrow"
+                        src="/assets/icons/label_blue_arrow.svg"
+                        alt=""
+                      />
+                      <p class="theme_preview_header__blue_label">Blue</p>
+                      <span class="theme_preview_header__blue_score">0</span>
+                    </div>
+                    <div class="theme_preview_header__left_second">
+                      <div class="theme_preview_header__orange_content">
+                        <img
+                          class="theme_preview_header__orange_arrow"
+                          src="/assets/icons/label_orange_arrow.svg"
+                          alt=""
+                        />
+                        <p class="theme_preview_header__orange_label">Orange</p>
+                      </div>
+                      <span class="theme_preview_header__orange_score">6</span>
+                    </div>
+                  </div>
+                  <div class="theme_preview_header__center">
+                    <div class="theme_preview_header__center_content">
+                      <p class="theme_preview_header__current_player">
+                        Current player:
+                      </p>
+                      <img
+                        class="theme_preview_header__current_player_arrow"
+                        src="/assets/icons/label_blue_arrow.svg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="theme_preview_header__right">
+                    <img
+                      class="theme_preview_header__exit_icon"
+                      src="/assets/icons/move_item_exit_game_2.svg"
+                      alt=""
+                    />
+                    <p class="theme_preview_header__exit_text">Exit game</p>
+                  </div>
+                </div>
                 <figure class="theme_preview">
                   <img
                     class="theme_preview__card theme_preview__card_back"
@@ -139,36 +178,38 @@
                   />
                 </figure>
               </div>
-              </aside>
-            </div>
-
-            <footer class="settings__footer">
-              <div class="settings__steps">
-                <ol class="settings__step_list" aria-label="Game setup steps">
-                  <li id="theme_step">Game theme</li>
-                  <li id="player_step">Player</li>
-                  <li id="board_step">Board size</li>
-                  <li class="settings__start_item">
-                    <button
-                      class="start_button"
-                      id="start_button"
-                      type="button"
-                      disabled
-                    >
-                      <span class="start_button__icon_container" aria-hidden="true">
-                        <img
-                          class="start_button__icon"
-                          src="/assets/icons/smart-display.svg"
-                          alt=""
-                        />
-                      </span>
-                      <span class="start_button__label">Start</span>
-                    </button>
-                  </li>
-                </ol>
-              </div>
-            </footer>
+            </aside>
           </div>
+
+          <footer class="settings__footer">
+            <div class="settings__steps">
+              <ol class="settings__step_list" aria-label="Game setup steps">
+                <li id="theme_step">Game theme</li>
+                <li id="player_step">Player</li>
+                <li id="board_step">Board size</li>
+                <li class="settings__start_item">
+                  <button
+                    class="start_button"
+                    id="start_button"
+                    type="button"
+                    disabled
+                  >
+                    <span
+                      class="start_button__icon_container"
+                      aria-hidden="true"
+                    >
+                      <img
+                        class="start_button__icon"
+                        src="/assets/icons/smart-display.svg"
+                        alt=""
+                      />
+                    </span>
+                    <span class="start_button__label">Start</span>
+                  </button>
+                </li>
+              </ol>
+            </div>
+          </footer>
         </div>
       </section>
     </main>

@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: $color-background;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: $color-text;
+  background-color: $color-background;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}

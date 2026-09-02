@@ -1,11 +1,11 @@
 import './styles/style.scss';
 
-const HOME_VIEW = document.getElementById('home_view');
-const SETTINGS_VIEW = document.getElementById('settings_view');
-const SETTINGS_TITLE = document.getElementById('settings_title');
-const PLAY_BUTTON = document.getElementById('play_button');
-const SETTINGS_FORM = document.getElementById('settings_form');
-const START_BUTTON = document.getElementById('start_button');
+const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
+const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
+const SETTINGS_TITLE: HTMLElement | null = document.getElementById('settings_title');
+const PLAY_BUTTON: HTMLElement | null = document.getElementById('play_button');
+const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form');
+const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 
 /** Connects the available controls with their actions. */
 function init(): void {
