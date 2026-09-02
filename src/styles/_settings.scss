@@ -72,167 +72,15 @@
     width: 460px;
     height: 412px;
     border-radius: 0.75rem;
-    background-color: $color-background;
+    background: linear-gradient(
+      to top right,
+      $color-preview-gradient-start 0%,
+      $color-background 45%
+    );
     align-self: start;
     grid-column: 2;
     justify-self: end;
     place-items: center;
-  }
-
-  &__preview_da_projects {
-    background-color: $color-da-projects-preview;
-    align-items: end;
-  }
-
-  &__preview_da_projects_content {
-    position: relative;
-    width: 430px;
-    height: 345px;
-    margin-bottom: 53px;
-    background-color: gray;
-  }
-
-  &__preview_da_projects_board {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 347px;
-    height: 256px;
-    background-color: $color-white;
-    transform: translateX(-50%);
-  }
-
-  &__preview_da_projects_header {
-    position: relative;
-    display: flex;
-    width: 430px;
-    height: 36px;
-    border-radius: 10px;
-    background-color: $color-white;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__preview_da_projects_header_center {
-    position: absolute;
-    left: 50%;
-    display: flex;
-    width: 76px;
-    height: 16px;
-    align-items: center;
-    transform: translateX(-50%);
-  }
-
-  &__preview_da_projects_current_player {
-    width: 56px;
-    height: 10px;
-    justify-self: start;
-
-    > p {
-      margin: 0;
-      color: $color-da-projects-blue-dark;
-      font-size: 8px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-  }
-
-  &__preview_da_projects_current_player_icon {
-    width: 16px;
-    height: 16px;
-    margin-left: 5px;
-  }
-
-  &__preview_da_projects_header_right {
-    display: flex;
-    width: 84px;
-    height: 20px;
-    margin-right: 10px;
-    border-radius: 5px;
-    background-color: $color-da-projects-preview;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  &__preview_da_projects_exit_icon_container {
-    display: grid;
-    width: 12px;
-    height: 12px;
-    margin-left: 9.5px;
-    place-items: center;
-  }
-
-  &__preview_da_projects_exit_icon {
-    width: 10px;
-    height: 9px;
-  }
-
-  &__preview_da_projects_exit_text {
-    width: 46px;
-    height: 12px;
-    margin-right: 8px;
-
-    > p {
-      margin: 0;
-      color: $color-da-projects-blue-dark;
-      font-size: 10px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-  }
-
-  &__preview_da_projects_header_left {
-    display: flex;
-    width: 69px;
-    height: 20px;
-    margin-left: 16px;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__preview_da_projects_header_left_first,
-  &__preview_da_projects_header_left_second {
-    height: 12px;
-  }
-
-  &__preview_da_projects_header_left_first {
-    display: flex;
-    width: 19px;
-    margin-left: 8px;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__preview_da_projects_header_left_second {
-    display: flex;
-    width: 18px;
-    margin-right: 8px;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__preview_da_projects_pawn {
-    width: 8px;
-    height: 10px;
-  }
-
-  &__preview_da_projects_score,
-  &__preview_da_projects_score_blue {
-    width: 7px;
-    height: 14px;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: right;
-  }
-
-  &__preview_da_projects_score {
-    color: $color-da-projects-orange;
-  }
-
-  &__preview_da_projects_score_blue {
-    height: 12px;
-    color: $color-blue;
-    font-size: 10px;
   }
 
   &__footer {
@@ -370,6 +218,30 @@
   }
 
   > input:checked + span {
+    position: relative;
     font-weight: 700;
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 50%;
+      content: '';
+    }
+
+    &::after {
+      left: calc(100% + 8px);
+      width: 41px;
+      height: 0;
+      border-top: 3px solid $color-step-divider;
+      transform: translateY(-50%);
+    }
+
+    &::before {
+      left: calc(100% + 49px);
+      width: 8px;
+      height: 8px;
+      background-color: $color-step-divider;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
   }
 }

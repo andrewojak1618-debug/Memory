@@ -138,6 +138,12 @@
 
 }
 
+@media (max-width: 340px) {
+  .settings__step_list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .play_button,
   .play_button__arrow {
