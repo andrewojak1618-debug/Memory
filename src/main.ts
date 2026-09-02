@@ -6,6 +6,8 @@ const SETTINGS_TITLE: HTMLElement | null = document.getElementById('settings_tit
 const PLAY_BUTTON: HTMLElement | null = document.getElementById('play_button');
 const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form');
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
+const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
+const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
 
 /** Connects the available controls with their actions. */
 function init(): void {
@@ -29,9 +31,20 @@ function updateSettingsState(): void {
   const hasPlayer: boolean = setStepState('player_step', 'player');
   const hasBoard: boolean = setStepState('board_step', 'board_size');
 
+  updateThemePreview();
   if (START_BUTTON instanceof HTMLButtonElement) {
     START_BUTTON.disabled = !(hasTheme && hasPlayer && hasBoard);
   }
+}
+
+/** Displays the preview that belongs to the selected theme. */
+function updateThemePreview(): void {
+  const selectedTheme: Element | null = document.querySelector('input[name="theme"]:checked');
+  const showDaProjects: boolean = selectedTheme instanceof HTMLInputElement
+    && selectedTheme.value === 'da_projects';
+
+  if (CODE_VIBES_PREVIEW) CODE_VIBES_PREVIEW.hidden = showDaProjects;
+  if (DA_PROJECTS_PREVIEW) DA_PROJECTS_PREVIEW.hidden = !showDaProjects;
 }
 
 /** Marks one setup step when its radio group has a selection. */

@@ -63,7 +63,11 @@
                 <div class="setting_options">
                   <label class="setting_option">
                     <input type="radio" name="theme" value="code_vibes" />
-                    <span>Code Vibes</span>
+                    <span>Code Vibes theme</span>
+                  </label>
+                  <label class="setting_option">
+                    <input type="radio" name="theme" value="da_projects" />
+                    <span>DA Projects theme</span>
                   </label>
                 </div>
               </fieldset>
@@ -119,7 +123,11 @@
               </div>
             </form>
 
-            <aside class="settings__preview" aria-label="Code Vibes preview">
+            <aside
+              class="settings__preview"
+              id="code_vibes_preview"
+              aria-label="Code Vibes preview"
+            >
               <div class="theme_preview_container">
                 <div class="theme_preview_header" aria-hidden="true">
                   <div class="theme_preview_header__left">
@@ -179,6 +187,58 @@
                 </figure>
               </div>
             </aside>
+            <div
+              class="settings__preview settings__preview_da_projects"
+              id="da_projects_preview"
+              aria-hidden="true"
+              hidden
+            >
+              <div class="settings__preview_da_projects_content">
+                <div class="settings__preview_da_projects_header">
+                  <div class="settings__preview_da_projects_header_left">
+                    <div class="settings__preview_da_projects_header_left_first">
+                      <img
+                        class="settings__preview_da_projects_pawn"
+                        src="/assets/icons/chess_pawn_orange.svg"
+                        alt=""
+                      />
+                      <span class="settings__preview_da_projects_score">6</span>
+                    </div>
+                    <div class="settings__preview_da_projects_header_left_second">
+                      <img
+                        class="settings__preview_da_projects_pawn"
+                        src="/assets/icons/chess-pawn-blue.svg"
+                        alt=""
+                      />
+                      <span class="settings__preview_da_projects_score_blue">2</span>
+                    </div>
+                  </div>
+                  <div class="settings__preview_da_projects_header_center">
+                    <div class="settings__preview_da_projects_current_player">
+                      <p>Current player:</p>
+                    </div>
+                    <img
+                      class="settings__preview_da_projects_current_player_icon"
+                      src="/assets/icons/round_chess_pawn_blue.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="settings__preview_da_projects_header_right">
+                    <div class="settings__preview_da_projects_exit_icon_container">
+                      <img
+                        class="settings__preview_da_projects_exit_icon"
+                        src="/assets/icons/move_item_exit_game_blue.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="settings__preview_da_projects_exit_text">
+                      <p>Exit game</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="settings__preview_da_projects_board"></div>
+              </div>
+            </div>
           </div>
 
           <footer class="settings__footer">
