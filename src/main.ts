@@ -1,7 +1,9 @@
 import './styles/style.scss';
+import { initQuitDialog } from './quit-dialog';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
 const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
+const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 const SETTINGS_TITLE: HTMLElement | null = document.getElementById('settings_title');
 const PLAY_BUTTON: HTMLElement | null = document.getElementById('play_button');
 const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form');
@@ -11,9 +13,21 @@ const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_proj
 
 /** Connects the available controls with their actions. */
 function init(): void {
+  initQuitDialog();
+  renderGamePlayers();
   PLAY_BUTTON?.addEventListener('click', showSettings);
+  START_BUTTON?.addEventListener('click', showGame);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+}
+
+/** Reuses only local preview markup; no user input is inserted as HTML. */
+function renderGamePlayers(): void {
+  const source: Element | null = document.querySelector('.theme_preview_header__left');
+  const target: Element | null = document.querySelector('.game__code_vibes_header_left_content');
+  if (!source || !target) return;
+
+  target.innerHTML = source.innerHTML;
 }
 
 /** Opens the settings view and places focus on its heading. */
@@ -23,6 +37,19 @@ function showSettings(): void {
   HOME_VIEW.hidden = true;
   SETTINGS_VIEW.hidden = false;
   SETTINGS_TITLE?.focus();
+}
+
+/** Opens the game only after all required settings are selected. */
+function showGame(): void {
+  const hasAllSettings: boolean = isSettingSelected('theme')
+    && isSettingSelected('player') && isSettingSelected('board_size');
+  if (!hasAllSettings || !SETTINGS_VIEW || !GAME_VIEW) return;
+
+  if (isDaProjectsTheme()) GAME_VIEW.classList.add('game_da_projects');
+  else GAME_VIEW.classList.remove('game_da_projects');
+  SETTINGS_VIEW.hidden = true;
+  GAME_VIEW.hidden = false;
+  GAME_VIEW.focus();
 }
 
 /** Updates the setup progress and availability of the start button. */
@@ -39,12 +66,16 @@ function updateSettingsState(): void {
 
 /** Displays the preview that belongs to the selected theme. */
 function updateThemePreview(): void {
-  const selectedTheme: Element | null = document.querySelector('input[name="theme"]:checked');
-  const showDaProjects: boolean = selectedTheme instanceof HTMLInputElement
-    && selectedTheme.value === 'da_projects';
+  const showDaProjects: boolean = isDaProjectsTheme();
 
   if (CODE_VIBES_PREVIEW) CODE_VIBES_PREVIEW.hidden = showDaProjects;
   if (DA_PROJECTS_PREVIEW) DA_PROJECTS_PREVIEW.hidden = !showDaProjects;
+}
+
+/** Identifies the selected theme for both preview and game appearance. */
+function isDaProjectsTheme(): boolean {
+  const selectedTheme: Element | null = document.querySelector('input[name="theme"]:checked');
+  return selectedTheme instanceof HTMLInputElement && selectedTheme.value === 'da_projects';
 }
 
 /** Marks one setup step when its radio group has a selection. */

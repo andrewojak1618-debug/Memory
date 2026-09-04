@@ -132,12 +132,14 @@
                 <div class="theme_preview_header" aria-hidden="true">
                   <div class="theme_preview_header__left">
                     <div class="theme_preview_header__left_first">
-                      <img
-                        class="theme_preview_header__arrow"
-                        src="/assets/icons/label_blue_arrow.svg"
-                        alt=""
-                      />
-                      <p class="theme_preview_header__blue_label">Blue</p>
+                      <div class="theme_preview_header__blue_content">
+                        <img
+                          class="theme_preview_header__arrow"
+                          src="/assets/icons/label_blue_arrow.svg"
+                          alt=""
+                        />
+                        <p class="theme_preview_header__blue_label">Blue</p>
+                      </div>
                       <span class="theme_preview_header__blue_score">0</span>
                     </div>
                     <div class="theme_preview_header__left_second">
@@ -289,6 +291,54 @@
           </footer>
         </div>
       </section>
+      <section
+        class="game"
+        id="game_view"
+        aria-label="Memory game"
+        tabindex="-1"
+        hidden
+      >
+        <div class="game__code_vibes_container">
+          <header class="game__code_vibes_header">
+            <div class="game__code_vibes_header_left">
+              <div class="game__code_vibes_header_left_content"></div>
+              <div class="game__current_player">
+                <p class="game__current_player_text">Current player:</p>
+                <img
+                  class="game__current_player_arrow"
+                  src="/assets/icons/label_blue_arrow.svg"
+                  alt="Blue"
+                />
+              </div>
+            </div>
+            <button
+              class="game__exit_button"
+              id="exit_button"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="quit_dialog"
+            >
+              Exit game
+            </button>
+          </header>
+        </div>
+      </section>
+      <dialog class="quit_dialog" id="quit_dialog" aria-labelledby="quit_title">
+        <div class="quit_dialog__content">
+          <h2 class="quit_dialog__title" id="quit_title" tabindex="-1">
+            Are you sure you want to quit
+            <span class="quit_dialog__title_last_line">the game?</span>
+          </h2>
+          <div class="quit_dialog__actions">
+            <button class="quit_dialog__back" id="back_to_game" type="button">
+              <span class="quit_dialog__back_label">Back to game</span>
+            </button>
+            <button class="quit_dialog__exit" id="confirm_exit" type="button">
+              <span class="quit_dialog__exit_label">Exit Game</span>
+            </button>
+          </div>
+        </div>
+      </dialog>
     </main>
 
     <script type="module" src="/src/main.ts"></script>

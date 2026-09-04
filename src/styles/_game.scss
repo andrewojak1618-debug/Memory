@@ -1,0 +1,197 @@
+@use 'variables' as *;
+
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 41px;
+  background-color: $color-background;
+}
+
+.game__code_vibes_container {
+  width: 1217px;
+  max-width: 100%;
+  height: 644px;
+  background-color: gray;
+}
+
+.game__code_vibes_header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: $game-header-height;
+  background-color: $color-white;
+}
+
+.game__code_vibes_header_left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 687px;
+  max-width: 100%;
+  height: $game-header-height;
+  background-color: gray;
+}
+
+.game__code_vibes_header_left_content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 292px;
+  max-width: 100%;
+  height: $game-header-height;
+  background-color: $color-game-score-surface;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__left_first {
+  flex-shrink: 0;
+  width: 98px;
+  height: $game-player-height;
+  margin-left: 4px;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__blue_content {
+  flex-shrink: 0;
+  width: 80px;
+  height: $game-player-height;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__blue_label,
+.game__code_vibes_header_left_content .theme_preview_header__blue_score,
+.game__code_vibes_header_left_content .theme_preview_header__orange_label,
+.game__code_vibes_header_left_content .theme_preview_header__orange_score {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__blue_label,
+.game__code_vibes_header_left_content .theme_preview_header__orange_label {
+  width: auto;
+  height: auto;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__arrow,
+.game__code_vibes_header_left_content .theme_preview_header__orange_arrow {
+  flex-shrink: 0;
+  width: 24px;
+  height: 20px;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__blue_score {
+  flex-shrink: 0;
+  width: 14px;
+  height: 28px;
+  margin-right: 0;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__left_second {
+  flex-shrink: 0;
+  width: 134px;
+  height: $game-player-height;
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__orange_content {
+  flex-shrink: 0;
+  width: 115px;
+  height: $game-player-height;
+}
+
+.game__code_vibes_header_left_content .theme_preview_header__orange_score {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 15px;
+  height: 24px;
+}
+
+.game__current_player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  width: 224px;
+  height: 32px;
+  margin-block: 8px;
+}
+
+.game__current_player_text {
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: 32px;
+  margin: 0;
+  color: $color-white;
+  font-size: 26px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.game__current_player_arrow {
+  flex-shrink: 0;
+  width: 29px;
+  height: 24px;
+}
+
+@media (max-width: 540px) {
+  .game__code_vibes_header,
+  .game__code_vibes_header_left {
+    height: auto;
+    min-height: $game-header-height;
+  }
+
+  .game__code_vibes_header_left {
+    flex-wrap: wrap;
+  }
+
+  .game__current_player {
+    margin-left: auto;
+  }
+}
+
+.game_da_projects {
+  background-color: $color-white;
+}
+
+.game_da_projects .game__code_vibes_container {
+  display: none;
+}
+
+.game__exit_button {
+  flex-shrink: 0;
+  width: 207px;
+  height: $game-header-height;
+  border: 0;
+  background-color: $color-preview-surface;
+  color: $color-white;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    filter: brightness(0.9);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-white;
+    outline-offset: -3px;
+  }
+}
+
+@media (max-width: 920px) {
+  .game__code_vibes_header {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .game__exit_button {
+    margin-left: auto;
+  }
+}

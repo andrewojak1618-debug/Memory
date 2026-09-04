@@ -1,0 +1,135 @@
+@use 'variables' as *;
+
+.quit_dialog {
+  position: fixed;
+  width: 539px;
+  max-width: calc(100% - 32px);
+  height: 270px;
+  padding: 40px;
+  border: 0;
+  background-color: $color-white;
+  color: black;
+
+  &[open] {
+    animation: quit_enter 300ms ease-out;
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.quit_dialog__content {
+  width: 459px;
+  max-width: 100%;
+  height: 190px;
+}
+
+.quit_dialog__title {
+  width: 459px;
+  max-width: 100%;
+  height: $quit-title-height;
+  margin: 0;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+.quit_dialog__title_last_line {
+  display: block;
+  text-align: center;
+}
+
+.quit_dialog__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  width: 354px;
+  max-width: calc(100% - 52px);
+  height: $quit-button-height;
+  margin-top: calc(133px - $quit-title-height);
+  margin-left: 52px;
+}
+
+.quit_dialog__back,
+.quit_dialog__exit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 182px;
+  max-width: 100%;
+  height: $quit-button-height;
+  padding: 0;
+  border: 0;
+  background-color: $color-back-to-game;
+  color: $color-white;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  &:active {
+    filter: brightness(0.9);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-focus-light-surface;
+    outline-offset: 2px;
+  }
+}
+
+.quit_dialog__back_label,
+.quit_dialog__exit_label {
+  width: 134px;
+  height: 25px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.quit_dialog__exit {
+  width: 148px;
+  border: 2px solid $color-quit-exit-text;
+  background-color: $color-quit-exit-background;
+  color: $color-quit-exit-text;
+}
+
+.quit_dialog__exit_label {
+  width: 100px;
+}
+
+@keyframes quit_enter {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quit_dialog[open] {
+    animation: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .quit_dialog {
+    padding: 40px 20px;
+    height: auto;
+    min-height: 270px;
+  }
+  .quit_dialog__content {
+    height: auto;
+    min-height: 190px;
+  }
+  .quit_dialog__title {
+    height: auto;
+    min-height: $quit-title-height;
+  }
+  .quit_dialog__actions {
+    flex-wrap: wrap;
+    height: auto;
+  }
+}
