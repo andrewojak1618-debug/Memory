@@ -10,10 +10,11 @@
 }
 
 .game__code_vibes_container {
+  display: flex;
+  flex-direction: column;
   width: 1217px;
   max-width: 100%;
   height: 644px;
-  background-color: gray;
 }
 
 .game__code_vibes_header {
@@ -21,7 +22,31 @@
   justify-content: space-between;
   width: 100%;
   height: $game-header-height;
-  background-color: $color-white;
+}
+
+.game__board {
+  width: 529px;
+  max-width: 100%;
+  height: 528px;
+  margin-top: auto;
+  margin-inline: auto;
+}
+
+.game__card_list {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  grid-auto-rows: 120px;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game__card_back {
+  display: block;
+  width: 120px;
+  height: 120px;
 }
 
 .game__code_vibes_header_left {
@@ -31,17 +56,16 @@
   width: 687px;
   max-width: 100%;
   height: $game-header-height;
-  background-color: gray;
 }
 
 .game__code_vibes_header_left_content {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 4px;
   width: 292px;
   max-width: 100%;
   height: $game-header-height;
+  padding-inline: 20px;
   background-color: $color-game-score-surface;
 }
 
@@ -49,7 +73,6 @@
   flex-shrink: 0;
   width: 98px;
   height: $game-player-height;
-  margin-left: 4px;
 }
 
 .game__code_vibes_header_left_content .theme_preview_header__blue_content {
@@ -91,7 +114,6 @@
   width: 134px;
   height: $game-player-height;
   margin-left: auto;
-  margin-right: 4px;
 }
 
 .game__code_vibes_header_left_content .theme_preview_header__orange_content {
@@ -161,6 +183,10 @@
 }
 
 .game__exit_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   flex-shrink: 0;
   width: 207px;
   height: $game-header-height;
@@ -183,6 +209,15 @@
     outline: 3px solid $color-white;
     outline-offset: -3px;
   }
+}
+
+.game__exit_label {
+  display: flex;
+  align-items: center;
+  width: 119px;
+  height: 30px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 @media (max-width: 920px) {
