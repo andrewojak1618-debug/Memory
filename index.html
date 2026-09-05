@@ -298,7 +298,7 @@
         tabindex="-1"
         hidden
       >
-        <div class="game__code_vibes_container">
+        <div class="game__code_vibes_container" id="game_code_vibes_container">
           <header class="game__code_vibes_header">
             <div class="game__code_vibes_header_left">
               <div class="game__code_vibes_header_left_content"></div>
@@ -318,28 +318,18 @@
               aria-haspopup="dialog"
               aria-controls="quit_dialog"
             >
+              <span class="game__exit_icon_container" aria-hidden="true">
+                <img
+                  class="game__exit_icon"
+                  src="./assets/icons/move_item_exit_game_2.svg"
+                  alt=""
+                />
+              </span>
               <span class="game__exit_label">Exit game</span>
             </button>
           </header>
-          <section class="game__board" aria-label="Memory cards">
-            <ol class="game__card_list">
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 1 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 2 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 3 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 4 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 5 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 6 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 7 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 8 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 9 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 10 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 11 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 12 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 13 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 14 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 15 of 16" /></li>
-              <li><img class="game__card_back" src="/assets/images/backside_card_logo.png" alt="Face-down card 16 of 16" /></li>
-            </ol>
+          <section class="game__board" id="game_board" aria-label="Memory cards">
+            <ol class="game__card_list" id="game_card_list"></ol>
           </section>
         </div>
       </section>

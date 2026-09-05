@@ -1,4 +1,5 @@
 import './styles/style.scss';
+import { initGameBoard, renderGameBoard } from './game-board';
 import { initQuitDialog } from './quit-dialog';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
@@ -13,6 +14,7 @@ const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_proj
 
 /** Connects the available controls with their actions. */
 function init(): void {
+  initGameBoard();
   initQuitDialog();
   renderGamePlayers();
   PLAY_BUTTON?.addEventListener('click', showSettings);
@@ -47,6 +49,7 @@ function showGame(): void {
 
   if (isDaProjectsTheme()) GAME_VIEW.classList.add('game_da_projects');
   else GAME_VIEW.classList.remove('game_da_projects');
+  renderGameBoard();
   SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = false;
   GAME_VIEW.focus();
