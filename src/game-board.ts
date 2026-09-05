@@ -17,7 +17,7 @@ interface BoardCardCounts {
 
 const DEFAULT_BOARD_SIZE: BoardSize = '4x4';
 const CARD_IMAGE_PATH: string = './assets/images/';
-const CARD_BACK_PATH: string = `${CARD_IMAGE_PATH}backside_card_logo.png`;
+const CARD_BACK_PATH: string = `${CARD_IMAGE_PATH}code_vibes_card_back.png`;
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 const GAME_CONTAINER: HTMLElement | null = document.getElementById('game_code_vibes_container');
 const GAME_BOARD: HTMLElement | null = document.getElementById('game_board');
@@ -30,24 +30,24 @@ const CARD_COUNTS: BoardCardCounts = {
   '6x6': 36,
 };
 const CARD_SYMBOLS: readonly CardSymbol[] = [
-  { name: 'Angular', fileName: 'ANGULAR_logo.png' },
-  { name: 'Bootstrap', fileName: 'B_logo.png' },
-  { name: 'CSS', fileName: 'CSS_logo.png' },
-  { name: 'Database', fileName: 'Database_logo.png' },
-  { name: 'Django', fileName: 'DJ_logo.png' },
-  { name: 'Firebase', fileName: 'Firebase_logo.png' },
+  { name: 'Angular', fileName: 'angular_logo.png' },
+  { name: 'Bootstrap', fileName: 'bootstrap_logo.png' },
+  { name: 'CSS', fileName: 'css_logo.png' },
+  { name: 'Database', fileName: 'database_icon.png' },
+  { name: 'Django', fileName: 'django_logo.png' },
+  { name: 'Firebase', fileName: 'firebase_logo.png' },
   { name: 'Git', fileName: 'git_logo.png' },
-  { name: 'GitHub', fileName: 'GITHUB_logo.png' },
-  { name: 'HTML', fileName: 'HTML_logo.png' },
-  { name: 'JavaScript library', fileName: 'JavaScript-Bibliothek_logo.png' },
-  { name: 'JavaScript', fileName: 'JS_logo.png' },
-  { name: 'Node.js', fileName: 'NODEJS_logo.png' },
-  { name: 'Python', fileName: 'PYTPON_logo.png' },
-  { name: 'Sass', fileName: 'SASS_logo.png' },
-  { name: 'Terminal', fileName: 'TERMINEL_logo.png' },
-  { name: 'TypeScript', fileName: 'TS_logo.png' },
-  { name: 'Vue', fileName: 'V_logo.png' },
-  { name: 'Visual Studio Code', fileName: 'VSCODE_logo.png' },
+  { name: 'GitHub', fileName: 'github_logo.png' },
+  { name: 'HTML', fileName: 'html_logo.png' },
+  { name: 'React', fileName: 'react_logo.png' },
+  { name: 'JavaScript', fileName: 'javascript_logo.png' },
+  { name: 'Node.js', fileName: 'nodejs_logo.png' },
+  { name: 'Python', fileName: 'python_logo.png' },
+  { name: 'Sass', fileName: 'sass_logo.png' },
+  { name: 'Terminal', fileName: 'terminal_icon.png' },
+  { name: 'TypeScript', fileName: 'typescript_logo.png' },
+  { name: 'Vue', fileName: 'vue_logo.png' },
+  { name: 'Visual Studio Code', fileName: 'visual_studio_code_logo.png' },
 ];
 
 /** Connects the card list with its delegated click action. */
