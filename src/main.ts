@@ -1,5 +1,6 @@
 import './styles/style.scss';
 import { initGameBoard, renderGameBoard } from './game-board';
+import { updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
@@ -62,6 +63,7 @@ function updateSettingsState(): void {
   const hasBoard: boolean = setStepState('board_step', 'board_size');
 
   updateThemePreview();
+  updatePlayerAssignment();
   if (START_BUTTON instanceof HTMLButtonElement) {
     START_BUTTON.disabled = !(hasTheme && hasPlayer && hasBoard);
   }

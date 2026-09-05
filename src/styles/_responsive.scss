@@ -145,6 +145,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .home__controller {
+    animation: none;
+  }
+
   .play_button,
   .play_button__arrow {
     transition: none;

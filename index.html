@@ -85,14 +85,35 @@
                   </legend>
                   <div class="setting_options">
                     <label class="setting_option">
-                      <input type="radio" name="player" value="blue" />
+                      <input
+                        id="player_blue"
+                        type="radio"
+                        name="player"
+                        value="blue"
+                        aria-describedby="player_assignment"
+                      />
                       <span>Blue</span>
                     </label>
                     <label class="setting_option">
-                      <input type="radio" name="player" value="orange" />
+                      <input
+                        id="player_orange"
+                        type="radio"
+                        name="player"
+                        value="orange"
+                        aria-describedby="player_assignment"
+                      />
                       <span>Orange</span>
                     </label>
                   </div>
+                  <p
+                    class="player_assignment_status"
+                    id="player_assignment"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    Choose a color for Player 1. Player 2 receives the other
+                    color automatically.
+                  </p>
                 </fieldset>
 
                 <fieldset class="setting_group setting_group_board">

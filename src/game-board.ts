@@ -16,6 +16,7 @@ interface BoardCardCounts {
 }
 
 const DEFAULT_BOARD_SIZE: BoardSize = '4x4';
+const CARDS_PER_PAIR: number = 2;
 const CARD_IMAGE_PATH: string = './assets/images/';
 const CARD_BACK_PATH: string = `${CARD_IMAGE_PATH}code_vibes_card_back.png`;
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
@@ -95,15 +96,51 @@ function isBoardSize(value: string): value is BoardSize {
 
 /** Builds two cards for every selected symbol. */
 function createCards(cardCount: number): MemoryCard[] {
-  const selectedSymbols: readonly CardSymbol[] = CARD_SYMBOLS.slice(0, cardCount / 2);
+  const pairCount: number = cardCount / CARDS_PER_PAIR;
+  const selectedSymbols: readonly CardSymbol[] = CARD_SYMBOLS.slice(0, pairCount);
+  if (!hasValidSymbols(selectedSymbols, pairCount)) return [];
+
+  const cards: MemoryCard[] = createCardPairs(selectedSymbols);
+  return hasValidPairs(cards, selectedSymbols) ? cards : [];
+}
+
+/** Rejects missing motifs and repeated motif names. */
+function hasValidSymbols(symbols: readonly CardSymbol[], pairCount: number): boolean {
+  const symbolNames: string[] = [];
+  if (symbols.length !== pairCount) return false;
+
+  for (let index: number = 0; index < symbols.length; index += 1) {
+    const symbol: CardSymbol | undefined = symbols[index];
+    if (!symbol || symbolNames.includes(symbol.name)) return false;
+    symbolNames.push(symbol.name);
+  }
+  return true;
+}
+
+/** Creates the configured number of copies for every motif. */
+function createCardPairs(symbols: readonly CardSymbol[]): MemoryCard[] {
   const cards: MemoryCard[] = [];
 
-  for (let copyIndex: number = 0; copyIndex < 2; copyIndex += 1) {
-    selectedSymbols.forEach((symbol: CardSymbol): void => {
+  for (let copyIndex: number = 0; copyIndex < CARDS_PER_PAIR; copyIndex += 1) {
+    symbols.forEach((symbol: CardSymbol): void => {
       cards.push({ symbol });
     });
   }
   return cards;
+}
+
+/** Ensures that every selected motif occurs in one complete pair. */
+function hasValidPairs(cards: readonly MemoryCard[], symbols: readonly CardSymbol[]): boolean {
+  if (cards.length !== symbols.length * CARDS_PER_PAIR) return false;
+
+  for (let index: number = 0; index < symbols.length; index += 1) {
+    const symbol: CardSymbol | undefined = symbols[index];
+    if (!symbol) return false;
+    const name: string = symbol.name;
+    const copies: MemoryCard[] = cards.filter((card: MemoryCard): boolean => card.symbol.name === name);
+    if (copies.length !== CARDS_PER_PAIR) return false;
+  }
+  return true;
 }
 
 /** Creates one semantic list item containing a card button. */

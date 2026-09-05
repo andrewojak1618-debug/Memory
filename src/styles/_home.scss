@@ -65,9 +65,21 @@
     z-index: -1;
     width: 414px;
     height: 301px;
+    animation: controller_float 4s ease-in-out infinite;
     filter: brightness(1.45);
     opacity: 0.28;
     transform: rotate(38deg);
+  }
+}
+
+@keyframes controller_float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(38deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(40deg);
   }
 }
 
