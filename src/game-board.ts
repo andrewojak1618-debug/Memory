@@ -1,35 +1,25 @@
-type BoardSize = '4x4' | '4x6' | '6x6';
+import {
+  CARD_COUNTS,
+  DEFAULT_BOARD_SIZE,
+  createCards,
+  isBoardSize,
+} from './card-data';
+import type { BoardSize, CardSymbol, MemoryCard } from './card-data';
 
-interface CardSymbol {
-  readonly name: string;
-  readonly fileName: string;
-}
-
-interface MemoryCard {
-  readonly symbol: CardSymbol;
-}
-
-interface BoardCardCounts {
-  readonly '4x4': number;
-  readonly '4x6': number;
-  readonly '6x6': number;
-}
-
-const DEFAULT_BOARD_SIZE: BoardSize = '4x4';
-const CARDS_PER_PAIR: number = 2;
 const CARD_IMAGE_PATH: string = './assets/images/';
 const CARD_BACK_PATH: string = `${CARD_IMAGE_PATH}code_vibes_card_back.png`;
+const DA_PROJECTS_CARD_BACK_PATH: string = `${CARD_IMAGE_PATH}da_projects_card_back.png`;
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 const GAME_CONTAINER: HTMLElement | null = document.getElementById('game_code_vibes_container');
 const GAME_BOARD: HTMLElement | null = document.getElementById('game_board');
+const DA_PROJECTS_BOARD: HTMLElement | null = document.getElementById('da_projects_board');
+const DA_PROJECTS_CONTENT: HTMLElement | null = document.querySelector('.game__da_projects_content');
 const GAME_CARD_LIST_ELEMENT: HTMLElement | null = document.getElementById('game_card_list');
+const DA_PROJECTS_CARD_LIST_ELEMENT: HTMLElement | null = document.getElementById('da_projects_card_list');
 const GAME_CARD_LIST: HTMLOListElement | null = GAME_CARD_LIST_ELEMENT instanceof HTMLOListElement
   ? GAME_CARD_LIST_ELEMENT : null;
-const CARD_COUNTS: BoardCardCounts = {
-  '4x4': 16,
-  '4x6': 24,
-  '6x6': 36,
-};
+const DA_PROJECTS_CARD_LIST: HTMLOListElement | null = DA_PROJECTS_CARD_LIST_ELEMENT instanceof HTMLOListElement
+  ? DA_PROJECTS_CARD_LIST_ELEMENT : null;
 const CARD_SYMBOLS: readonly CardSymbol[] = [
   { name: 'Angular', fileName: 'angular_logo.png' },
   { name: 'Bootstrap', fileName: 'bootstrap_logo.png' },
@@ -50,22 +40,52 @@ const CARD_SYMBOLS: readonly CardSymbol[] = [
   { name: 'Vue', fileName: 'vue_logo.png' },
   { name: 'Visual Studio Code', fileName: 'visual_studio_code_logo.png' },
 ];
+const DA_PROJECTS_CARD_SYMBOLS: readonly CardSymbol[] = [
+  { name: 'Blue Arrow', fileName: 'da_projects_blue_arrow.png' },
+  { name: 'Change Coin', fileName: 'da_projects_change_coin.png' },
+  { name: 'Code a Cuisine', fileName: 'da_projects_code_a_cuisine.png' },
+  { name: 'Cooking World', fileName: 'da_projects_cooking_world.png' },
+  { name: 'DA Bubble', fileName: 'da_projects_da_bubble.png' },
+  { name: 'Egg', fileName: 'da_projects_egg.png' },
+  { name: 'El Pollo Loco', fileName: 'da_projects_el_pollo_loco.png' },
+  { name: 'Green Button', fileName: 'da_projects_green_button.png' },
+  { name: 'Join', fileName: 'da_projects_join.png' },
+  { name: 'Ordering App', fileName: 'da_projects_ordering_app.png' },
+  { name: 'Pokedex', fileName: 'da_projects_pokedex.png' },
+  { name: 'Purple Person', fileName: 'da_projects_purple_person.png' },
+  { name: 'Ramen', fileName: 'da_projects_ramen.png' },
+  { name: 'Sakura', fileName: 'da_projects_sakura.png' },
+  { name: 'Shark Fin', fileName: 'da_projects_shark_fin.png' },
+  { name: 'Soup', fileName: 'da_projects_soup.png' },
+  { name: 'Tic-Tac-Toe', fileName: 'da_projects_tic_tac_toe.png' },
+  { name: 'Yellow Smiley', fileName: 'da_projects_yellow_smiley.png' },
+];
 
 /** Connects the card list with its delegated click action. */
 export function initGameBoard(): void {
   GAME_CARD_LIST?.addEventListener('click', handleCardClick);
+  DA_PROJECTS_CARD_LIST?.addEventListener('click', handleCardClick);
 }
 
 /** Creates paired cards for the currently selected board size. */
-export function renderGameBoard(): void {
-  if (!GAME_CARD_LIST) return;
-
+export function renderGameBoard(showDaProjects: boolean = false): void {
+  const cardList: HTMLOListElement | null = showDaProjects ? DA_PROJECTS_CARD_LIST : GAME_CARD_LIST;
+  const symbols: readonly CardSymbol[] = showDaProjects ? DA_PROJECTS_CARD_SYMBOLS : CARD_SYMBOLS;
+  const backPath: string = showDaProjects ? DA_PROJECTS_CARD_BACK_PATH : CARD_BACK_PATH;
+  if (!cardList) return;
   const boardSize: BoardSize = getSelectedBoardSize();
-  const cards: MemoryCard[] = createCards(CARD_COUNTS[boardSize]);
-  updateBoardClasses(boardSize);
-  GAME_CARD_LIST.innerHTML = '';
+  const cardCount: number = CARD_COUNTS[boardSize];
+  const cards: MemoryCard[] = createCards(cardCount, symbols);
+  if (showDaProjects) updateDaBoardClasses(boardSize);
+  else updateBoardClasses(boardSize);
+  renderCards(cardList, cards, backPath);
+}
+
+/** Replaces one board with its configured card buttons. */
+function renderCards(cardList: HTMLOListElement, cards: readonly MemoryCard[], backPath: string): void {
+  cardList.innerHTML = '';
   cards.forEach((card: MemoryCard, index: number): void => {
-    GAME_CARD_LIST.append(createCardItem(card, index));
+    cardList.append(createCardItem(card, index, backPath));
   });
 }
 
@@ -81,6 +101,18 @@ function updateBoardClasses(boardSize: BoardSize): void {
   if (boardSize === '6x6') GAME_VIEW?.classList.add('game_6x6');
 }
 
+/** Applies the selected size to the DA Projects board. */
+function updateDaBoardClasses(boardSize: BoardSize): void {
+  if (DA_PROJECTS_BOARD) {
+    DA_PROJECTS_BOARD.className = `game__da_projects_board game__da_projects_board_${boardSize}`;
+  }
+  DA_PROJECTS_CARD_LIST?.classList.remove(
+    'game__da_projects_card_list_4x4', 'game__da_projects_card_list_4x6', 'game__da_projects_card_list_6x6',
+  );
+  DA_PROJECTS_CARD_LIST?.classList.add(`game__da_projects_card_list_${boardSize}`);
+  DA_PROJECTS_CONTENT?.classList.toggle('game__da_projects_content_6x6', boardSize === '6x6');
+}
+
 /** Reads and validates the selected board size. */
 function getSelectedBoardSize(): BoardSize {
   const selected: Element | null = document.querySelector('input[name="board_size"]:checked');
@@ -89,70 +121,16 @@ function getSelectedBoardSize(): BoardSize {
   return isBoardSize(selected.value) ? selected.value : DEFAULT_BOARD_SIZE;
 }
 
-/** Narrows a form value to one supported board size. */
-function isBoardSize(value: string): value is BoardSize {
-  return value === '4x4' || value === '4x6' || value === '6x6';
-}
-
-/** Builds two cards for every selected symbol. */
-function createCards(cardCount: number): MemoryCard[] {
-  const pairCount: number = cardCount / CARDS_PER_PAIR;
-  const selectedSymbols: readonly CardSymbol[] = CARD_SYMBOLS.slice(0, pairCount);
-  if (!hasValidSymbols(selectedSymbols, pairCount)) return [];
-
-  const cards: MemoryCard[] = createCardPairs(selectedSymbols);
-  return hasValidPairs(cards, selectedSymbols) ? cards : [];
-}
-
-/** Rejects missing motifs and repeated motif names. */
-function hasValidSymbols(symbols: readonly CardSymbol[], pairCount: number): boolean {
-  const symbolNames: string[] = [];
-  if (symbols.length !== pairCount) return false;
-
-  for (let index: number = 0; index < symbols.length; index += 1) {
-    const symbol: CardSymbol | undefined = symbols[index];
-    if (!symbol || symbolNames.includes(symbol.name)) return false;
-    symbolNames.push(symbol.name);
-  }
-  return true;
-}
-
-/** Creates the configured number of copies for every motif. */
-function createCardPairs(symbols: readonly CardSymbol[]): MemoryCard[] {
-  const cards: MemoryCard[] = [];
-
-  for (let copyIndex: number = 0; copyIndex < CARDS_PER_PAIR; copyIndex += 1) {
-    symbols.forEach((symbol: CardSymbol): void => {
-      cards.push({ symbol });
-    });
-  }
-  return cards;
-}
-
-/** Ensures that every selected motif occurs in one complete pair. */
-function hasValidPairs(cards: readonly MemoryCard[], symbols: readonly CardSymbol[]): boolean {
-  if (cards.length !== symbols.length * CARDS_PER_PAIR) return false;
-
-  for (let index: number = 0; index < symbols.length; index += 1) {
-    const symbol: CardSymbol | undefined = symbols[index];
-    if (!symbol) return false;
-    const name: string = symbol.name;
-    const copies: MemoryCard[] = cards.filter((card: MemoryCard): boolean => card.symbol.name === name);
-    if (copies.length !== CARDS_PER_PAIR) return false;
-  }
-  return true;
-}
-
 /** Creates one semantic list item containing a card button. */
-function createCardItem(card: MemoryCard, index: number): HTMLLIElement {
+function createCardItem(card: MemoryCard, index: number, backPath: string): HTMLLIElement {
   const item: HTMLLIElement = document.createElement('li');
   item.className = 'game__card_item';
-  item.append(createCardButton(card, index + 1));
+  item.append(createCardButton(card, index + 1, backPath));
   return item;
 }
 
 /** Creates an accessible two-sided memory card. */
-function createCardButton(card: MemoryCard, position: number): HTMLButtonElement {
+function createCardButton(card: MemoryCard, position: number, backPath: string): HTMLButtonElement {
   const button: HTMLButtonElement = document.createElement('button');
   button.className = 'game__card';
   button.type = 'button';
@@ -160,15 +138,15 @@ function createCardButton(card: MemoryCard, position: number): HTMLButtonElement
   button.dataset.card_position = String(position);
   button.setAttribute('aria-label', `Face-down memory card ${position}`);
   button.setAttribute('aria-pressed', 'false');
-  button.append(createCardInner(card.symbol));
+  button.append(createCardInner(card.symbol, backPath));
   return button;
 }
 
 /** Creates the rotating element with both card faces. */
-function createCardInner(symbol: CardSymbol): HTMLSpanElement {
+function createCardInner(symbol: CardSymbol, backPath: string): HTMLSpanElement {
   const inner: HTMLSpanElement = document.createElement('span');
   inner.className = 'game__card_inner';
-  inner.append(createCardFace('back', CARD_BACK_PATH));
+  inner.append(createCardFace('back', backPath));
   inner.append(createCardFace('front', `${CARD_IMAGE_PATH}${symbol.fileName}`));
   return inner;
 }
@@ -187,10 +165,12 @@ function createCardFace(side: string, source: string): HTMLSpanElement {
 
 /** Toggles only the card activated inside the shared list. */
 function handleCardClick(event: MouseEvent): void {
-  if (!(event.target instanceof Element) || !GAME_CARD_LIST) return;
+  if (!(event.target instanceof Element)) return;
+  const cardList: EventTarget | null = event.currentTarget;
+  if (!(cardList instanceof HTMLOListElement)) return;
 
   const card: HTMLButtonElement | null = event.target.closest<HTMLButtonElement>('.game__card');
-  if (!card || !GAME_CARD_LIST.contains(card)) return;
+  if (!card || !cardList.contains(card)) return;
 
   const isFlipped: boolean = card.classList.toggle('is_flipped');
   updateCardAccessibility(card, isFlipped);

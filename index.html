@@ -18,30 +18,15 @@
         </div>
 
         <button class="play_button" id="play_button" type="button">
-          <img
-            class="play_button__icon"
-            src="/assets/icons/controller_icon.svg"
-            alt=""
-            aria-hidden="true"
-          />
+          <img class="play_button__icon" src="/assets/icons/controller_icon.svg" alt="" aria-hidden="true" />
           <span class="play_button__label">Play</span>
           <span class="play_button__arrow" aria-hidden="true">→</span>
         </button>
 
-        <img
-          class="home__controller"
-          src="/assets/icons/controller_icon.svg"
-          alt=""
-          aria-hidden="true"
-        />
+        <img class="home__controller" src="/assets/icons/controller_icon.svg" alt="" aria-hidden="true" />
       </section>
 
-      <section
-        class="settings"
-        id="settings_view"
-        aria-labelledby="settings_title"
-        hidden
-      >
+      <section class="settings" id="settings_view" aria-labelledby="settings_title" hidden>
         <h1 class="settings__header" id="settings_title" tabindex="-1">
           <span class="settings__marker" aria-hidden="true"></span>
           <span class="settings__title">Settings</span>
@@ -52,12 +37,7 @@
             <form class="settings__form" id="settings_form">
               <fieldset class="setting_group setting_group_theme">
                 <legend class="setting_group__title">
-                  <img
-                    class="setting_group__icon"
-                    src="/assets/icons/game_theme_icon.svg"
-                    alt=""
-                    aria-hidden="true"
-                  />
+                  <img class="setting_group__icon" src="/assets/icons/game_theme_icon.svg" alt="" aria-hidden="true" />
                   <span>Game theme</span>
                 </legend>
                 <div class="setting_options">
@@ -75,42 +55,20 @@
               <div class="player_board_container">
                 <fieldset class="setting_group setting_group_player">
                   <legend class="setting_group__title">
-                    <img
-                      class="setting_group__icon"
-                      src="/assets/icons/chess_pawn_blue.svg"
-                      alt=""
-                      aria-hidden="true"
-                    />
+                    <img class="setting_group__icon" src="/assets/icons/chess_pawn_blue.svg" alt="" aria-hidden="true" />
                     <span>Choose player</span>
                   </legend>
                   <div class="setting_options">
                     <label class="setting_option">
-                      <input
-                        id="player_blue"
-                        type="radio"
-                        name="player"
-                        value="blue"
-                        aria-describedby="player_assignment"
-                      />
+                      <input id="player_blue" type="radio" name="player" value="blue" aria-describedby="player_assignment" />
                       <span>Blue</span>
                     </label>
                     <label class="setting_option">
-                      <input
-                        id="player_orange"
-                        type="radio"
-                        name="player"
-                        value="orange"
-                        aria-describedby="player_assignment"
-                      />
+                      <input id="player_orange" type="radio" name="player" value="orange" aria-describedby="player_assignment" />
                       <span>Orange</span>
                     </label>
                   </div>
-                  <p
-                    class="player_assignment_status"
-                    id="player_assignment"
-                    aria-live="polite"
-                    aria-atomic="true"
-                  >
+                  <p class="player_assignment_status" id="player_assignment" aria-live="polite" aria-atomic="true">
                     Choose a color for Player 1. Player 2 receives the other
                     color automatically.
                   </p>
@@ -118,12 +76,7 @@
 
                 <fieldset class="setting_group setting_group_board">
                   <legend class="setting_group__title">
-                    <img
-                      class="setting_group__icon"
-                      src="/assets/icons/board_size_icon.svg"
-                      alt=""
-                      aria-hidden="true"
-                    />
+                    <img class="setting_group__icon" src="/assets/icons/board_size_icon.svg" alt="" aria-hidden="true" />
                     <span>Board size</span>
                   </legend>
                   <div class="setting_options">
@@ -144,32 +97,20 @@
               </div>
             </form>
 
-            <aside
-              class="settings__preview"
-              id="code_vibes_preview"
-              aria-label="Code Vibes preview"
-            >
+            <aside class="settings__preview" id="code_vibes_preview" aria-label="Code Vibes preview">
               <div class="theme_preview_container">
                 <div class="theme_preview_header" aria-hidden="true">
                   <div class="theme_preview_header__left">
                     <div class="theme_preview_header__left_first">
                       <div class="theme_preview_header__blue_content">
-                        <img
-                          class="theme_preview_header__arrow"
-                          src="/assets/icons/blue_player_arrow.svg"
-                          alt=""
-                        />
+                        <img class="theme_preview_header__arrow" src="/assets/icons/blue_player_arrow.svg" alt="" />
                         <p class="theme_preview_header__blue_label">Blue</p>
                       </div>
                       <span class="theme_preview_header__blue_score">0</span>
                     </div>
                     <div class="theme_preview_header__left_second">
                       <div class="theme_preview_header__orange_content">
-                        <img
-                          class="theme_preview_header__orange_arrow"
-                          src="/assets/icons/orange_player_arrow.svg"
-                          alt=""
-                        />
+                        <img class="theme_preview_header__orange_arrow" src="/assets/icons/orange_player_arrow.svg" alt="" />
                         <p class="theme_preview_header__orange_label">Orange</p>
                       </div>
                       <span class="theme_preview_header__orange_score">6</span>
@@ -180,19 +121,11 @@
                       <p class="theme_preview_header__current_player">
                         Current player:
                       </p>
-                      <img
-                        class="theme_preview_header__current_player_arrow"
-                        src="/assets/icons/blue_player_arrow.svg"
-                        alt=""
-                      />
+                      <img class="theme_preview_header__current_player_arrow" src="/assets/icons/blue_player_arrow.svg" alt="" />
                     </div>
                   </div>
                   <div class="theme_preview_header__right">
-                    <img
-                      class="theme_preview_header__exit_icon"
-                      src="/assets/icons/exit_game_white_icon.svg"
-                      alt=""
-                    />
+                    <img class="theme_preview_header__exit_icon" src="/assets/icons/exit_game_white_icon.svg" alt="" />
                     <p class="theme_preview_header__exit_text">Exit game</p>
                   </div>
                 </div>
@@ -210,29 +143,16 @@
                 </figure>
               </div>
             </aside>
-            <div
-              class="settings__preview settings__preview_da_projects"
-              id="da_projects_preview"
-              aria-hidden="true"
-              hidden
-            >
+            <div class="settings__preview settings__preview_da_projects" id="da_projects_preview" aria-hidden="true" hidden>
               <div class="settings__preview_da_projects_content">
                 <div class="settings__preview_da_projects_header">
                   <div class="settings__preview_da_projects_header_left">
                     <div class="settings__preview_da_projects_header_left_first">
-                      <img
-                        class="settings__preview_da_projects_pawn"
-                        src="/assets/icons/chess_pawn_orange.svg"
-                        alt=""
-                      />
+                      <img class="settings__preview_da_projects_pawn" src="/assets/icons/chess_pawn_orange.svg" alt="" />
                       <span class="settings__preview_da_projects_score">6</span>
                     </div>
                     <div class="settings__preview_da_projects_header_left_second">
-                      <img
-                        class="settings__preview_da_projects_pawn"
-                        src="/assets/icons/chess_pawn_blue.svg"
-                        alt=""
-                      />
+                      <img class="settings__preview_da_projects_pawn" src="/assets/icons/chess_pawn_blue.svg" alt="" />
                       <span class="settings__preview_da_projects_score_blue">2</span>
                     </div>
                   </div>
@@ -240,19 +160,11 @@
                     <div class="settings__preview_da_projects_current_player">
                       <p>Current player:</p>
                     </div>
-                    <img
-                      class="settings__preview_da_projects_current_player_icon"
-                      src="/assets/icons/current_player_blue_icon.svg"
-                      alt=""
-                    />
+                    <img class="settings__preview_da_projects_current_player_icon" src="/assets/icons/current_player_blue_icon.svg" alt="" />
                   </div>
                   <div class="settings__preview_da_projects_header_right">
                     <div class="settings__preview_da_projects_exit_icon_container">
-                      <img
-                        class="settings__preview_da_projects_exit_icon"
-                        src="/assets/icons/exit_game_blue_icon.svg"
-                        alt=""
-                      />
+                      <img class="settings__preview_da_projects_exit_icon" src="/assets/icons/exit_game_blue_icon.svg" alt="" />
                     </div>
                     <div class="settings__preview_da_projects_exit_text">
                       <p>Exit game</p>
@@ -261,19 +173,11 @@
                 </div>
                 <div class="settings__preview_da_projects_board">
                   <div class="settings__preview_da_projects_board_card">
-                    <img
-                      class="settings__preview_da_projects_poll_back"
-                      src="/assets/images/da_projects_card_motif.svg"
-                      alt=""
-                    />
+                    <img class="settings__preview_da_projects_poll_back" src="/assets/images/da_projects_card_motif.svg" alt="" />
                   </div>
                   <div class="settings__preview_da_projects_board_card_left">
                     <div class="settings__preview_da_projects_pc_container">
-                      <img
-                        class="settings__preview_da_projects_pc"
-                        src="/assets/images/da_projects_card_back_logo.svg"
-                        alt=""
-                      />
+                      <img class="settings__preview_da_projects_pc" src="/assets/images/da_projects_card_back_logo.svg" alt="" />
                     </div>
                   </div>
                 </div>
@@ -319,7 +223,11 @@
         tabindex="-1"
         hidden
       >
-        <div class="game__code_vibes_container" id="game_code_vibes_container">
+        <section
+          class="game__code_vibes_container"
+          id="game_code_vibes_container"
+          aria-label="Code Vibes game"
+        >
           <header class="game__code_vibes_header">
             <div class="game__code_vibes_header_left">
               <div class="game__code_vibes_header_left_content"></div>
@@ -352,13 +260,63 @@
           <section class="game__board" id="game_board" aria-label="Memory cards">
             <ol class="game__card_list" id="game_card_list"></ol>
           </section>
-        </div>
+        </section>
+        <section
+          class="game__da_projects_container"
+          id="game_da_projects_container"
+          aria-labelledby="game_da_projects_title"
+          hidden
+        >
+          <div class="game__da_projects_content">
+            <header class="game__da_projects_header">
+              <h1 class="game__da_projects_title" id="game_da_projects_title">
+                DA Projects Memory game
+              </h1>
+              <div class="game__da_projects_header_left">
+                <div class="game__da_projects_score game__da_projects_score_orange" role="group" aria-label="Orange player score: 0">
+                  <img class="game__da_projects_score_icon" src="/assets/icons/chess_pawn_orange.svg" alt="" aria-hidden="true" />
+                  <p class="game__da_projects_score_value">0</p>
+                </div>
+                <div class="game__da_projects_score game__da_projects_score_blue" role="group" aria-label="Blue player score: 0">
+                  <img class="game__da_projects_score_icon" src="/assets/icons/chess_pawn_blue.svg" alt="" aria-hidden="true" />
+                  <p class="game__da_projects_score_value">0</p>
+                </div>
+              </div>
+              <div class="game__da_projects_header_center">
+                <p class="game__da_projects_current_player">Current player:</p>
+                <img
+                  class="game__da_projects_current_player_icon"
+                  src="/assets/icons/current_player_blue_icon.svg"
+                  alt="Blue player"
+                />
+              </div>
+              <button
+                class="game__da_projects_header_right"
+                id="da_projects_exit_button"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="quit_dialog"
+              >
+                <img
+                  class="game__da_projects_exit_icon"
+                  src="/assets/icons/exit_game_blue_icon.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span class="game__da_projects_exit_text">Exit game</span>
+              </button>
+            </header>
+            <section class="game__da_projects_board" id="da_projects_board" aria-label="Memory cards">
+              <ol class="game__da_projects_card_list game__da_projects_card_list_4x4" id="da_projects_card_list"></ol>
+            </section>
+          </div>
+        </section>
       </section>
       <dialog class="quit_dialog" id="quit_dialog" aria-labelledby="quit_title">
         <div class="quit_dialog__content">
           <h2 class="quit_dialog__title" id="quit_title" tabindex="-1">
-            Are you sure you want to quit
-            <span class="quit_dialog__title_last_line">the game?</span>
+            Are you sure you want to
+            <span class="quit_dialog__title_da_last_line">quit the game?</span>
           </h2>
           <div class="quit_dialog__actions">
             <button class="quit_dialog__back" id="back_to_game" type="button">

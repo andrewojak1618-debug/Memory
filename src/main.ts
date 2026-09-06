@@ -1,6 +1,6 @@
 import './styles/style.scss';
 import { initGameBoard, renderGameBoard } from './game-board';
-import { updatePlayerAssignment } from './player-settings';
+import { prepareGamePlayers, updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
@@ -12,6 +12,8 @@ const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
+const CODE_VIBES_GAME: HTMLElement | null = document.getElementById('game_code_vibes_container');
+const DA_PROJECTS_GAME: HTMLElement | null = document.getElementById('game_da_projects_container');
 
 /** Connects the available controls with their actions. */
 function init(): void {
@@ -48,12 +50,28 @@ function showGame(): void {
     && isSettingSelected('player') && isSettingSelected('board_size');
   if (!hasAllSettings || !SETTINGS_VIEW || !GAME_VIEW) return;
 
-  if (isDaProjectsTheme()) GAME_VIEW.classList.add('game_da_projects');
-  else GAME_VIEW.classList.remove('game_da_projects');
-  renderGameBoard();
+  prepareGameView();
   SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = false;
   GAME_VIEW.focus();
+}
+
+/** Prepares only the game view belonging to the selected theme. */
+function prepareGameView(): void {
+  const showDaProjects: boolean = isDaProjectsTheme();
+  if (CODE_VIBES_GAME) CODE_VIBES_GAME.hidden = showDaProjects;
+  if (DA_PROJECTS_GAME) DA_PROJECTS_GAME.hidden = !showDaProjects;
+  if (showDaProjects) GAME_VIEW?.classList.add('game_da_projects');
+  else GAME_VIEW?.classList.remove('game_da_projects');
+  prepareGamePlayers();
+  renderGameBoard(showDaProjects);
+  updateGameLabel(showDaProjects);
+}
+
+/** Gives assistive technologies the selected game's name. */
+function updateGameLabel(showDaProjects: boolean): void {
+  const themeName: string = showDaProjects ? 'DA Projects' : 'Code Vibes';
+  GAME_VIEW?.setAttribute('aria-label', `${themeName} memory game`);
 }
 
 /** Updates the setup progress and availability of the start button. */

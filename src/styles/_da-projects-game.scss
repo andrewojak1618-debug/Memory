@@ -1,0 +1,261 @@
+@use 'variables' as *;
+
+.game_da_projects {
+  padding-top: 0;
+  background-color: $color-white;
+}
+
+.game__da_projects_container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-white;
+}
+
+.game__da_projects_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 1219px);
+  height: 604px;
+  margin-top: 10px;
+  margin-inline: auto;
+}
+
+.game__da_projects_content_6x6 {
+  height: 836px;
+}
+
+.game__da_projects_board {
+  width: 528px;
+  max-width: 100%;
+  height: 448px;
+}
+
+.game__da_projects_board_4x6 {
+  width: 800px;
+}
+
+.game__da_projects_board_6x6 {
+  width: 800px;
+  height: 680px;
+}
+
+.game__da_projects_card_list {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-auto-rows: 100px;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game__da_projects_card_list_4x4 {
+  grid-template-columns: repeat(4, minmax(0, 120px));
+}
+
+.game__da_projects_card_list_4x6,
+.game__da_projects_card_list_6x6 {
+  grid-template-columns: repeat(6, minmax(0, 120px));
+}
+
+.game__da_projects_card_list .game__card_item {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 6 / 5;
+}
+
+.game__da_projects_card_list .game__card_image {
+  border-radius: 13px;
+}
+
+.game__da_projects_card_list .game__card:focus-visible {
+  outline-color: $color-da-projects-blue-dark;
+}
+
+.game__da_projects_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1219px;
+  height: 102px;
+  border-radius: 10px;
+  background-color: $color-da-projects-header;
+}
+
+.game__da_projects_header_left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 156px;
+  height: 54px;
+  margin-block: 16px;
+  margin-left: 16px;
+  padding-inline: 16px;
+  border-radius: 10px;
+  background-color: $color-white;
+}
+
+.game__da_projects_score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 42px;
+  height: 36px;
+}
+
+.game__da_projects_score_icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 25px;
+}
+
+.game__da_projects_score_value {
+  display: flex;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.game__da_projects_score_orange {
+  color: $color-da-projects-orange;
+}
+
+.game__da_projects_score_blue {
+  color: $color-blue;
+}
+
+.game__da_projects_header_center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 283px;
+  height: 40px;
+  margin-block: 18px;
+}
+
+.game__da_projects_current_player {
+  display: flex;
+  align-items: center;
+  width: 224px;
+  height: 38px;
+  margin: 0;
+  color: $color-da-projects-blue-dark;
+  font-size: 32px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.game__da_projects_current_player_icon {
+  flex-shrink: 0;
+  width: 41px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.game__da_projects_header_right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 172px;
+  height: 54px;
+  margin-block: 12px;
+  margin-right: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background-color: $color-da-projects-preview;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.97);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-da-projects-blue-dark;
+    outline-offset: 3px;
+  }
+}
+
+.game__da_projects_exit_icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.game__da_projects_exit_text {
+  display: flex;
+  align-items: center;
+  width: 92px;
+  height: 24px;
+  margin-right: 20px;
+  color: $color-da-projects-blue-dark;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.game__da_projects_title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 1219px) {
+  .game__da_projects_content {
+    padding-inline: 16px;
+  }
+
+  .game__da_projects_header {
+    width: 100%;
+  }
+}
+
+@media (max-width: 850px) {
+  .game__da_projects_content,
+  .game__da_projects_content_6x6 {
+    height: auto;
+    min-height: 604px;
+    gap: 32px;
+  }
+
+  .game__da_projects_board,
+  .game__da_projects_board_6x6 {
+    width: 100%;
+    height: auto;
+  }
+
+  .game__da_projects_card_list {
+    height: auto;
+    grid-auto-rows: auto;
+    gap: clamp(4px, 2vw, 16px);
+  }
+}
+
+@media (max-width: 700px) {
+  .game__da_projects_content,
+  .game__da_projects_content_6x6 {
+    min-height: 0;
+  }
+
+  .game__da_projects_header {
+    height: auto;
+    padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .game__da_projects_header_left,
+  .game__da_projects_header_center,
+  .game__da_projects_header_right {
+    max-width: 100%;
+    margin: 0;
+  }
+}
