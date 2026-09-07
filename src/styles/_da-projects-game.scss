@@ -179,6 +179,11 @@
   border-radius: 13px;
 }
 
+.game__container_da_projects .game__card.is_matched {
+  border: 2px solid $color-da-projects-blue-dark;
+  border-radius: 13px;
+}
+
 .game__container_da_projects .game__card:focus-visible {
   outline-color: $color-da-projects-blue-dark;
 }

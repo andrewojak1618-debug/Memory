@@ -111,14 +111,20 @@
   transform: rotateY(180deg);
 }
 
+.game__card.is_matched {
+  cursor: default;
+}
+
 .game__exit_button {
   padding: 0;
   border: 0;
+  background-color: $color-game-exit-button;
   font-weight: 700;
   cursor: pointer;
 
   &:hover {
-    filter: brightness(0.97);
+    background-color: $color-result-button-hover;
+    border: 3px solid $color-preview-border;
   }
 
   &:active {

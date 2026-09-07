@@ -1,0 +1,311 @@
+@use 'variables' as *;
+
+.game_result {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $color-background;
+  place-items: center;
+}
+
+.game_result__confetti {
+  position: absolute;
+  top: -32px;
+  right: 0;
+  left: 0;
+  width: 1234px;
+  max-width: 100%;
+  height: 359px;
+  margin-inline: auto;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.game_result__confetti_piece {
+  position: absolute;
+  top: -24px;
+  left: var(--confetti_left);
+  width: 10px;
+  height: 18px;
+  background-color: var(--confetti_color);
+  border-radius: 2px;
+  animation: winner_confetti_fall var(--confetti_duration) linear
+    var(--confetti_delay) infinite;
+}
+
+.game_result__winner_content {
+  position: absolute;
+  top: 318px;
+  left: 50%;
+  width: 426px;
+  max-width: 100%;
+  height: 573px;
+  transform: translateX(-50%);
+}
+
+.game_result__winner_content_orange {
+  width: 522px;
+}
+
+.game_result__winner_summary {
+  width: 100%;
+  max-width: 100%;
+  height: 133px;
+}
+
+.game_result__winner_eyebrow,
+.game_result__winner_title {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: center;
+  place-items: center;
+}
+
+.game_result__winner_eyebrow {
+  height: 50px;
+  color: $color-white;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.game_result__winner_title {
+  height: 75px;
+  color: $color-preview-blue;
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.game_result__winner_content_orange .game_result__winner_title {
+  color: $color-preview-orange;
+}
+
+.game_result__winner_pawn {
+  display: block;
+  width: 200px;
+  height: 250px;
+  margin: 64px auto 0;
+}
+
+.game_result__confetti_ribbon {
+  position: absolute;
+  top: -110px;
+  left: var(--confetti_left);
+  width: 30px;
+  height: 94px;
+  color: var(--confetti_color);
+  animation: winner_confetti_ribbon var(--confetti_duration) ease-in-out
+    var(--confetti_delay) infinite;
+}
+
+.game_result__confetti_ribbon::before,
+.game_result__confetti_ribbon::after {
+  position: absolute;
+  left: 0;
+  width: 30px;
+  height: 52px;
+  border-radius: 50%;
+  content: '';
+}
+
+.game_result__confetti_ribbon::before {
+  top: 0;
+  border-left: 6px solid currentcolor;
+  animation: winner_ribbon_top_wave 900ms ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}
+
+.game_result__confetti_ribbon::after {
+  top: 42px;
+  border-right: 6px solid currentcolor;
+  animation: winner_ribbon_bottom_wave 900ms ease-in-out -450ms infinite alternate;
+  transform-origin: center top;
+}
+
+@keyframes winner_confetti_fall {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  to {
+    transform: translate3d(var(--confetti_drift), 400px, 0) rotate(720deg);
+  }
+}
+
+@keyframes winner_confetti_ribbon {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-20deg);
+  }
+
+  25% {
+    transform: translate3d(-24px, 120px, 0) rotate(12deg);
+  }
+
+  50% {
+    transform: translate3d(24px, 240px, 0) rotate(-10deg);
+  }
+
+  75% {
+    transform: translate3d(-18px, 360px, 0) rotate(16deg);
+  }
+
+  to {
+    transform: translate3d(var(--confetti_drift), 480px, 0) rotate(-20deg);
+  }
+}
+
+@keyframes winner_ribbon_top_wave {
+  from {
+    transform: translateX(-7px) rotate(-12deg) scaleX(0.75);
+  }
+
+  to {
+    transform: translateX(7px) rotate(12deg) scaleX(1.15);
+  }
+}
+
+@keyframes winner_ribbon_bottom_wave {
+  from {
+    transform: translateX(7px) rotate(12deg) scaleX(1.15);
+  }
+
+  to {
+    transform: translateX(-7px) rotate(-12deg) scaleX(0.75);
+  }
+}
+
+.game_result__content {
+  position: relative;
+  width: calc(100vw - 32px);
+  max-width: 420px;
+  height: 603px;
+}
+
+.game_result__summary {
+  position: relative;
+  width: 100%;
+  height: 141px;
+}
+
+.game_result__summary_top {
+  display: grid;
+  width: 100%;
+  height: 50px;
+  place-items: center;
+}
+
+.game_result__eyebrow {
+  margin: 0;
+  color: $color-white;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.game_result__draw_visual {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  width: 100%;
+  height: 79px;
+  place-items: center;
+}
+
+.game_result__draw_image {
+  width: 410px;
+  max-width: 100%;
+  height: 73px;
+  filter:
+    drop-shadow(-4px -3px 0 $color-white)
+    drop-shadow(-3px 5px 4px $color-draw-shadow);
+}
+
+.game_result__scale_icon {
+  display: block;
+  width: 339px;
+  max-width: 100%;
+  height: 272px;
+  object-fit: contain;
+  margin: 64px auto 0;
+}
+
+.game_result__back_button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: grid;
+  width: 204px;
+  height: 64px;
+  padding: 0;
+  color: $color-white;
+  background-color: $color-result-button;
+  border: 2px solid $color-preview-border;
+  cursor: pointer;
+  place-items: center;
+  transform: translateX(-50%);
+}
+
+.game_result__back_button:hover {
+  background-color: $color-result-button-hover;
+}
+
+.game_result__winner_back_button {
+  height: 62px;
+  border: 1px solid $color-preview-border;
+}
+
+.game_result__back_button:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 4px;
+}
+
+.game_result__back_label {
+  display: grid;
+  width: 156px;
+  height: 30px;
+  font-size: 24px;
+  font-weight: 700;
+  white-space: nowrap;
+  place-items: center;
+}
+
+@media (max-width: 600px) {
+  .game_result__winner_content {
+    top: 240px;
+    width: calc(100vw - 32px);
+    height: 500px;
+  }
+
+  .game_result__winner_eyebrow {
+    font-size: 32px;
+  }
+
+  .game_result__winner_title {
+    height: auto;
+    min-height: 75px;
+    font-size: 44px;
+    line-height: 1.1;
+  }
+
+  .game_result__winner_pawn {
+    width: 160px;
+    height: 200px;
+    margin-top: 40px;
+  }
+
+  .game_result__draw_image {
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game_result__confetti {
+    display: none;
+  }
+}

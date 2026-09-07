@@ -9,6 +9,8 @@ export interface MemoryCard {
   readonly symbol: CardSymbol;
 }
 
+export type RandomGenerator = () => number;
+
 export const CARDS_PER_PAIR: number = 2;
 export const DEFAULT_BOARD_SIZE: BoardSize = '4x4';
 export const BOARD_SIZES: readonly BoardSize[] = ['4x4', '4x6', '6x6'];
@@ -24,12 +26,37 @@ export function isBoardSize(value: string): value is BoardSize {
 }
 
 /** Builds one complete pair for every required symbol. */
-export function createCards(cardCount: number, symbols: readonly CardSymbol[]): MemoryCard[] {
+export function createCards(
+  cardCount: number,
+  symbols: readonly CardSymbol[],
+  random: RandomGenerator = Math.random,
+): MemoryCard[] {
   const pairCount: number = cardCount / CARDS_PER_PAIR;
   const selectedSymbols: readonly CardSymbol[] = symbols.slice(0, pairCount);
   if (!hasValidSymbols(selectedSymbols, pairCount)) return [];
   const cards: MemoryCard[] = createCardPairs(selectedSymbols);
-  return hasValidPairs(cards, selectedSymbols) ? cards : [];
+  return hasValidPairs(cards, selectedSymbols) ? shuffleCards(cards, random) : [];
+}
+
+/** Returns a shuffled copy without changing the validated card pairs. */
+export function shuffleCards(
+  cards: readonly MemoryCard[],
+  random: RandomGenerator = Math.random,
+): MemoryCard[] {
+  const shuffledCards: MemoryCard[] = [...cards];
+  for (let index: number = shuffledCards.length - 1; index > 0; index -= 1) {
+    swapCards(shuffledCards, index, Math.floor(random() * (index + 1)));
+  }
+  return shuffledCards;
+}
+
+/** Exchanges two positions during the Fisher-Yates shuffle. */
+function swapCards(cards: MemoryCard[], firstIndex: number, secondIndex: number): void {
+  const firstCard: MemoryCard | undefined = cards[firstIndex];
+  const secondCard: MemoryCard | undefined = cards[secondIndex];
+  if (!firstCard || !secondCard) return;
+  cards[firstIndex] = secondCard;
+  cards[secondIndex] = firstCard;
 }
 
 /** Rejects missing motifs and repeated motif names. */

@@ -1,10 +1,12 @@
 import './styles/style.scss';
 import { initGameBoard, renderGameBoard } from './game-board';
+import { initGameResult, showTieResult, showWinnerResult } from './game-result';
 import { applyGameTheme } from './game-theme';
 import { prepareGamePlayers, updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
 import { isGameTheme } from './theme-data';
 import type { GameTheme } from './theme-data';
+import { initWinnerConfetti } from './winner-confetti';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
 const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
@@ -15,15 +17,33 @@ const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
+const DEBUG_PARAMETER: string = 'debug';
+const TIE_RESULT_DEBUG_VALUE: string = 'tie_result';
+const BLUE_WINNER_DEBUG_VALUE: string = 'blue_winner';
+const ORANGE_WINNER_DEBUG_VALUE: string = 'orange_winner';
 
 /** Connects the available controls with their actions. */
 function init(): void {
   initGameBoard();
+  initGameResult();
   initQuitDialog();
+  initWinnerConfetti();
+  if (showDebugView()) return;
   PLAY_BUTTON?.addEventListener('click', showSettings);
   START_BUTTON?.addEventListener('click', showGame);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+}
+
+/** Opens a requested development view without changing normal navigation. */
+function showDebugView(): boolean {
+  const parameters: URLSearchParams = new URLSearchParams(window.location.search);
+  const debugView: string | null = parameters.get(DEBUG_PARAMETER);
+  if (debugView === TIE_RESULT_DEBUG_VALUE) showTieResult();
+  else if (debugView === BLUE_WINNER_DEBUG_VALUE) showWinnerResult('blue');
+  else if (debugView === ORANGE_WINNER_DEBUG_VALUE) showWinnerResult('orange');
+  else return false;
+  return true;
 }
 
 /** Opens the settings view and places focus on its heading. */

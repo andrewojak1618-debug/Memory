@@ -13,7 +13,7 @@
         <div class="home__content">
           <header class="home__headline">
             <p class="home__eyebrow">It’s play time.</p>
-            <h1 class="home__title" id="home_title">Ready to play?</h1>
+            <h1 class="home__title" id="home_title" tabindex="-1">Ready to play?</h1>
           </header>
         </div>
 
@@ -264,6 +264,7 @@
                   decoding="async"
                 />
               </div>
+              <p class="visually_hidden" id="game_status" role="status" aria-live="polite"></p>
             </div>
             <button
               class="game__exit_button"
@@ -289,6 +290,61 @@
             <ol class="game__card_list" id="game_card_list"></ol>
           </section>
         </section>
+      </section>
+      <section
+        class="game_result"
+        id="tie_result_view"
+        aria-labelledby="tie_result_title"
+        hidden
+      >
+        <h1 class="visually_hidden" id="tie_result_title" tabindex="-1">Game over: Draw</h1>
+        <div class="game_result__content">
+          <div class="game_result__summary">
+            <div class="game_result__summary_top">
+              <p class="game_result__eyebrow">It’s a</p>
+            </div>
+            <div class="game_result__draw_visual" aria-hidden="true">
+              <img class="game_result__draw_image" src="/assets/images/draw_green.png" alt="" />
+            </div>
+          </div>
+          <img
+            class="game_result__scale_icon"
+            src="/assets/images/scale_icon.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <button class="game_result__back_button" id="back_to_start_button" type="button">
+            <span class="game_result__back_label">Back to start</span>
+          </button>
+        </div>
+      </section>
+      <section
+        class="game_result"
+        id="winner_view"
+        aria-labelledby="winner_title"
+        tabindex="-1"
+        hidden
+      >
+        <div class="game_result__confetti" id="winner_confetti" aria-hidden="true"></div>
+        <div class="game_result__winner_content game_result__winner_content_blue" id="winner_content">
+          <header class="game_result__winner_summary">
+            <p class="game_result__winner_eyebrow">The winner is</p>
+            <h1 class="game_result__winner_title" id="winner_title">BLUE PLAYER</h1>
+          </header>
+          <img
+            class="game_result__winner_pawn"
+            id="winner_pawn"
+            src="/assets/images/chess_pawn_blue.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <button
+            class="game_result__back_button game_result__winner_back_button"
+            type="button"
+          >
+            <span class="game_result__back_label">Back to start</span>
+          </button>
+        </div>
       </section>
       <dialog class="quit_dialog" id="quit_dialog" aria-labelledby="quit_title">
         <div class="quit_dialog__content">
