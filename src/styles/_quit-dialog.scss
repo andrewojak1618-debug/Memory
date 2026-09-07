@@ -42,10 +42,6 @@
   text-align: center;
 }
 
-.quit_dialog_da_projects .quit_dialog__title_da_last_line {
-  display: block;
-}
-
 .quit_dialog_da_projects .quit_dialog__actions {
   width: 278px;
   height: 43px;
@@ -106,6 +102,11 @@
   font-size: 32px;
   line-height: 40px;
   font-weight: 700;
+  text-align: center;
+}
+
+.quit_dialog__title_da_last_line {
+  display: block;
 }
 
 .quit_dialog__actions {
@@ -156,11 +157,15 @@
   font-weight: 700;
 }
 
+.quit_dialog__back {
+  color: $color-da-projects-blue-dark;
+}
+
 .quit_dialog__exit {
   width: 148px;
-  border: 2px solid $color-quit-exit-text;
+  border: 2px solid $color-preview-border;
   background-color: $color-quit-exit-background;
-  color: $color-quit-exit-text;
+  color: $color-preview-border;
 }
 
 .quit_dialog__exit_label {

@@ -17,72 +17,49 @@
   padding-top: 10px;
 }
 
-.game__code_vibes_container {
+.game__container {
   display: flex;
   flex-direction: column;
-  width: 1217px;
   max-width: 100%;
-  height: 644px;
 }
 
-.game__code_vibes_container_6x6 {
-  width: 1217px;
-  height: 866px;
-}
-
-.game__code_vibes_header {
+.game__header,
+.game__status,
+.game__score_panel,
+.game__score,
+.game__score_identity,
+.game__current_player,
+.game__exit_button {
   display: flex;
+  align-items: center;
+}
+
+.game__header {
   justify-content: space-between;
   width: 100%;
-  height: $game-header-height;
 }
 
 .game__board {
   display: grid;
   flex-shrink: 0;
-  width: 529px;
   max-width: 100%;
-  height: 528px;
-  margin-top: auto;
   margin-inline: auto;
   place-items: center;
 }
 
-.game__board_4x6 {
-  width: 750px;
-  height: 498px;
-  margin-top: 54px;
-}
-
-.game__board_6x6 {
-  width: 750px;
-  height: 750px;
-}
-
 .game__card_list {
   display: grid;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
+  justify-content: center;
   list-style: none;
 }
 
-.game__card_list_4x4 {
-  grid-template-columns: repeat(4, 120px);
-  grid-auto-rows: 120px;
-  gap: 16px;
-}
-
-.game__card_list_4x6,
-.game__card_list_6x6 {
-  grid-template-columns: repeat(6, 120px);
-  grid-auto-rows: 120px;
-  gap: 6px;
-}
-
 .game__card_item {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
 }
 
 .game__card {
@@ -134,35 +111,18 @@
   transform: rotateY(180deg);
 }
 
-@media (max-width: 560px) {
-  .game__board {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
+.game__exit_button {
+  padding: 0;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.97);
   }
 
-  .game__card_list {
-    width: 100%;
-  }
-
-  .game__card_list_4x4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    gap: clamp(4px, 3vw, 16px);
-  }
-
-  .game__card_list_4x6,
-  .game__card_list_6x6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    gap: clamp(3px, 2vw, 9px);
-  }
-
-  .game__card_item,
-  .game__card_list_4x4 .game__card_item {
-    width: auto;
-    height: auto;
-    aspect-ratio: 1;
+  &:active {
+    filter: brightness(0.9);
   }
 }
 

@@ -1,7 +1,10 @@
 import './styles/style.scss';
 import { initGameBoard, renderGameBoard } from './game-board';
+import { applyGameTheme } from './game-theme';
 import { prepareGamePlayers, updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
+import { isGameTheme } from './theme-data';
+import type { GameTheme } from './theme-data';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
 const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
@@ -12,27 +15,15 @@ const SETTINGS_FORM: HTMLElement | null = document.getElementById('settings_form
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
-const CODE_VIBES_GAME: HTMLElement | null = document.getElementById('game_code_vibes_container');
-const DA_PROJECTS_GAME: HTMLElement | null = document.getElementById('game_da_projects_container');
 
 /** Connects the available controls with their actions. */
 function init(): void {
   initGameBoard();
   initQuitDialog();
-  renderGamePlayers();
   PLAY_BUTTON?.addEventListener('click', showSettings);
   START_BUTTON?.addEventListener('click', showGame);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
-}
-
-/** Reuses only local preview markup; no user input is inserted as HTML. */
-function renderGamePlayers(): void {
-  const source: Element | null = document.querySelector('.theme_preview_header__left');
-  const target: Element | null = document.querySelector('.game__code_vibes_header_left_content');
-  if (!source || !target) return;
-
-  target.innerHTML = source.innerHTML;
 }
 
 /** Opens the settings view and places focus on its heading. */
@@ -58,20 +49,11 @@ function showGame(): void {
 
 /** Prepares only the game view belonging to the selected theme. */
 function prepareGameView(): void {
-  const showDaProjects: boolean = isDaProjectsTheme();
-  if (CODE_VIBES_GAME) CODE_VIBES_GAME.hidden = showDaProjects;
-  if (DA_PROJECTS_GAME) DA_PROJECTS_GAME.hidden = !showDaProjects;
-  if (showDaProjects) GAME_VIEW?.classList.add('game_da_projects');
-  else GAME_VIEW?.classList.remove('game_da_projects');
-  prepareGamePlayers();
-  renderGameBoard(showDaProjects);
-  updateGameLabel(showDaProjects);
-}
-
-/** Gives assistive technologies the selected game's name. */
-function updateGameLabel(showDaProjects: boolean): void {
-  const themeName: string = showDaProjects ? 'DA Projects' : 'Code Vibes';
-  GAME_VIEW?.setAttribute('aria-label', `${themeName} memory game`);
+  const theme: GameTheme | null = getSelectedTheme();
+  if (!theme) return;
+  applyGameTheme(theme);
+  prepareGamePlayers(theme);
+  renderGameBoard(theme);
 }
 
 /** Updates the setup progress and availability of the start button. */
@@ -89,16 +71,16 @@ function updateSettingsState(): void {
 
 /** Displays the preview that belongs to the selected theme. */
 function updateThemePreview(): void {
-  const showDaProjects: boolean = isDaProjectsTheme();
-
+  const showDaProjects: boolean = getSelectedTheme() === 'da_projects';
   if (CODE_VIBES_PREVIEW) CODE_VIBES_PREVIEW.hidden = showDaProjects;
   if (DA_PROJECTS_PREVIEW) DA_PROJECTS_PREVIEW.hidden = !showDaProjects;
 }
 
-/** Identifies the selected theme for both preview and game appearance. */
-function isDaProjectsTheme(): boolean {
+/** Reads and validates the selected game theme. */
+function getSelectedTheme(): GameTheme | null {
   const selectedTheme: Element | null = document.querySelector('input[name="theme"]:checked');
-  return selectedTheme instanceof HTMLInputElement && selectedTheme.value === 'da_projects';
+  if (!(selectedTheme instanceof HTMLInputElement)) return null;
+  return isGameTheme(selectedTheme.value) ? selectedTheme.value : null;
 }
 
 /** Marks one setup step when its radio group has a selection. */

@@ -1,8 +1,8 @@
-type PlayerColor = 'blue' | 'orange';
+import { getCurrentPlayerIcon } from './game-theme';
+import type { GameTheme, PlayerColor } from './theme-data';
 
 const PLAYER_ASSIGNMENT_STATUS: HTMLElement | null = document.getElementById('player_assignment');
-const CODE_CURRENT_PLAYER_ICON: HTMLElement | null = document.querySelector('.game__current_player_arrow');
-const DA_CURRENT_PLAYER_ICON: HTMLElement | null = document.querySelector('.game__da_projects_current_player_icon');
+const CURRENT_PLAYER_ICON: HTMLElement | null = document.getElementById('current_player_icon');
 const PLAYER_ICON_DIRECTORY: string = './assets/icons';
 const INITIAL_SCORE: string = '0';
 
@@ -12,18 +12,15 @@ export function updatePlayerAssignment(): void {
   const playerTwo: PlayerColor | null = playerOne ? getOpponentColor(playerOne) : null;
 
   updateAssignmentStatus(playerOne, playerTwo);
-  updateCurrentPlayerIcons(playerOne);
 }
 
 /** Resets a newly opened game and applies its starting player. */
-export function prepareGamePlayers(): void {
+export function prepareGamePlayers(theme: GameTheme): void {
   const playerOne: PlayerColor | null = getSelectedPlayerColor();
   if (!playerOne) return;
-  updateCurrentPlayerIcons(playerOne);
-  resetScore('.game__code_vibes_header_left_content .theme_preview_header__blue_score');
-  resetScore('.game__code_vibes_header_left_content .theme_preview_header__orange_score');
-  resetDaScore('orange');
-  resetDaScore('blue');
+  updateCurrentPlayerIcon(playerOne, theme);
+  resetScore('orange');
+  resetScore('blue');
 }
 
 /** Reads and validates the selected color from the player radio group. */
@@ -59,12 +56,10 @@ function getColorLabel(color: PlayerColor): string {
   return color === 'blue' ? 'Blue' : 'Orange';
 }
 
-/** Updates both theme variants with the selected starting player. */
-function updateCurrentPlayerIcons(color: PlayerColor | null): void {
-  if (!color) return;
+/** Updates the shared current-player symbol for the chosen theme. */
+function updateCurrentPlayerIcon(color: PlayerColor, theme: GameTheme): void {
   const label: string = `${getColorLabel(color)}, Player 1`;
-  updatePlayerIcon(CODE_CURRENT_PLAYER_ICON, `${color}_player_arrow.svg`, label);
-  updatePlayerIcon(DA_CURRENT_PLAYER_ICON, `current_player_${color}_icon.svg`, label);
+  updatePlayerIcon(CURRENT_PLAYER_ICON, getCurrentPlayerIcon(theme, color), label);
 }
 
 /** Updates one current-player image if it is available. */
@@ -74,17 +69,10 @@ function updatePlayerIcon(element: HTMLElement | null, fileName: string, label: 
   element.alt = label;
 }
 
-/** Resets one visible score value. */
-function resetScore(selector: string): void {
-  const score: Element | null = document.querySelector(selector);
-  if (score) score.textContent = INITIAL_SCORE;
-}
-
-/** Resets a DA score and its accessible group label. */
-function resetDaScore(color: PlayerColor): void {
-  const selector: string = `.game__da_projects_score_${color}`;
-  const group: Element | null = document.querySelector(selector);
-  const score: Element | null = group?.querySelector('.game__da_projects_score_value') ?? null;
+/** Resets one score and its accessible group label. */
+function resetScore(color: PlayerColor): void {
+  const group: HTMLElement | null = document.getElementById(`${color}_score`);
+  const score: HTMLElement | null = document.getElementById(`${color}_score_value`);
   if (score) score.textContent = INITIAL_SCORE;
   group?.setAttribute('aria-label', `${getColorLabel(color)} player score: ${INITIAL_SCORE}`);
 }
