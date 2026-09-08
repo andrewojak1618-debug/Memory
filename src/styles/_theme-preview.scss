@@ -14,8 +14,9 @@
   width: 100%;
   min-width: 0;
   height: 36px;
-  padding-inline: 8px;
+  padding-inline: 20px;
   align-items: center;
+  background-color: $color-preview-header;
   justify-content: space-between;
 
   &__left {
@@ -197,19 +198,21 @@
 
 .start_button {
   display: inline-flex;
-  min-height: 2.7rem;
-  padding: 0.65rem 1.2rem;
+  width: 126px;
+  height: 53px;
+  padding: 0;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   gap: 0.5rem;
   border: 0;
   color: $color-settings-text;
-  background: none;
+  background-color: $color-accent;
   cursor: pointer;
   font-weight: 400;
 
   &:hover:not(:disabled) {
-    background-color: rgba($color-settings-text, 0.08);
+    box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.08);
   }
 
   &:focus-visible {
@@ -218,7 +221,7 @@
   }
 
   &:active:not(:disabled) {
-    background-color: rgba($color-settings-text, 0.16);
+    box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.16);
   }
 
   &__icon_container {
@@ -244,6 +247,7 @@
   }
 
   &:disabled {
+    background-color: $color-disabled-start;
     cursor: not-allowed;
     opacity: 0.55;
   }

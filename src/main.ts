@@ -1,6 +1,11 @@
 import './styles/style.scss';
 import { initGameBoard, renderGameBoard } from './game-board';
-import { initGameResult, showTieResult, showWinnerResult } from './game-result';
+import {
+  initGameResult,
+  setGameResultTheme,
+  showTieResult,
+  showWinnerResult,
+} from './game-result';
 import { applyGameTheme } from './game-theme';
 import { prepareGamePlayers, updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
@@ -21,6 +26,7 @@ const DEBUG_PARAMETER: string = 'debug';
 const TIE_RESULT_DEBUG_VALUE: string = 'tie_result';
 const BLUE_WINNER_DEBUG_VALUE: string = 'blue_winner';
 const ORANGE_WINNER_DEBUG_VALUE: string = 'orange_winner';
+const DA_PROJECTS_WINNER_DEBUG_VALUE: string = 'da_projects_winner';
 
 /** Connects the available controls with their actions. */
 function init(): void {
@@ -42,8 +48,15 @@ function showDebugView(): boolean {
   if (debugView === TIE_RESULT_DEBUG_VALUE) showTieResult();
   else if (debugView === BLUE_WINNER_DEBUG_VALUE) showWinnerResult('blue');
   else if (debugView === ORANGE_WINNER_DEBUG_VALUE) showWinnerResult('orange');
+  else if (debugView === DA_PROJECTS_WINNER_DEBUG_VALUE) showDaProjectsWinnerDebug();
   else return false;
   return true;
+}
+
+/** Opens the reusable winner view with the DA Projects presentation. */
+function showDaProjectsWinnerDebug(): void {
+  setGameResultTheme('da_projects');
+  showWinnerResult('blue');
 }
 
 /** Opens the settings view and places focus on its heading. */
@@ -72,6 +85,7 @@ function prepareGameView(): void {
   const theme: GameTheme | null = getSelectedTheme();
   if (!theme) return;
   applyGameTheme(theme);
+  setGameResultTheme(theme);
   prepareGamePlayers(theme);
   renderGameBoard(theme);
 }
@@ -85,7 +99,8 @@ function updateSettingsState(): void {
   updateThemePreview();
   updatePlayerAssignment();
   if (START_BUTTON instanceof HTMLButtonElement) {
-    START_BUTTON.disabled = !(hasTheme && hasPlayer && hasBoard);
+    const isEnabled: boolean = hasTheme && hasPlayer && hasBoard;
+    START_BUTTON.disabled = !isEnabled;
   }
 }
 

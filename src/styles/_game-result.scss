@@ -13,6 +13,67 @@
   place-items: center;
 }
 
+.game_result_da_projects {
+  background-color: $color-da-projects-blue-dark;
+
+  .game_result__confetti {
+    display: none;
+  }
+
+  .game_result__winner_content {
+    top: 192px;
+    width: 407px;
+    height: 567px;
+  }
+
+  .game_result__winner_summary {
+    height: 141px;
+  }
+
+  .game_result__winner_eyebrow {
+    width: 253px;
+    max-width: 100%;
+    height: 37px;
+    margin-inline: auto;
+    font-family: 'Figtree', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 37px;
+  }
+
+  .game_result__winner_title {
+    width: 407px;
+    max-width: 100%;
+    height: 96px;
+    color: $color-white;
+    font-family: 'Figtree', Arial, Helvetica, sans-serif;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .game_result__winner_back_button {
+    width: 96px;
+    height: 48px;
+    color: $color-da-projects-blue-dark;
+    background-color: $color-da-projects-preview;
+    border-radius: 10px;
+    font-family: 'Figtree', Arial, Helvetica, sans-serif;
+  }
+
+  .game_result__winner_back_button:hover {
+    background-color: $color-da-projects-preview;
+  }
+
+  .game_result__winner_back_button .game_result__back_label {
+    width: 56px;
+    height: 24px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
+
 .game_result__confetti {
   position: absolute;
   top: -32px;
@@ -276,6 +337,10 @@
 }
 
 @media (max-width: 600px) {
+  .game_result_da_projects .game_result__winner_content {
+    width: calc(100vw - 32px);
+  }
+
   .game_result__winner_content {
     top: 240px;
     width: calc(100vw - 32px);

@@ -1,8 +1,7 @@
-import type { PlayerColor } from './theme-data';
+import type { GameTheme, PlayerColor } from './theme-data';
 
 interface WinnerPresentation {
   contentClass: string;
-  imagePath: string;
   label: string;
 }
 
@@ -14,30 +13,70 @@ const WINNER_VIEW: HTMLElement | null = document.getElementById('winner_view');
 const WINNER_CONTENT: HTMLElement | null = document.getElementById('winner_content');
 const WINNER_TITLE: HTMLElement | null = document.getElementById('winner_title');
 const WINNER_PAWN: HTMLElement | null = document.getElementById('winner_pawn');
+const WINNER_BACK_LABEL: HTMLElement | null = WINNER_VIEW
+  ?.querySelector<HTMLElement>('.game_result__back_label') ?? null;
 const TIE_RESULT_TITLE: HTMLElement | null = document.getElementById('tie_result_title');
 const HOME_TITLE: HTMLElement | null = document.getElementById('home_title');
+const RESULT_THEME_CLASSES: readonly string[] = [
+  'game_result_code_vibes',
+  'game_result_da_projects',
+];
 const BACK_TO_START_BUTTONS: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
   '.game_result__back_button',
 );
 const WINNER_IMAGE_DIRECTORY: string = './assets/images';
+const WINNER_IMAGES: Readonly<Record<GameTheme, Record<PlayerColor, string>>> = {
+  code_vibes: {
+    blue: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_blue.png`,
+    orange: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_orange.png`,
+  },
+  da_projects: {
+    blue: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_white_blue.png`,
+    orange: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_orange.png`,
+  },
+};
 const WINNER_PRESENTATIONS: Record<PlayerColor, WinnerPresentation> = {
   blue: {
     contentClass: 'game_result__winner_content_blue',
-    imagePath: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_blue.png`,
     label: 'BLUE PLAYER',
   },
   orange: {
     contentClass: 'game_result__winner_content_orange',
-    imagePath: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_orange.png`,
     label: 'ORANGE PLAYER',
   },
 };
+const DA_PROJECTS_WINNER_LABELS: Readonly<Record<PlayerColor, string>> = {
+  blue: 'Blue Player',
+  orange: 'Orange Player',
+};
+let activeResultTheme: GameTheme = 'code_vibes';
 
 /** Connects the result action with the home view. */
 export function initGameResult(): void {
   BACK_TO_START_BUTTONS.forEach((button: HTMLButtonElement): void => {
     button.addEventListener('click', showHomeView);
   });
+}
+
+/** Applies the selected theme to both reusable result views. */
+export function setGameResultTheme(theme: GameTheme): void {
+  activeResultTheme = theme;
+  setResultViewTheme(TIE_RESULT_VIEW, theme);
+  setResultViewTheme(WINNER_VIEW, theme);
+  updateWinnerBackLabel(theme);
+}
+
+/** Updates the reusable winner action for the selected theme. */
+function updateWinnerBackLabel(theme: GameTheme): void {
+  if (!WINNER_BACK_LABEL) return;
+  WINNER_BACK_LABEL.textContent = theme === 'da_projects' ? 'Home' : 'Back to start';
+}
+
+/** Replaces the theme modifier on one result view. */
+function setResultViewTheme(view: HTMLElement | null, theme: GameTheme): void {
+  if (!view) return;
+  view.classList.remove(...RESULT_THEME_CLASSES);
+  view.classList.add(`game_result_${theme}`);
 }
 
 /** Replaces the completed game with the draw result view. */
@@ -66,12 +105,21 @@ export function showWinnerResult(winner: PlayerColor): void {
 /** Applies the content and dimensions belonging to one winner. */
 function applyWinnerPresentation(winner: PlayerColor): void {
   const presentation: WinnerPresentation = WINNER_PRESENTATIONS[winner];
+  const label: string = getWinnerLabel(winner, presentation.label);
   WINNER_CONTENT?.classList.remove(
     'game_result__winner_content_blue', 'game_result__winner_content_orange',
   );
   WINNER_CONTENT?.classList.add(presentation.contentClass);
-  if (WINNER_TITLE) WINNER_TITLE.textContent = presentation.label;
-  if (WINNER_PAWN instanceof HTMLImageElement) WINNER_PAWN.src = presentation.imagePath;
+  if (WINNER_TITLE) WINNER_TITLE.textContent = label;
+  if (WINNER_PAWN instanceof HTMLImageElement) {
+    WINNER_PAWN.src = WINNER_IMAGES[activeResultTheme][winner];
+  }
+}
+
+/** Returns the capitalization belonging to the active result theme. */
+function getWinnerLabel(winner: PlayerColor, codeVibesLabel: string): string {
+  return activeResultTheme === 'da_projects'
+    ? DA_PROJECTS_WINNER_LABELS[winner] : codeVibesLabel;
 }
 
 /** Returns from the completed game to the start view. */

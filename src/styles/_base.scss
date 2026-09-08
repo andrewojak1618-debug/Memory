@@ -1,5 +1,13 @@
 @use 'variables' as *;
 
+@font-face {
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }

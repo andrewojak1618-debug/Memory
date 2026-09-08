@@ -84,6 +84,10 @@
       justify-content: center;
       gap: 1rem;
     }
+
+    .start_button {
+      align-self: center;
+    }
   }
 }
 
@@ -121,10 +125,10 @@
         text-align: center;
       }
 
-      > .settings__start_item {
-        width: 100%;
-        grid-column: 1 / -1;
-      }
+    }
+
+    .start_button {
+      width: 100%;
     }
   }
 

@@ -105,7 +105,8 @@
 
   &__step_list {
     display: flex;
-    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
     margin: 0;
     padding: 0;
     align-items: center;
@@ -122,14 +123,6 @@
       font-weight: 700;
     }
 
-    > .settings__start_item {
-      display: grid;
-      width: 126px;
-      height: 53px;
-      padding: 0;
-      background-color: $color-accent;
-      place-items: center;
-    }
   }
 }
 
