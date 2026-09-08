@@ -10,7 +10,7 @@ import { applyGameTheme } from './game-theme';
 import { prepareGamePlayers, updatePlayerAssignment } from './player-settings';
 import { initQuitDialog } from './quit-dialog';
 import { isGameTheme } from './theme-data';
-import type { GameTheme } from './theme-data';
+import type { GameTheme, PlayerColor } from './theme-data';
 import { initWinnerConfetti } from './winner-confetti';
 
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
@@ -27,6 +27,7 @@ const TIE_RESULT_DEBUG_VALUE: string = 'tie_result';
 const BLUE_WINNER_DEBUG_VALUE: string = 'blue_winner';
 const ORANGE_WINNER_DEBUG_VALUE: string = 'orange_winner';
 const DA_PROJECTS_WINNER_DEBUG_VALUE: string = 'da_projects_winner';
+const DA_PROJECTS_ORANGE_WINNER_DEBUG_VALUE: string = 'da_projects_orange_winner';
 
 /** Connects the available controls with their actions. */
 function init(): void {
@@ -48,15 +49,18 @@ function showDebugView(): boolean {
   if (debugView === TIE_RESULT_DEBUG_VALUE) showTieResult();
   else if (debugView === BLUE_WINNER_DEBUG_VALUE) showWinnerResult('blue');
   else if (debugView === ORANGE_WINNER_DEBUG_VALUE) showWinnerResult('orange');
-  else if (debugView === DA_PROJECTS_WINNER_DEBUG_VALUE) showDaProjectsWinnerDebug();
+  else if (debugView === DA_PROJECTS_WINNER_DEBUG_VALUE) showDaProjectsWinnerDebug('blue');
+  else if (debugView === DA_PROJECTS_ORANGE_WINNER_DEBUG_VALUE) {
+    showDaProjectsWinnerDebug('orange');
+  }
   else return false;
   return true;
 }
 
 /** Opens the reusable winner view with the DA Projects presentation. */
-function showDaProjectsWinnerDebug(): void {
+function showDaProjectsWinnerDebug(winner: PlayerColor): void {
   setGameResultTheme('da_projects');
-  showWinnerResult('blue');
+  showWinnerResult(winner);
 }
 
 /** Opens the settings view and places focus on its heading. */

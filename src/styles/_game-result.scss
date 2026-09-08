@@ -53,6 +53,20 @@
     white-space: nowrap;
   }
 
+  .game_result__winner_content_orange {
+    width: 522px;
+  }
+
+  .game_result__winner_content_orange .game_result__winner_summary,
+  .game_result__winner_content_orange .game_result__winner_title {
+    width: 522px;
+    max-width: 100%;
+  }
+
+  .game_result__winner_content_orange .game_result__winner_title {
+    color: $color-white;
+  }
+
   .game_result__winner_back_button {
     width: 96px;
     height: 48px;

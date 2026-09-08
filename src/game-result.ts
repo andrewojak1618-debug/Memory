@@ -32,7 +32,7 @@ const WINNER_IMAGES: Readonly<Record<GameTheme, Record<PlayerColor, string>>> = 
   },
   da_projects: {
     blue: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_white_blue.png`,
-    orange: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_orange.png`,
+    orange: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_white_orange.png`,
   },
 };
 const WINNER_PRESENTATIONS: Record<PlayerColor, WinnerPresentation> = {
