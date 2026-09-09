@@ -111,6 +111,8 @@
     padding: 0;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Almarai', Arial, Helvetica, sans-serif;
+    font-style: normal;
     font-weight: 400;
     list-style: none;
 
@@ -120,10 +122,65 @@
     }
 
     > .is_complete {
-      font-weight: 700;
+      font-style: normal;
+      font-weight: 400;
     }
 
   }
+
+  &__validation_message {
+    position: absolute;
+    right: 20px;
+    bottom: calc(100% + 8px);
+    margin: 0;
+    padding: 6px 10px;
+    color: $color-settings-text;
+    background-color: $color-white;
+    box-shadow: 0 2px 8px rgba($color-settings-text, 0.18);
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+}
+
+.settings__footer.is_unselected,
+.settings__footer.is_unselected .settings__steps {
+  width: 492px;
+}
+
+.settings__footer.is_unselected .settings__step_list {
+  font-weight: 400;
+}
+
+.settings__footer.selection_count_1,
+.settings__footer.selection_count_1 .settings__steps {
+  width: 548px;
+}
+
+.settings__footer.selection_count_2,
+.settings__footer.selection_count_2 .settings__steps {
+  width: 604px;
+}
+
+.settings__footer.selection_count_3,
+.settings__footer.selection_count_3 .settings__steps {
+  width: 660px;
+}
+
+.settings__footer.is_unselected #theme_step {
+  width: 62px;
+  height: 22px;
+}
+
+.settings__footer.is_unselected #player_step {
+  width: 56px;
+  height: 24px;
+}
+
+.settings__footer.is_unselected #board_step {
+  left: 0;
+  width: 91px;
+  height: 22px;
 }
 
 .setting_group {
@@ -236,5 +293,16 @@
       background-color: $color-step-divider;
       transform: translate(-50%, -50%) rotate(45deg);
     }
+  }
+}
+
+.setting_group_theme .setting_option > input:checked + span {
+  &::after {
+    width: 54px;
+    border-top-width: 4px;
+  }
+
+  &::before {
+    left: calc(100% + 68px);
   }
 }

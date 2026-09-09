@@ -4,9 +4,11 @@ const BACK_TO_GAME: HTMLElement | null = document.getElementById('back_to_game')
 const CONFIRM_EXIT: HTMLElement | null = document.getElementById('confirm_exit');
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
+let resetExitedGame: (() => void) | null = null;
 
 /** Connects the confirmation without ending the game prematurely. */
-export function initQuitDialog(): void {
+export function initQuitDialog(resetGame: () => void): void {
+  resetExitedGame = resetGame;
   EXIT_BUTTON?.addEventListener('click', openQuitDialog);
   BACK_TO_GAME?.addEventListener('click', closeQuitDialog);
   CONFIRM_EXIT?.addEventListener('click', returnToSettings);
@@ -27,10 +29,11 @@ function closeQuitDialog(): void {
   if (QUIT_DIALOG instanceof HTMLDialogElement) QUIT_DIALOG.close();
 }
 
-/** Leaves the game view while preserving the chosen settings. */
+/** Leaves the game view and clears the abandoned game configuration. */
 function returnToSettings(): void {
   if (!GAME_VIEW || !SETTINGS_VIEW) return;
   closeQuitDialog();
+  resetExitedGame?.();
   GAME_VIEW.hidden = true;
   SETTINGS_VIEW.hidden = false;
   document.getElementById('settings_title')?.focus();

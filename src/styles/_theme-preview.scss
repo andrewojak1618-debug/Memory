@@ -211,7 +211,7 @@
   cursor: pointer;
   font-weight: 400;
 
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not([aria-disabled='true']) {
     box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.08);
   }
 
@@ -220,7 +220,7 @@
     outline-offset: 3px;
   }
 
-  &:active:not(:disabled) {
+  &:active:not(:disabled):not([aria-disabled='true']) {
     box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.16);
   }
 
@@ -246,7 +246,8 @@
     font-weight: 700;
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled='true'] {
     background-color: $color-disabled-start;
     cursor: not-allowed;
     opacity: 0.55;
@@ -279,8 +280,48 @@
   left: calc(85% + 10px);
 }
 
+#theme_step.is_complete::after {
+  width: 54px;
+  height: 0;
+  border-top: 4px solid $color-step-divider;
+}
+
+#theme_step.is_complete::before {
+  position: absolute;
+  top: calc(50% + 26px);
+  left: calc(85% + 28px);
+  width: 16px;
+  height: 16px;
+  background-color: $color-step-divider;
+  content: '';
+  transform: translate(-50%, -50%) rotate(153.09deg);
+}
+
 #player_step::after {
   left: calc(85% + 0px);
+}
+
+#player_step.is_complete::after {
+  width: 54px;
+  height: 0;
+  border-top: 4px solid $color-step-divider;
+}
+
+#player_step.is_complete::before {
+  position: absolute;
+  top: calc(50% + 26px);
+  left: calc(85% + 18px);
+  width: 16px;
+  height: 16px;
+  background-color: $color-step-divider;
+  content: '';
+  transform: translate(-50%, -50%) rotate(153.09deg);
+}
+
+#player_step.is_complete {
+  width: 136px;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 #player_step {
@@ -294,13 +335,17 @@
 
 #board_step {
   position: relative;
-  left: 15px;
+  left: 0;
   display: flex;
   width: 91px;
   height: 22px;
-  padding: 0;
+  padding-inline: 0;
   align-items: center;
   justify-content: center;
   text-align: center;
   white-space: nowrap;
+}
+
+#board_step.is_complete {
+  width: 168px;
 }

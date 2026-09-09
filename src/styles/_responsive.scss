@@ -49,6 +49,17 @@
     }
   }
 
+  .settings__footer.is_unselected,
+  .settings__footer.is_unselected .settings__steps,
+  .settings__footer.selection_count_1,
+  .settings__footer.selection_count_1 .settings__steps,
+  .settings__footer.selection_count_2,
+  .settings__footer.selection_count_2 .settings__steps,
+  .settings__footer.selection_count_3,
+  .settings__footer.selection_count_3 .settings__steps {
+    width: 100%;
+  }
+
   .player_board_container {
     position: static;
   }

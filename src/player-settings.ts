@@ -33,6 +33,13 @@ export function prepareGamePlayers(theme: GameTheme): void {
   updateAllScores();
 }
 
+/** Clears player state and scores after a confirmed game exit. */
+export function resetGamePlayers(): void {
+  activeTheme = null;
+  gameState = null;
+  updateAllScores();
+}
+
 /** Stores the active player and updates the theme-specific turn symbol. */
 export function setCurrentPlayer(color: PlayerColor): void {
   if (!gameState) gameState = createGameState(color);
@@ -73,7 +80,7 @@ export function switchCurrentPlayer(): PlayerColor | null {
 }
 
 /** Reads and validates the selected color from the player radio group. */
-function getSelectedPlayerColor(): PlayerColor | null {
+export function getSelectedPlayerColor(): PlayerColor | null {
   const selected: Element | null = document.querySelector('input[name="player"]:checked');
   if (!(selected instanceof HTMLInputElement)) return null;
   return isPlayerColor(selected.value) ? selected.value : null;
@@ -94,7 +101,11 @@ function updateAssignmentStatus(
   playerOne: PlayerColor | null,
   playerTwo: PlayerColor | null,
 ): void {
-  if (!PLAYER_ASSIGNMENT_STATUS || !playerOne || !playerTwo) return;
+  if (!PLAYER_ASSIGNMENT_STATUS) return;
+  if (!playerOne || !playerTwo) {
+    PLAYER_ASSIGNMENT_STATUS.textContent = '';
+    return;
+  }
   const firstColor: string = getColorLabel(playerOne);
   const secondColor: string = getColorLabel(playerTwo);
   PLAYER_ASSIGNMENT_STATUS.innerText = `Player 1: ${firstColor}. Player 2: ${secondColor}.`;

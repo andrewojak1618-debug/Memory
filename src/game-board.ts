@@ -53,6 +53,13 @@ export function renderGameBoard(theme: GameTheme): void {
   announceStartingPlayer();
 }
 
+/** Clears cards and pending comparisons after a confirmed game exit. */
+export function resetGameBoard(): void {
+  resetTurnState();
+  if (CARD_LIST) CARD_LIST.innerHTML = '';
+  if (GAME_STATUS) GAME_STATUS.textContent = '';
+}
+
 /** Replaces the shared board with its configured card buttons. */
 function renderCards(cards: readonly MemoryCard[], backFileName: string): void {
   if (!CARD_LIST) return;

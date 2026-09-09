@@ -192,15 +192,23 @@
           <footer class="settings__footer">
             <div class="settings__steps">
               <ol class="settings__step_list" aria-label="Game setup steps">
-                <li id="theme_step">Game theme</li>
+                <li id="theme_step">Theme</li>
                 <li id="player_step">Player</li>
                 <li id="board_step">Board size</li>
               </ol>
+              <p
+                class="settings__validation_message"
+                id="settings_validation_message"
+                role="status"
+                aria-live="polite"
+                hidden
+              ></p>
               <button
                 class="start_button"
                 id="start_button"
                 type="button"
-                disabled
+                aria-disabled="true"
+                aria-describedby="settings_validation_message"
               >
                 <span class="start_button__icon_container" aria-hidden="true">
                   <img
