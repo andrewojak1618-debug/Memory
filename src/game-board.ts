@@ -14,7 +14,7 @@ import {
   getWinningPlayer,
   switchCurrentPlayer,
 } from './player-settings';
-import { showTieResult, showWinnerResult } from './game-result';
+import { showTieResult, showWinnerTransition } from './game-result';
 import { THEME_CONFIGS } from './theme-data';
 import type { GameTheme, GameThemeConfig, PlayerColor } from './theme-data';
 
@@ -184,7 +184,7 @@ function showResultWhenComplete(): void {
   if (!isBoardComplete()) return;
   const winner: PlayerColor | null = getWinningPlayer();
   if (!winner) showTieResult();
-  else showWinnerResult(winner);
+  else showWinnerTransition(winner);
 }
 
 /** Checks whether no unmatched card remains on the board. */

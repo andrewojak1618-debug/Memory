@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+.game_over {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-background;
+}
+
+.game_over__content {
+  width: 991px;
+  height: 367px;
+  margin: 303px auto 0;
+  background-color: gray;
+}
+
+.game_over__heading {
+  display: grid;
+  width: 991px;
+  height: 125px;
+  place-items: center;
+}
+
+.game_over__title {
+  display: grid;
+  width: 990px;
+  height: 125px;
+  margin: 0;
+  place-items: center;
+  color: $color-preview-border;
+  font-family: 'Figtree', Arial, sans-serif;
+  font-size: 112px;
+  font-weight: 700;
+  line-height: 121px;
+  text-align: center;
+  white-space: nowrap;
+  filter:
+    drop-shadow(-4px -3px 0 $color-white)
+    drop-shadow(-3px 5px 4px $color-draw-shadow);
+}
+
+.game_over__title_text {
+  display: block;
+  transform: scaleX(1.72);
+}

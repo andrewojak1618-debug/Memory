@@ -8,6 +8,8 @@ interface WinnerPresentation {
 const HOME_VIEW: HTMLElement | null = document.getElementById('home_view');
 const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view');
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
+const GAME_OVER_VIEW: HTMLElement | null = document.getElementById('game_over_view');
+const GAME_OVER_TITLE: HTMLElement | null = document.getElementById('game_over_title');
 const TIE_RESULT_VIEW: HTMLElement | null = document.getElementById('tie_result_view');
 const WINNER_VIEW: HTMLElement | null = document.getElementById('winner_view');
 const WINNER_CONTENT: HTMLElement | null = document.getElementById('winner_content');
@@ -49,7 +51,10 @@ const DA_PROJECTS_WINNER_LABELS: Readonly<Record<PlayerColor, string>> = {
   blue: 'Blue Player',
   orange: 'Orange Player',
 };
+const WINNER_TRANSITION_DELAY_MS: number = 4000;
 let activeResultTheme: GameTheme = 'code_vibes';
+let pendingWinner: PlayerColor | null = null;
+let winnerTransitionTimer: number | null = null;
 
 /** Connects the result action with the home view. */
 export function initGameResult(): void {
@@ -61,6 +66,7 @@ export function initGameResult(): void {
 /** Applies the selected theme to both reusable result views. */
 export function setGameResultTheme(theme: GameTheme): void {
   activeResultTheme = theme;
+  setResultViewTheme(GAME_OVER_VIEW, theme);
   setResultViewTheme(TIE_RESULT_VIEW, theme);
   setResultViewTheme(WINNER_VIEW, theme);
   updateWinnerBackLabel(theme);
@@ -85,9 +91,44 @@ export function showTieResult(): void {
   if (HOME_VIEW) HOME_VIEW.hidden = true;
   if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = true;
+  if (GAME_OVER_VIEW) GAME_OVER_VIEW.hidden = true;
   if (WINNER_VIEW) WINNER_VIEW.hidden = true;
   TIE_RESULT_VIEW.hidden = false;
   TIE_RESULT_TITLE?.focus();
+}
+
+/** Opens the empty Game-over view without starting its winner timer. */
+export function showGameOverView(): void {
+  if (!GAME_OVER_VIEW) return;
+  if (HOME_VIEW) HOME_VIEW.hidden = true;
+  if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
+  if (GAME_VIEW) GAME_VIEW.hidden = true;
+  if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
+  if (WINNER_VIEW) WINNER_VIEW.hidden = true;
+  GAME_OVER_VIEW.hidden = false;
+  GAME_OVER_TITLE?.focus();
+}
+
+/** Shows the short Game-over transition before revealing the winner. */
+export function showWinnerTransition(winner: PlayerColor): void {
+  if (!GAME_OVER_VIEW) return;
+  showGameOverView();
+  scheduleWinnerResult(winner);
+}
+
+/** Restarts the single winner transition timer for the completed game. */
+function scheduleWinnerResult(winner: PlayerColor): void {
+  if (winnerTransitionTimer !== null) window.clearTimeout(winnerTransitionTimer);
+  pendingWinner = winner;
+  winnerTransitionTimer = window.setTimeout(finishWinnerTransition, WINNER_TRANSITION_DELAY_MS);
+}
+
+/** Replaces the Game-over transition with the stored winner. */
+function finishWinnerTransition(): void {
+  const winner: PlayerColor | null = pendingWinner;
+  pendingWinner = null;
+  winnerTransitionTimer = null;
+  if (winner) showWinnerResult(winner);
 }
 
 /** Replaces the completed game with the winning player's view. */
@@ -96,6 +137,7 @@ export function showWinnerResult(winner: PlayerColor): void {
   if (HOME_VIEW) HOME_VIEW.hidden = true;
   if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = true;
+  if (GAME_OVER_VIEW) GAME_OVER_VIEW.hidden = true;
   if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
   applyWinnerPresentation(winner);
   WINNER_VIEW.hidden = false;
@@ -125,6 +167,7 @@ function getWinnerLabel(winner: PlayerColor, codeVibesLabel: string): string {
 /** Returns from the completed game to the start view. */
 function showHomeView(): void {
   if (!HOME_VIEW) return;
+  if (GAME_OVER_VIEW) GAME_OVER_VIEW.hidden = true;
   if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
   if (WINNER_VIEW) WINNER_VIEW.hidden = true;
   HOME_VIEW.hidden = false;

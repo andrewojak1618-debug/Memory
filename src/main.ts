@@ -5,6 +5,7 @@ import { initGameBoard, renderGameBoard, resetGameBoard } from './game-board';
 import {
   initGameResult,
   setGameResultTheme,
+  showGameOverView,
   showTieResult,
   showWinnerResult,
 } from './game-result';
@@ -36,6 +37,7 @@ const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vib
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
 const DEBUG_PARAMETER: string = 'debug';
 const TIE_RESULT_DEBUG_VALUE: string = 'tie_result';
+const GAME_OVER_DEBUG_VALUE: string = 'game_over';
 const BLUE_WINNER_DEBUG_VALUE: string = 'blue_winner';
 const ORANGE_WINNER_DEBUG_VALUE: string = 'orange_winner';
 const DA_PROJECTS_WINNER_DEBUG_VALUE: string = 'da_projects_winner';
@@ -71,6 +73,7 @@ function showDebugView(): boolean {
   const parameters: URLSearchParams = new URLSearchParams(window.location.search);
   const debugView: string | null = parameters.get(DEBUG_PARAMETER);
   if (debugView === TIE_RESULT_DEBUG_VALUE) showTieResult();
+  else if (debugView === GAME_OVER_DEBUG_VALUE) showGameOverView();
   else if (debugView === BLUE_WINNER_DEBUG_VALUE) showWinnerResult('blue');
   else if (debugView === ORANGE_WINNER_DEBUG_VALUE) showWinnerResult('orange');
   else if (debugView === DA_PROJECTS_WINNER_DEBUG_VALUE) showDaProjectsWinnerDebug('blue');
