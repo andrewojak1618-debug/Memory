@@ -24,6 +24,23 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Anek Telugu';
+  src: url('/assets/fonts/anek-telugu-expanded-800.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: expanded;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Red Rose';
+  src: url('/assets/fonts/red-rose-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }

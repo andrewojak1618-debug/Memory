@@ -7,6 +7,7 @@
 }
 
 .game_over__content {
+  position: relative;
   width: 991px;
   height: 367px;
   margin: 303px auto 0;
@@ -27,18 +28,46 @@
   margin: 0;
   place-items: center;
   color: $color-preview-border;
-  font-family: 'Figtree', Arial, sans-serif;
-  font-size: 112px;
-  font-weight: 700;
+  font-family: 'Anek Telugu', Arial, sans-serif;
+  font-size: 162px;
+  font-weight: 800;
+  font-stretch: expanded;
   line-height: 121px;
+  outline: none;
   text-align: center;
   white-space: nowrap;
-  filter:
-    drop-shadow(-4px -3px 0 $color-white)
-    drop-shadow(-3px 5px 4px $color-draw-shadow);
 }
 
 .game_over__title_text {
-  display: block;
-  transform: scaleX(1.72);
+  display: grid;
+  width: 990.5px;
+  height: 125px;
+  place-items: center;
+  transform: translateY(25px);
+  filter:
+    drop-shadow(-2px -2px 0 $color-white)
+    drop-shadow(-3px 5px 4px $color-draw-shadow);
+}
+
+.game_over__score {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 323px;
+  height: 118px;
+  background-color: darkblue;
+  transform: translateX(-50%);
+}
+
+.game_over__score_title {
+  display: grid;
+  width: 323px;
+  height: 32px;
+  margin: 0;
+  place-items: center;
+  font-family: 'Red Rose', Arial, sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
 }

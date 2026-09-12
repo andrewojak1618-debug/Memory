@@ -1,4 +1,3 @@
-import './styles/style.scss';
 import { CARD_COUNTS, isBoardSize } from './card-data';
 import type { BoardSize } from './card-data';
 import { initGameBoard, renderGameBoard, resetGameBoard } from './game-board';
