@@ -53,6 +53,11 @@ export function getCurrentPlayer(): PlayerColor | null {
   return gameState?.currentPlayer ?? null;
 }
 
+/** Returns one player's current score or zero before a game starts. */
+export function getPlayerScore(color: PlayerColor): number {
+  return gameState?.scores[color] ?? 0;
+}
+
 /** Reports whether both players have the same score. */
 export function hasTiedScore(): boolean {
   return gameState ? hasTie(gameState) : true;
@@ -92,7 +97,7 @@ function isPlayerColor(value: string): value is PlayerColor {
 }
 
 /** Returns the color that remains for Player 2. */
-function getOpponentColor(playerOne: PlayerColor): PlayerColor {
+export function getOpponentColor(playerOne: PlayerColor): PlayerColor {
   return playerOne === 'blue' ? 'orange' : 'blue';
 }
 

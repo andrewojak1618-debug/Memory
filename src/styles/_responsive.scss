@@ -129,18 +129,16 @@
   .settings {
     &__step_list {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
 
       > li {
+        min-width: 0;
         padding-inline: 0.5rem;
         text-align: center;
       }
 
     }
 
-    .start_button {
-      width: 100%;
-    }
   }
 
   #theme_step,
@@ -151,11 +149,23 @@
     justify-content: center;
   }
 
+  #board_step {
+    grid-column: 1 / -1;
+  }
+
+  .settings__marker {
+    left: 0;
+  }
+
 }
 
 @media (max-width: 340px) {
   .settings__step_list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #board_step {
+    grid-column: auto;
   }
 }
 

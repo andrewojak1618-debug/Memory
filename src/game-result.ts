@@ -1,4 +1,22 @@
 import type { GameTheme, PlayerColor } from './theme-data';
+import {
+  getColorLabel,
+  getOpponentColor,
+  getPlayerScore,
+  getSelectedPlayerColor,
+} from './player-settings';
+
+interface GameOverPlayerPresentation {
+  itemClass: string;
+  iconFileName: string;
+}
+
+interface GameOverPlayerElements {
+  item: HTMLElement | null;
+  icon: HTMLElement | null;
+  label: HTMLElement | null;
+  score: HTMLElement | null;
+}
 
 interface WinnerPresentation {
   contentClass: string;
@@ -10,6 +28,21 @@ const SETTINGS_VIEW: HTMLElement | null = document.getElementById('settings_view
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 const GAME_OVER_VIEW: HTMLElement | null = document.getElementById('game_over_view');
 const GAME_OVER_TITLE: HTMLElement | null = document.getElementById('game_over_title');
+const GAME_OVER_DA_PROJECTS_TITLE: HTMLElement | null = document.getElementById(
+  'game_over_da_projects_title',
+);
+const GAME_OVER_PLAYER_ONE: GameOverPlayerElements = {
+  item: document.getElementById('game_over_player_one'),
+  icon: document.getElementById('game_over_player_one_icon'),
+  label: document.getElementById('game_over_player_one_label'),
+  score: document.getElementById('game_over_player_one_score'),
+};
+const GAME_OVER_PLAYER_TWO: GameOverPlayerElements = {
+  item: document.getElementById('game_over_player_two'),
+  icon: document.getElementById('game_over_player_two_icon'),
+  label: document.getElementById('game_over_player_two_label'),
+  score: document.getElementById('game_over_player_two_score'),
+};
 const TIE_RESULT_VIEW: HTMLElement | null = document.getElementById('tie_result_view');
 const WINNER_VIEW: HTMLElement | null = document.getElementById('winner_view');
 const WINNER_CONTENT: HTMLElement | null = document.getElementById('winner_content');
@@ -23,6 +56,11 @@ const RESULT_THEME_CLASSES: readonly string[] = [
   'game_result_code_vibes',
   'game_result_da_projects',
 ];
+const GAME_OVER_PLAYER_CLASSES: readonly string[] = ['is_blue', 'is_orange'];
+const GAME_OVER_PLAYER_PRESENTATIONS: Readonly<Record<PlayerColor, GameOverPlayerPresentation>> = {
+  blue: { itemClass: 'is_blue', iconFileName: 'blue_player_arrow.svg' },
+  orange: { itemClass: 'is_orange', iconFileName: 'orange_player_arrow.svg' },
+};
 const BACK_TO_START_BUTTONS: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
   '.game_result__back_button',
 );
@@ -67,9 +105,17 @@ export function initGameResult(): void {
 export function setGameResultTheme(theme: GameTheme): void {
   activeResultTheme = theme;
   setResultViewTheme(GAME_OVER_VIEW, theme);
+  updateGameOverLabel(theme);
   setResultViewTheme(TIE_RESULT_VIEW, theme);
   setResultViewTheme(WINNER_VIEW, theme);
   updateWinnerBackLabel(theme);
+}
+
+/** Associates the Game-over view with its currently visible theme heading. */
+function updateGameOverLabel(theme: GameTheme): void {
+  const titleId: string = theme === 'da_projects'
+    ? 'game_over_da_projects_title' : 'game_over_title';
+  GAME_OVER_VIEW?.setAttribute('aria-labelledby', titleId);
 }
 
 /** Updates the reusable winner action for the selected theme. */
@@ -100,13 +146,81 @@ export function showTieResult(): void {
 /** Opens the empty Game-over view without starting its winner timer. */
 export function showGameOverView(): void {
   if (!GAME_OVER_VIEW) return;
+  updateGameOverPlayers();
   if (HOME_VIEW) HOME_VIEW.hidden = true;
   if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
   if (GAME_VIEW) GAME_VIEW.hidden = true;
   if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
   if (WINNER_VIEW) WINNER_VIEW.hidden = true;
   GAME_OVER_VIEW.hidden = false;
-  GAME_OVER_TITLE?.focus();
+  focusGameOverTitle();
+}
+
+/** Moves focus to the heading belonging to the active Game-over theme. */
+function focusGameOverTitle(): void {
+  const title: HTMLElement | null = activeResultTheme === 'da_projects'
+    ? GAME_OVER_DA_PROJECTS_TITLE : GAME_OVER_TITLE;
+  title?.focus();
+}
+
+/** Shows both players in their selected order in the final-score panel. */
+function updateGameOverPlayers(): void {
+  const playerOne: PlayerColor = getSelectedPlayerColor() ?? 'blue';
+  updateGameOverPlayer(GAME_OVER_PLAYER_ONE, playerOne, 'Player 1');
+  updateGameOverPlayer(GAME_OVER_PLAYER_TWO, getOpponentColor(playerOne), 'Player 2');
+  updateDaProjectsScores();
+}
+
+/** Updates both fixed-color score groups in the DA Projects result panel. */
+function updateDaProjectsScores(): void {
+  updateDaProjectsScore('blue');
+  updateDaProjectsScore('orange');
+}
+
+/** Writes one current score into its DA Projects player group. */
+function updateDaProjectsScore(color: PlayerColor): void {
+  const item: HTMLElement | null = document.getElementById(`game_over_da_projects_${color}_score_item`);
+  const scoreElement: HTMLElement | null = document.getElementById(`game_over_da_projects_${color}_score`);
+  const score: number = getPlayerScore(color);
+  if (scoreElement) scoreElement.textContent = String(score);
+  item?.setAttribute('aria-label', `${getColorLabel(color)} player score: ${score}`);
+}
+
+/** Applies one player's color, symbol and score to its final-score entry. */
+function updateGameOverPlayer(elements: GameOverPlayerElements, player: PlayerColor, playerName: string): void {
+  const presentation: GameOverPlayerPresentation = GAME_OVER_PLAYER_PRESENTATIONS[player];
+  const score: number = getPlayerScore(player);
+  const label: string = getColorLabel(player);
+  updateGameOverPlayerItem(elements.item, presentation, `${playerName}: ${label}, score: ${score}`);
+  updateGameOverPlayerContent(elements, label, score);
+  updateGameOverPlayerIcon(elements.icon, presentation.iconFileName);
+}
+
+/** Applies identifying classes and an accessible summary to one score entry. */
+function updateGameOverPlayerItem(
+  item: HTMLElement | null,
+  presentation: GameOverPlayerPresentation,
+  accessibleLabel: string,
+): void {
+  item?.classList.remove(...GAME_OVER_PLAYER_CLASSES);
+  item?.classList.add(presentation.itemClass);
+  item?.setAttribute('aria-label', accessibleLabel);
+}
+
+/** Writes one player's visible label and score. */
+function updateGameOverPlayerContent(
+  elements: GameOverPlayerElements,
+  label: string,
+  score: number,
+): void {
+  if (elements.label) elements.label.textContent = label;
+  if (elements.score) elements.score.textContent = String(score);
+}
+
+/** Selects the arrow icon belonging to one player. */
+function updateGameOverPlayerIcon(icon: HTMLElement | null, fileName: string): void {
+  if (!(icon instanceof HTMLImageElement)) return;
+  icon.src = `./assets/icons/${fileName}`;
 }
 
 /** Shows the short Game-over transition before revealing the winner. */

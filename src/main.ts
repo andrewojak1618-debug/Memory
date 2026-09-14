@@ -4,9 +4,6 @@ import { initGameBoard, renderGameBoard, resetGameBoard } from './game-board';
 import {
   initGameResult,
   setGameResultTheme,
-  showGameOverView,
-  showTieResult,
-  showWinnerResult,
 } from './game-result';
 import { applyGameTheme } from './game-theme';
 import {
@@ -34,13 +31,6 @@ const SETTINGS_VALIDATION_MESSAGE: HTMLElement | null = document.getElementById(
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
-const DEBUG_PARAMETER: string = 'debug';
-const TIE_RESULT_DEBUG_VALUE: string = 'tie_result';
-const GAME_OVER_DEBUG_VALUE: string = 'game_over';
-const BLUE_WINNER_DEBUG_VALUE: string = 'blue_winner';
-const ORANGE_WINNER_DEBUG_VALUE: string = 'orange_winner';
-const DA_PROJECTS_WINNER_DEBUG_VALUE: string = 'da_projects_winner';
-const DA_PROJECTS_ORANGE_WINNER_DEBUG_VALUE: string = 'da_projects_orange_winner';
 const FOOTER_SELECTION_CLASSES: readonly string[] = [
   'selection_count_0', 'selection_count_1', 'selection_count_2', 'selection_count_3',
 ];
@@ -60,33 +50,10 @@ function init(): void {
   initGameResult();
   initQuitDialog(resetExitedGame);
   initWinnerConfetti();
-  if (showDebugView()) return;
   PLAY_BUTTON?.addEventListener('click', showSettings);
   START_BUTTON?.addEventListener('click', showGame);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
-}
-
-/** Opens a requested development view without changing normal navigation. */
-function showDebugView(): boolean {
-  const parameters: URLSearchParams = new URLSearchParams(window.location.search);
-  const debugView: string | null = parameters.get(DEBUG_PARAMETER);
-  if (debugView === TIE_RESULT_DEBUG_VALUE) showTieResult();
-  else if (debugView === GAME_OVER_DEBUG_VALUE) showGameOverView();
-  else if (debugView === BLUE_WINNER_DEBUG_VALUE) showWinnerResult('blue');
-  else if (debugView === ORANGE_WINNER_DEBUG_VALUE) showWinnerResult('orange');
-  else if (debugView === DA_PROJECTS_WINNER_DEBUG_VALUE) showDaProjectsWinnerDebug('blue');
-  else if (debugView === DA_PROJECTS_ORANGE_WINNER_DEBUG_VALUE) {
-    showDaProjectsWinnerDebug('orange');
-  }
-  else return false;
-  return true;
-}
-
-/** Opens the reusable winner view with the DA Projects presentation. */
-function showDaProjectsWinnerDebug(winner: PlayerColor): void {
-  setGameResultTheme('da_projects');
-  showWinnerResult(winner);
 }
 
 /** Opens the settings view and places focus on its heading. */
@@ -110,14 +77,20 @@ function resetExitedGame(): void {
 /** Opens the game only after all required settings are selected. */
 function showGame(): void {
   const missingSettings: string[] = getMissingSettings();
-  if (missingSettings.length > 0) {
-    showValidationMessage(missingSettings);
-    return;
-  }
-  if (!SETTINGS_VIEW || !GAME_VIEW) return;
-  const isGameAlreadyOpen: boolean = !GAME_VIEW.hidden;
-  if (isGameAlreadyOpen) return;
+  if (showMissingSettings(missingSettings)) return;
+  openGameView();
+}
 
+/** Reports an incomplete setup and tells the caller to stop opening the game. */
+function showMissingSettings(missingSettings: readonly string[]): boolean {
+  if (missingSettings.length === 0) return false;
+  showValidationMessage(missingSettings);
+  return true;
+}
+
+/** Opens one prepared game and prevents a duplicate start. */
+function openGameView(): void {
+  if (!SETTINGS_VIEW || !GAME_VIEW || !GAME_VIEW.hidden) return;
   prepareGameView();
   SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = false;
@@ -149,7 +122,7 @@ function updateSettingsState(): void {
 /** Keeps the start control operable for accessible validation feedback. */
 function updateStartButtonState(isEnabled: boolean): void {
   if (!(START_BUTTON instanceof HTMLButtonElement)) return;
-  START_BUTTON.setAttribute('aria-disabled', String(!isEnabled));
+  START_BUTTON.classList.toggle('is_unavailable', !isEnabled);
   if (isEnabled) hideValidationMessage();
   else if (!SETTINGS_VALIDATION_MESSAGE?.hidden) showValidationMessage(getMissingSettings());
 }
