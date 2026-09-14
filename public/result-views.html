@@ -115,17 +115,24 @@
       </div>
       <div class="game_result__draw_visual" aria-hidden="true">
         <img class="game_result__draw_image" src="./assets/images/draw_green.png" alt="" />
+        <span class="game_result__draw_text">DRAW</span>
       </div>
     </div>
     <img
       class="game_result__scale_icon"
+      id="tie_scale_icon"
       src="./assets/images/scale_icon.png"
       alt=""
       aria-hidden="true"
     />
-    <button class="game_result__back_button" id="back_to_start_button" type="button">
-      <span class="game_result__back_label">Back to start</span>
-    </button>
+    <div class="game_result__actions">
+      <button class="game_result__back_button" id="back_to_start_button" type="button">
+        <span class="game_result__back_label">Back to start</span>
+      </button>
+      <button class="game_result__new_game_button" id="new_game_button" type="button">
+        <span class="game_result__back_label">Revanche</span>
+      </button>
+    </div>
   </div>
 </section>
 <section

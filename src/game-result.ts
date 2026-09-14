@@ -48,10 +48,10 @@ const WINNER_VIEW: HTMLElement | null = document.getElementById('winner_view');
 const WINNER_CONTENT: HTMLElement | null = document.getElementById('winner_content');
 const WINNER_TITLE: HTMLElement | null = document.getElementById('winner_title');
 const WINNER_PAWN: HTMLElement | null = document.getElementById('winner_pawn');
-const WINNER_BACK_LABEL: HTMLElement | null = WINNER_VIEW
-  ?.querySelector<HTMLElement>('.game_result__back_label') ?? null;
 const TIE_RESULT_TITLE: HTMLElement | null = document.getElementById('tie_result_title');
-const HOME_TITLE: HTMLElement | null = document.getElementById('home_title');
+const TIE_SCALE_ICON: HTMLImageElement | null = document.querySelector<HTMLImageElement>(
+  '#tie_scale_icon',
+);
 const RESULT_THEME_CLASSES: readonly string[] = [
   'game_result_code_vibes',
   'game_result_da_projects',
@@ -64,7 +64,13 @@ const GAME_OVER_PLAYER_PRESENTATIONS: Readonly<Record<PlayerColor, GameOverPlaye
 const BACK_TO_START_BUTTONS: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
   '.game_result__back_button',
 );
+const DRAW_ACTIONS: HTMLElement | null = document.querySelector('.game_result__actions');
+const DRAW_BACK_BUTTON: HTMLElement | null = document.getElementById('back_to_start_button');
 const WINNER_IMAGE_DIRECTORY: string = './assets/images';
+const TIE_SCALE_IMAGES: Readonly<Record<GameTheme, string>> = {
+  code_vibes: `${WINNER_IMAGE_DIRECTORY}/scale_icon.png`,
+  da_projects: `${WINNER_IMAGE_DIRECTORY}/draw_da_icon.png`,
+};
 const WINNER_IMAGES: Readonly<Record<GameTheme, Record<PlayerColor, string>>> = {
   code_vibes: {
     blue: `${WINNER_IMAGE_DIRECTORY}/chess_pawn_blue.png`,
@@ -89,16 +95,26 @@ const DA_PROJECTS_WINNER_LABELS: Readonly<Record<PlayerColor, string>> = {
   blue: 'Blue Player',
   orange: 'Orange Player',
 };
-const WINNER_TRANSITION_DELAY_MS: number = 4000;
+const WINNER_TRANSITION_DELAY_MS: number = 8000;
 let activeResultTheme: GameTheme = 'code_vibes';
 let pendingWinner: PlayerColor | null = null;
 let winnerTransitionTimer: number | null = null;
 
-/** Connects the result action with the home view. */
-export function initGameResult(): void {
+/** Connects the result action with the clean home-view reset. */
+export function initGameResult(resetGame: () => void): void {
+  DRAW_BACK_BUTTON?.addEventListener('click', revealDrawActionsOnTouch);
   BACK_TO_START_BUTTONS.forEach((button: HTMLButtonElement): void => {
-    button.addEventListener('click', showHomeView);
+    button.addEventListener('click', (): void => showSettingsView(resetGame));
   });
+}
+
+/** Reveals both draw actions before a touch can leave the result view. */
+function revealDrawActionsOnTouch(event: MouseEvent): void {
+  if (!('pointerType' in event) || event.pointerType !== 'touch') return;
+  if (DRAW_ACTIONS?.classList.contains('is_touch_open')) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  DRAW_ACTIONS?.classList.add('is_touch_open');
 }
 
 /** Applies the selected theme to both reusable result views. */
@@ -107,8 +123,15 @@ export function setGameResultTheme(theme: GameTheme): void {
   setResultViewTheme(GAME_OVER_VIEW, theme);
   updateGameOverLabel(theme);
   setResultViewTheme(TIE_RESULT_VIEW, theme);
+  updateTieScaleIcon(theme);
   setResultViewTheme(WINNER_VIEW, theme);
-  updateWinnerBackLabel(theme);
+  updateResultBackLabels(theme);
+}
+
+/** Selects the scale illustration belonging to the active theme. */
+function updateTieScaleIcon(theme: GameTheme): void {
+  if (!TIE_SCALE_ICON) return;
+  TIE_SCALE_ICON.src = TIE_SCALE_IMAGES[theme];
 }
 
 /** Associates the Game-over view with its currently visible theme heading. */
@@ -118,10 +141,13 @@ function updateGameOverLabel(theme: GameTheme): void {
   GAME_OVER_VIEW?.setAttribute('aria-labelledby', titleId);
 }
 
-/** Updates the reusable winner action for the selected theme. */
-function updateWinnerBackLabel(theme: GameTheme): void {
-  if (!WINNER_BACK_LABEL) return;
-  WINNER_BACK_LABEL.textContent = theme === 'da_projects' ? 'Home' : 'Back to start';
+/** Updates the reusable result actions for the selected theme. */
+function updateResultBackLabels(theme: GameTheme): void {
+  const label: string = theme === 'da_projects' ? 'Home' : 'Back to start';
+  BACK_TO_START_BUTTONS.forEach((button: HTMLButtonElement): void => {
+    const content: HTMLElement | null = button.querySelector('.game_result__back_label');
+    if (content) content.textContent = label;
+  });
 }
 
 /** Replaces the theme modifier on one result view. */
@@ -134,11 +160,11 @@ function setResultViewTheme(view: HTMLElement | null, theme: GameTheme): void {
 /** Replaces the completed game with the draw result view. */
 export function showTieResult(): void {
   if (!GAME_VIEW || !TIE_RESULT_VIEW) return;
-  if (HOME_VIEW) HOME_VIEW.hidden = true;
   if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
   GAME_VIEW.hidden = true;
   if (GAME_OVER_VIEW) GAME_OVER_VIEW.hidden = true;
   if (WINNER_VIEW) WINNER_VIEW.hidden = true;
+  DRAW_ACTIONS?.classList.remove('is_touch_open');
   TIE_RESULT_VIEW.hidden = false;
   TIE_RESULT_TITLE?.focus();
 }
@@ -147,7 +173,6 @@ export function showTieResult(): void {
 export function showGameOverView(): void {
   if (!GAME_OVER_VIEW) return;
   updateGameOverPlayers();
-  if (HOME_VIEW) HOME_VIEW.hidden = true;
   if (SETTINGS_VIEW) SETTINGS_VIEW.hidden = true;
   if (GAME_VIEW) GAME_VIEW.hidden = true;
   if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
@@ -278,12 +303,13 @@ function getWinnerLabel(winner: PlayerColor, codeVibesLabel: string): string {
     ? DA_PROJECTS_WINNER_LABELS[winner] : codeVibesLabel;
 }
 
-/** Returns from the completed game to the start view. */
-function showHomeView(): void {
-  if (!HOME_VIEW) return;
+/** Resets the completed round and opens a clean settings view. */
+function showSettingsView(resetGame: () => void): void {
+  if (!SETTINGS_VIEW) return;
+  resetGame();
   if (GAME_OVER_VIEW) GAME_OVER_VIEW.hidden = true;
   if (TIE_RESULT_VIEW) TIE_RESULT_VIEW.hidden = true;
   if (WINNER_VIEW) WINNER_VIEW.hidden = true;
-  HOME_VIEW.hidden = false;
-  HOME_TITLE?.focus();
+  SETTINGS_VIEW.hidden = false;
+  document.getElementById('settings_title')?.focus();
 }

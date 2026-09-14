@@ -120,6 +120,8 @@
   &__icon {
     width: 44px;
     height: 32px;
+    transition: transform 180ms ease;
+    transform-origin: center;
   }
 
   &__label {
@@ -140,5 +142,9 @@
 
   &:hover &__arrow {
     transform: translateX(0.2rem);
+  }
+
+  &:hover &__icon {
+    transform: rotate(-12deg);
   }
 }

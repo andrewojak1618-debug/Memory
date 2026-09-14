@@ -288,7 +288,12 @@
               <span class="game__exit_label">Exit game</span>
             </button>
           </header>
-          <section class="game__board" id="game_board" aria-label="Memory cards">
+          <section
+            class="game__board"
+            id="game_board"
+            aria-labelledby="game_board_title"
+          >
+            <h2 class="visually_hidden" id="game_board_title">Memory cards</h2>
             <ol class="game__card_list" id="game_card_list"></ol>
           </section>
         </section>

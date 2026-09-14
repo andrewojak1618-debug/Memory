@@ -7,9 +7,12 @@ import {
   createCards,
   shuffleCards,
 } from '../src/card-data.ts';
-import type { CardSymbol, MemoryCard } from '../src/card-data.ts';
+import type { BoardSize, CardSymbol, MemoryCard } from '../src/card-data.ts';
 
 const SYMBOL_COUNT: number = 18;
+const INCOMPLETE_SYMBOL_COUNT: number = 7;
+const FOUR_BY_FOUR_PAIR_COUNT: number = 8;
+const SOURCE_SYMBOL_COUNT: number = 2;
 const SYMBOLS: readonly CardSymbol[] = Array.from(
   { length: SYMBOL_COUNT },
   (_value: unknown, index: number): CardSymbol => ({
@@ -24,29 +27,34 @@ function countCards(cards: readonly MemoryCard[], name: string): number {
 }
 
 test('creates complete pairs for every supported board size', (): void => {
-  BOARD_SIZES.forEach((boardSize): void => {
+  BOARD_SIZES.forEach((boardSize: BoardSize): void => {
     const cards: MemoryCard[] = createCards(CARD_COUNTS[boardSize], SYMBOLS);
     assert.equal(cards.length, CARD_COUNTS[boardSize]);
-    const names: string[] = [...new Set(cards.map((card): string => card.symbol.name))];
+    const names: string[] = [
+      ...new Set(cards.map((card: MemoryCard): string => card.symbol.name)),
+    ];
     names.forEach((name: string): void => assert.equal(countCards(cards, name), CARDS_PER_PAIR));
   });
 });
 
 test('rejects decks without enough unique motifs', (): void => {
-  const incompleteSymbols: readonly CardSymbol[] = SYMBOLS.slice(0, 7);
+  const incompleteSymbols: readonly CardSymbol[] = SYMBOLS.slice(0, INCOMPLETE_SYMBOL_COUNT);
   assert.deepEqual(createCards(CARD_COUNTS['4x4'], incompleteSymbols), []);
 });
 
 test('shuffles generated pairs before they are rendered', (): void => {
   const cards: MemoryCard[] = createCards(CARD_COUNTS['4x4'], SYMBOLS, (): number => 0);
   const names: string[] = cards.map((card: MemoryCard): string => card.symbol.name);
-  const orderedNames: string[] = [...SYMBOLS.slice(0, 8), ...SYMBOLS.slice(0, 8)]
+  const orderedNames: string[] = [
+    ...SYMBOLS.slice(0, FOUR_BY_FOUR_PAIR_COUNT),
+    ...SYMBOLS.slice(0, FOUR_BY_FOUR_PAIR_COUNT),
+  ]
     .map((symbol: CardSymbol): string => symbol.name);
   assert.notDeepEqual(names, orderedNames);
 });
 
 test('does not mutate the source collection while shuffling', (): void => {
-  const cards: readonly MemoryCard[] = SYMBOLS.slice(0, 2).map(
+  const cards: readonly MemoryCard[] = SYMBOLS.slice(0, SOURCE_SYMBOL_COUNT).map(
     (symbol: CardSymbol): MemoryCard => ({ symbol }),
   );
   const shuffledCards: MemoryCard[] = shuffleCards(cards, (): number => 0);

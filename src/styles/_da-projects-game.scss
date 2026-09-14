@@ -115,6 +115,21 @@
     outline: 3px solid $color-da-projects-blue-dark;
     outline-offset: 3px;
   }
+
+  &:hover {
+    border: 0;
+    color: $color-white;
+    background-color: $color-da-projects-blue-dark;
+    box-shadow: 0 4px 8px #2f2e2e33;
+  }
+
+  &:hover .game__exit_label {
+    color: $color-white;
+  }
+
+  &:hover .game__exit_icon {
+    filter: brightness(0) invert(1);
+  }
 }
 
 .game__container_da_projects .game__exit_icon_container {

@@ -13,6 +13,18 @@ export function initQuitDialog(resetGame: () => void): void {
   BACK_TO_GAME?.addEventListener('click', closeQuitDialog);
   CONFIRM_EXIT?.addEventListener('click', returnToSettings);
   QUIT_DIALOG?.addEventListener('close', restoreExitFocus);
+  QUIT_DIALOG?.addEventListener('keydown', trapDialogFocus);
+}
+
+/** Keeps forward and backward keyboard navigation inside the modal. */
+function trapDialogFocus(event: KeyboardEvent): void {
+  if (event.key !== 'Tab' || !BACK_TO_GAME || !CONFIRM_EXIT) return;
+  const movesBackward: boolean = event.shiftKey && document.activeElement === BACK_TO_GAME;
+  const movesForward: boolean = !event.shiftKey && document.activeElement === CONFIRM_EXIT;
+  if (!movesBackward && !movesForward) return;
+  event.preventDefault();
+  if (movesBackward) CONFIRM_EXIT.focus();
+  else BACK_TO_GAME.focus();
 }
 
 /** Uses native modality to keep keyboard focus within the popup. */

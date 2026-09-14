@@ -234,6 +234,7 @@
   &__icon {
     width: 20px;
     height: 16px;
+    transform-origin: center;
   }
 
   &__label {
@@ -250,6 +251,27 @@
   &.is_unavailable {
     background-color: $color-disabled-start;
     opacity: 0.55;
+  }
+}
+
+.start_button:not(:disabled):not(.is_unavailable) .start_button__icon {
+  animation: start_button_icon_tilt 1200ms ease-in-out infinite;
+}
+
+@keyframes start_button_icon_tilt {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start_button__icon {
+    animation: none;
   }
 }
 

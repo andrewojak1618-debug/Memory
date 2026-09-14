@@ -15,6 +15,7 @@ const MINIMUM_DURATION_SECONDS: number = 4;
 const MAXIMUM_DURATION_SECONDS: number = 8;
 const MAXIMUM_DELAY_SECONDS: number = 8;
 const MAXIMUM_DRIFT_PIXELS: number = 80;
+const MAXIMUM_LEFT_PERCENT: number = 100;
 
 /** Creates the decorative pieces shared by both winner views once. */
 export function initWinnerConfetti(): void {
@@ -55,7 +56,7 @@ function createConfettiStyle(
     delay: -randomBetween(0, MAXIMUM_DELAY_SECONDS),
     drift: randomBetween(-MAXIMUM_DRIFT_PIXELS, MAXIMUM_DRIFT_PIXELS),
     duration: randomBetween(MINIMUM_DURATION_SECONDS, MAXIMUM_DURATION_SECONDS),
-    left: randomBetween(0, 100),
+    left: randomBetween(0, MAXIMUM_LEFT_PERCENT),
   };
 }
 

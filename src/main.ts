@@ -4,6 +4,7 @@ import { initGameBoard, renderGameBoard, resetGameBoard } from './game-board';
 import {
   initGameResult,
   setGameResultTheme,
+  showTieResult,
 } from './game-result';
 import { applyGameTheme } from './game-theme';
 import {
@@ -28,12 +29,16 @@ const SETTINGS_FOOTER: HTMLElement | null = document.querySelector('.settings__f
 const SETTINGS_VALIDATION_MESSAGE: HTMLElement | null = document.getElementById(
   'settings_validation_message',
 );
+const TIE_RESULT_VIEW: HTMLElement | null = document.getElementById('tie_result_view');
+const NEW_GAME_BUTTON: HTMLElement | null = document.getElementById('new_game_button');
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
 const FOOTER_SELECTION_CLASSES: readonly string[] = [
   'selection_count_0', 'selection_count_1', 'selection_count_2', 'selection_count_3',
 ];
+const CODE_VIBES_DRAW_DEBUG_VALUE: string = 'code_vibes_draw';
+const DA_PROJECTS_DRAW_DEBUG_VALUE: string = 'da_projects_draw';
 interface SettingRequirement {
   readonly name: string;
   readonly label: string;
@@ -47,13 +52,43 @@ const REQUIRED_SETTINGS: readonly SettingRequirement[] = [
 /** Connects the available controls with their actions. */
 function init(): void {
   initGameBoard();
-  initGameResult();
-  initQuitDialog(resetExitedGame);
+  initGameResult(resetGameSetup);
+  initQuitDialog(resetGameSetup);
   initWinnerConfetti();
   PLAY_BUTTON?.addEventListener('click', showSettings);
   START_BUTTON?.addEventListener('click', showGame);
+  NEW_GAME_BUTTON?.addEventListener('click', startNewRound);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+  openDevelopmentView();
+}
+
+/** Opens the DA Projects draw screen only while Vite runs in development mode. */
+function openDevelopmentView(): void {
+  if (!import.meta.env.DEV) return;
+  const query: URLSearchParams = new URLSearchParams(window.location.search);
+  const debugValue: string | null = query.get('debug');
+  if (!isDrawDebugValue(debugValue)) return;
+  const theme: GameTheme = debugValue === CODE_VIBES_DRAW_DEBUG_VALUE
+    ? 'code_vibes' : 'da_projects';
+  selectDebugSetting('theme', theme);
+  selectDebugSetting('player', 'blue');
+  selectDebugSetting('board_size', '4x4');
+  updateSettingsState();
+  setGameResultTheme(theme);
+  showTieResult();
+}
+
+/** Checks whether the query requests one supported draw preview. */
+function isDrawDebugValue(value: string | null): boolean {
+  return value === CODE_VIBES_DRAW_DEBUG_VALUE || value === DA_PROJECTS_DRAW_DEBUG_VALUE;
+}
+
+/** Selects one safe development value for testing the new-round action. */
+function selectDebugSetting(name: string, value: string): void {
+  const selector: string = `input[name="${name}"][value="${value}"]`;
+  const input: HTMLInputElement | null = document.querySelector<HTMLInputElement>(selector);
+  if (input) input.checked = true;
 }
 
 /** Opens the settings view and places focus on its heading. */
@@ -65,8 +100,8 @@ function showSettings(): void {
   SETTINGS_TITLE?.focus();
 }
 
-/** Restores the complete setup state after a confirmed game exit. */
-function resetExitedGame(): void {
+/** Restores a clean setup after leaving or completing a game. */
+function resetGameSetup(): void {
   if (SETTINGS_FORM instanceof HTMLFormElement) SETTINGS_FORM.reset();
   resetGameBoard();
   resetGamePlayers();
@@ -79,6 +114,15 @@ function showGame(): void {
   const missingSettings: string[] = getMissingSettings();
   if (showMissingSettings(missingSettings)) return;
   openGameView();
+}
+
+/** Starts a shuffled round with the settings from the completed game. */
+function startNewRound(): void {
+  if (!getSelectedTheme() || !GAME_VIEW || !TIE_RESULT_VIEW) return;
+  prepareGameView();
+  TIE_RESULT_VIEW.hidden = true;
+  GAME_VIEW.hidden = false;
+  GAME_VIEW.focus();
 }
 
 /** Reports an incomplete setup and tells the caller to stop opening the game. */
@@ -123,6 +167,7 @@ function updateSettingsState(): void {
 function updateStartButtonState(isEnabled: boolean): void {
   if (!(START_BUTTON instanceof HTMLButtonElement)) return;
   START_BUTTON.classList.toggle('is_unavailable', !isEnabled);
+  START_BUTTON.setAttribute('aria-disabled', String(!isEnabled));
   if (isEnabled) hideValidationMessage();
   else if (!SETTINGS_VALIDATION_MESSAGE?.hidden) showValidationMessage(getMissingSettings());
 }

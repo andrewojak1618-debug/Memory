@@ -126,6 +126,10 @@
   color: $color-white;
   font-size: 24px;
 
+  &:hover {
+    box-shadow: 0 4px 8px $color-draw-result-shadow;
+  }
+
   &:focus-visible {
     outline: 3px solid $color-white;
     outline-offset: -3px;
