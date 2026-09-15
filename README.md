@@ -32,6 +32,10 @@ Die ausgewählte Spielerfarbe beginnt. Ein gefundenes Paar bleibt sichtbar, zäh
 - Vite
 - Node.js Test Runner
 
+## Mehrseiten-Aufbau
+
+Memory verwendet separate HTML-Seiten für Home, Settings, Spiel, Game over, Unentschieden und Gewinneransicht. Ihre Einstiegspunkte sind in `vite.config.ts` unter `input` eingetragen. Dieser Aufbau folgt der offiziellen Vite-Dokumentation zu [Mehrseitenprojekten](https://vite.dev/guide/build#multi-page-app) und zur [Konfigurationsoption `input`](https://vite.dev/config/shared-options#input).
+
 ## Lokal starten
 
 Voraussetzung ist eine aktuelle Installation von Node.js und npm.
