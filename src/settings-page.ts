@@ -20,6 +20,7 @@ const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_proj
 const FOOTER_SELECTION_CLASSES: readonly string[] = [
   'selection_count_0', 'selection_count_1', 'selection_count_2', 'selection_count_3',
 ];
+const MIN_VISIBLE_SELECTION_COUNT: number = 2;
 interface SettingRequirement {
   readonly name: string;
   readonly label: string;
@@ -34,8 +35,21 @@ let isNavigating: boolean = false;
 /** Connects the setup form to its progress and start controls. */
 function init(): void {
   START_BUTTON?.addEventListener('click', startSelectedGame);
+  START_BUTTON?.addEventListener('pointerenter', updateStartHover);
+  START_BUTTON?.addEventListener('pointerleave', updateStartHover);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+}
+
+/** Keeps the footer aligned with the enlarged, available start control.
+ * @param event - The pointer entering or leaving the start control.
+ */
+function updateStartHover(event: PointerEvent): void {
+  const isAvailable: boolean = START_BUTTON instanceof HTMLButtonElement &&
+    !START_BUTTON.classList.contains('is_unavailable');
+  SETTINGS_FOOTER?.classList.toggle(
+    'is_start_hovered', isAvailable && event.type === 'pointerenter',
+  );
 }
 
 /** Validates and transfers one complete setup to the separate game page. */
@@ -71,13 +85,14 @@ function getSelectedBoardSize(): BoardSize | null {
 
 /** Updates the setup progress and availability of the start button. */
 function updateSettingsState(): void {
-  const hasTheme: boolean = setStepState('theme_step', 'theme');
-  const hasPlayer: boolean = setStepState('player_step', 'player');
-  const hasBoard: boolean = setStepState('board_step', 'board_size');
+  const showSelectedSteps: boolean = getSelectedSettingCount() >= MIN_VISIBLE_SELECTION_COUNT;
+  const hasTheme: boolean = setStepState('theme_step', 'theme', showSelectedSteps);
+  const hasPlayer: boolean = setStepState('player_step', 'player', showSelectedSteps);
+  const hasBoard: boolean = setStepState('board_step', 'board_size', showSelectedSteps);
 
   updateThemePreview();
   updatePlayerAssignment();
-  updateFooterState(hasTheme, hasPlayer, hasBoard);
+  updateFooterState();
   updateStartButtonState(hasTheme && hasPlayer && hasBoard);
 }
 
@@ -85,6 +100,7 @@ function updateSettingsState(): void {
 function updateStartButtonState(isEnabled: boolean): void {
   if (!(START_BUTTON instanceof HTMLButtonElement)) return;
   START_BUTTON.classList.toggle('is_unavailable', !isEnabled);
+  if (!isEnabled) SETTINGS_FOOTER?.classList.remove('is_start_hovered');
   START_BUTTON.setAttribute('aria-disabled', String(!isEnabled));
   if (isEnabled) hideValidationMessage();
   else if (!SETTINGS_VALIDATION_MESSAGE?.hidden) showValidationMessage(getMissingSettings());
@@ -111,15 +127,19 @@ function hideValidationMessage(): void {
   SETTINGS_VALIDATION_MESSAGE.textContent = '';
 }
 
-/** Applies the compact presentation while every setup option is empty. */
-function updateFooterState(hasTheme: boolean, hasPlayer: boolean, hasBoard: boolean): void {
-  const selections: boolean[] = [hasTheme, hasPlayer, hasBoard];
-  const selectionCount: number = selections.filter(
-    (isSelected: boolean): boolean => isSelected,
-  ).length;
+/** Keeps the footer compact until two setup categories are selected. */
+function updateFooterState(): void {
+  const selectionCount: number = getSelectedSettingCount();
   SETTINGS_FOOTER?.classList.remove(...FOOTER_SELECTION_CLASSES);
   SETTINGS_FOOTER?.classList.add(`selection_count_${selectionCount}`);
-  SETTINGS_FOOTER?.classList.toggle('is_unselected', selectionCount === 0);
+  SETTINGS_FOOTER?.classList.toggle('is_unselected', selectionCount < MIN_VISIBLE_SELECTION_COUNT);
+}
+
+/** Counts completed categories without changing their radio states. */
+function getSelectedSettingCount(): number {
+  return REQUIRED_SETTINGS.filter(
+    (setting: SettingRequirement): boolean => isSettingSelected(setting.name),
+  ).length;
 }
 
 /** Displays the preview that belongs to the selected theme. */
@@ -136,15 +156,28 @@ function getSelectedTheme(): GameTheme | null {
   return isGameTheme(selectedTheme.value) ? selectedTheme.value : null;
 }
 
-/** Marks one setup step when its radio group has a selection. */
-function setStepState(stepId: string, inputName: string): boolean {
+/** Marks one setup step once the footer shows completed choices.
+ * @param stepId - The footer step to update.
+ * @param inputName - The related radio group.
+ * @param showSelectedSteps - Whether completed categories are visible yet.
+ */
+function setStepState(stepId: string, inputName: string, showSelectedSteps: boolean): boolean {
   const step: HTMLElement | null = document.getElementById(stepId);
   const isSelected: boolean = isSettingSelected(inputName);
 
-  if (step) step.textContent = getStepLabel(stepId);
-  if (isSelected) step?.classList.add('is_complete');
+  if (step) step.textContent = showSelectedSteps ? getStepLabel(stepId) : getInitialStepLabel(stepId);
+  if (isSelected && showSelectedSteps) step?.classList.add('is_complete');
   else step?.classList.remove('is_complete');
   return isSelected;
+}
+
+/** Returns the neutral footer label before progress is displayed.
+ * @param stepId - The footer step whose label is requested.
+ */
+function getInitialStepLabel(stepId: string): string {
+  if (stepId === 'theme_step') return 'Theme';
+  if (stepId === 'player_step') return 'Player';
+  return 'Board size';
 }
 
 /** Returns the shorter initial label used before the theme is selected. */

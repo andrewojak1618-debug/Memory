@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use 'variables' as *;
 
 .theme_preview_container {
@@ -207,10 +208,15 @@
 
 }
 
+$start-button-width: 126px;
+$start-button-height: 53px;
+$start-button-hover-width: 140px;
+$start-button-hover-height: 61px;
+
 .start_button {
   display: inline-flex;
-  width: 126px;
-  height: 53px;
+  width: $start-button-width;
+  height: $start-button-height;
   padding: 0;
   align-items: center;
   justify-content: center;
@@ -218,21 +224,22 @@
   gap: 0.5rem;
   border: 0;
   color: $color-settings-text;
-  background-color: $color-accent;
+  background-color: $color-step-divider;
   cursor: pointer;
   font-weight: 400;
+  transform-origin: left center;
+  transition: transform 300ms ease-out;
 
   &:hover:not(:disabled):not(.is_unavailable) {
-    box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.08);
+    transform: scale(
+      math.div($start-button-hover-width, $start-button-width),
+      math.div($start-button-hover-height, $start-button-height)
+    );
   }
 
   &:focus-visible {
     outline: 3px solid $color-focus-light-surface;
     outline-offset: 3px;
-  }
-
-  &:active:not(:disabled):not(.is_unavailable) {
-    box-shadow: inset 0 0 0 100px rgba($color-settings-text, 0.16);
   }
 
   &__icon_container {
@@ -281,6 +288,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .start_button {
+    transition: none;
+  }
+
   .start_button__icon {
     animation: none;
   }
