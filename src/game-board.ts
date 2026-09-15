@@ -4,17 +4,15 @@ import {
   CARDS_PER_PAIR,
   DEFAULT_BOARD_SIZE,
   createCards,
-  isBoardSize,
 } from './card-data';
 import type { BoardSize, CardSymbol, MemoryCard } from './card-data';
 import {
   addCurrentPlayerPoint,
-  getColorLabel,
   getCurrentPlayer,
-  getWinningPlayer,
   switchCurrentPlayer,
 } from './player-settings';
-import { showTieResult, showWinnerTransition } from './game-result';
+import { getColorLabel } from './player-color';
+import { cancelResultTransition, showCompletedResult } from './game-result';
 import { THEME_CONFIGS } from './theme-data';
 import type { GameTheme, GameThemeConfig, PlayerColor } from './theme-data';
 
@@ -42,10 +40,9 @@ export function initGameBoard(): void {
 }
 
 /** Creates paired cards for the selected theme and board size. */
-export function renderGameBoard(theme: GameTheme): void {
+export function renderGameBoard(theme: GameTheme, boardSize: BoardSize): void {
   if (!CARD_LIST) return;
   const config: GameThemeConfig = THEME_CONFIGS[theme];
-  const boardSize: BoardSize = getSelectedBoardSize();
   const cards: MemoryCard[] = createCards(CARD_COUNTS[boardSize], config.symbols);
   resetTurnState();
   updateBoardClasses(boardSize);
@@ -82,13 +79,6 @@ function updateBoardClasses(boardSize: BoardSize): void {
 function updateGameSpacing(boardSize: BoardSize): void {
   GAME_VIEW?.classList.remove('game_4x6', 'game_6x6');
   if (boardSize !== DEFAULT_BOARD_SIZE) GAME_VIEW?.classList.add(`game_${boardSize}`);
-}
-
-/** Reads and validates the selected board size. */
-function getSelectedBoardSize(): BoardSize {
-  const selected: Element | null = document.querySelector('input[name="board_size"]:checked');
-  if (!(selected instanceof HTMLInputElement)) return DEFAULT_BOARD_SIZE;
-  return isBoardSize(selected.value) ? selected.value : DEFAULT_BOARD_SIZE;
 }
 
 /** Creates one semantic list item containing a card button. */
@@ -182,9 +172,7 @@ function completeMatchingPair(): void {
 /** Opens the available result view after every card has been matched. */
 function showResultWhenComplete(): void {
   if (!isBoardComplete()) return;
-  const winner: PlayerColor | null = getWinningPlayer();
-  if (!winner) showTieResult();
-  else showWinnerTransition(winner);
+  showCompletedResult();
 }
 
 /** Checks whether no unmatched card remains on the board. */
@@ -236,6 +224,7 @@ function getCardLabel(name: string, position: string, state: CardState): string 
 
 /** Clears any pending comparison before a new game is rendered. */
 function resetTurnState(): void {
+  cancelResultTransition();
   if (mismatchTimer !== null) window.clearTimeout(mismatchTimer);
   mismatchTimer = null;
   boardLocked = false;

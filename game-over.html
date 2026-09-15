@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A two-player memory game." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Game over | Memory</title>
+  </head>
+  <body>
+    <main class="app">
+      <section
+        class="game_over game_result_code_vibes"
+        id="game_over_view"
+        aria-labelledby="game_over_title"
+      >
+        <div class="game_over__content">
+          <header class="game_over__heading">
+            <h1 class="game_over__title" id="game_over_title" tabindex="-1">
+              <span class="game_over__title_text">Game over</span>
+            </h1>
+          </header>
+          <section class="game_over__score" aria-labelledby="game_over_score_title">
+            <h2 class="game_over__score_title" id="game_over_score_title">Final score</h2>
+            <div class="game_over__score_content">
+              <div
+                class="game_over__score_item is_blue"
+                id="game_over_player_one"
+                role="group"
+                aria-label="Player 1: Blue"
+              >
+                <img
+                  class="game_over__score_icon"
+                  id="game_over_player_one_icon"
+                  src="./assets/icons/blue_player_arrow.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span class="game_over__score_label" id="game_over_player_one_label">Blue</span>
+                <span class="game_over__score_value" id="game_over_player_one_score">0</span>
+              </div>
+              <div
+                class="game_over__score_player_two is_orange"
+                id="game_over_player_two"
+                role="group"
+                aria-label="Player 2: Orange, score: 0"
+              >
+                <img
+                  class="game_over__score_icon"
+                  id="game_over_player_two_icon"
+                  src="./assets/icons/orange_player_arrow.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span class="game_over__score_label" id="game_over_player_two_label">Orange</span>
+                <span class="game_over__score_value" id="game_over_player_two_score">0</span>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="game_over__da_projects_content">
+          <h1 class="game_over__da_projects_title" id="game_over_da_projects_title" tabindex="-1">
+            GAME OVER
+          </h1>
+          <section
+            class="game_over__da_projects_score"
+            aria-labelledby="game_over_da_projects_score_title"
+          >
+            <h2
+              class="game_over__da_projects_score_title"
+              id="game_over_da_projects_score_title"
+            >
+              Final score
+            </h2>
+            <div class="game_over__da_projects_score_panel">
+              <div
+                class="game_over__da_projects_score_item is_blue"
+                id="game_over_da_projects_blue_score_item"
+                role="group"
+                aria-label="Blue player score: 0"
+              >
+                <img
+                  class="game_over__da_projects_score_icon"
+                  src="./assets/images/chess_pawn_blue.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span
+                  class="game_over__da_projects_score_value"
+                  id="game_over_da_projects_blue_score"
+                >0</span>
+              </div>
+              <div
+                class="game_over__da_projects_score_item is_orange"
+                id="game_over_da_projects_orange_score_item"
+                role="group"
+                aria-label="Orange player score: 0"
+              >
+                <img
+                  class="game_over__da_projects_score_icon"
+                  src="./assets/images/chess_pawn_orange.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span
+                  class="game_over__da_projects_score_value"
+                  id="game_over_da_projects_orange_score"
+                >0</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/game-over-page.ts"></script>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 import { getCurrentPlayerIcon } from './game-theme';
+import { getColorLabel } from './player-color';
 import {
   addPoint,
   createGameState,
@@ -9,25 +10,16 @@ import {
 import type { GameState } from './game-state';
 import type { GameTheme, PlayerColor } from './theme-data';
 
-const PLAYER_ASSIGNMENT_STATUS: HTMLElement | null = document.getElementById('player_assignment');
 const CURRENT_PLAYER_ICON: HTMLElement | null = document.getElementById('current_player_icon');
 const PLAYER_ICON_DIRECTORY: string = './assets/icons';
 let activeTheme: GameTheme | null = null;
 let gameState: GameState | null = null;
-
-/** Updates both player assignments and the game's starting-player symbol. */
-export function updatePlayerAssignment(): void {
-  const playerOne: PlayerColor | null = getSelectedPlayerColor();
-  const playerTwo: PlayerColor | null = playerOne ? getOpponentColor(playerOne) : null;
-
-  updateAssignmentStatus(playerOne, playerTwo);
-}
+let startingPlayer: PlayerColor | null = null;
 
 /** Resets a newly opened game and applies its starting player. */
-export function prepareGamePlayers(theme: GameTheme): void {
-  const playerOne: PlayerColor | null = getSelectedPlayerColor();
-  if (!playerOne) return;
+export function prepareGamePlayers(theme: GameTheme, playerOne: PlayerColor): void {
   activeTheme = theme;
+  startingPlayer = playerOne;
   gameState = createGameState(playerOne);
   updateCurrentPlayerIcon(playerOne, theme);
   updateAllScores();
@@ -36,6 +28,7 @@ export function prepareGamePlayers(theme: GameTheme): void {
 /** Clears player state and scores after a confirmed game exit. */
 export function resetGamePlayers(): void {
   activeTheme = null;
+  startingPlayer = null;
   gameState = null;
   updateAllScores();
 }
@@ -84,41 +77,9 @@ export function switchCurrentPlayer(): PlayerColor | null {
   return nextPlayer;
 }
 
-/** Reads and validates the selected color from the player radio group. */
-export function getSelectedPlayerColor(): PlayerColor | null {
-  const selected: Element | null = document.querySelector('input[name="player"]:checked');
-  if (!(selected instanceof HTMLInputElement)) return null;
-  return isPlayerColor(selected.value) ? selected.value : null;
-}
-
-/** Narrows a form value to one of the two supported player colors. */
-function isPlayerColor(value: string): value is PlayerColor {
-  return value === 'blue' || value === 'orange';
-}
-
-/** Returns the color that remains for Player 2. */
-export function getOpponentColor(playerOne: PlayerColor): PlayerColor {
-  return playerOne === 'blue' ? 'orange' : 'blue';
-}
-
-/** Announces both assignments without adding visible design text. */
-function updateAssignmentStatus(
-  playerOne: PlayerColor | null,
-  playerTwo: PlayerColor | null,
-): void {
-  if (!PLAYER_ASSIGNMENT_STATUS) return;
-  if (!playerOne || !playerTwo) {
-    PLAYER_ASSIGNMENT_STATUS.textContent = '';
-    return;
-  }
-  const firstColor: string = getColorLabel(playerOne);
-  const secondColor: string = getColorLabel(playerTwo);
-  PLAYER_ASSIGNMENT_STATUS.innerText = `Player 1: ${firstColor}. Player 2: ${secondColor}.`;
-}
-
-/** Converts the typed color value into its visible name. */
-export function getColorLabel(color: PlayerColor): string {
-  return color === 'blue' ? 'Blue' : 'Orange';
+/** Returns the color chosen by Player 1 for the active round. */
+export function getStartingPlayerColor(): PlayerColor | null {
+  return startingPlayer;
 }
 
 /** Updates the shared current-player symbol for the chosen theme. */

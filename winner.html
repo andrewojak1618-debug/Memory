@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A two-player memory game." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Winner | Memory</title>
+  </head>
+  <body>
+    <main class="app">
+      <section
+        class="game_result"
+        id="winner_view"
+        aria-labelledby="winner_title"
+        tabindex="-1"
+      >
+        <div class="game_result__confetti" id="winner_confetti" aria-hidden="true"></div>
+        <div class="game_result__winner_content game_result__winner_content_blue" id="winner_content">
+          <header class="game_result__winner_summary">
+            <p class="game_result__winner_eyebrow">The winner is</p>
+            <h1 class="game_result__winner_title" id="winner_title">BLUE PLAYER</h1>
+          </header>
+          <img
+            class="game_result__winner_pawn"
+            id="winner_pawn"
+            src="./assets/images/chess_pawn_blue.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <button class="game_result__back_button game_result__winner_back_button" type="button">
+            <span class="game_result__back_label">Back to start</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/winner-page.ts"></script>
+  </body>
+</html>

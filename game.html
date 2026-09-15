@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A two-player memory game." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Game | Memory</title>
+  </head>
+  <body>
+    <main class="app">
+      <section
+        class="game"
+        id="game_view"
+        aria-label="Memory game"
+        tabindex="-1"
+      >
+        <section
+          class="game__container game__container_code_vibes"
+          id="game_container"
+          aria-labelledby="game_title"
+        >
+          <header class="game__header">
+            <h1 class="visually_hidden" id="game_title">Code Vibes memory game</h1>
+            <div class="game__status">
+              <div class="game__score_panel">
+                <div class="game__score game__score_blue" id="blue_score" role="group" aria-label="Blue player score: 0">
+                  <span class="game__score_identity">
+                    <img class="game__score_icon" id="blue_score_icon" src="/assets/icons/blue_player_arrow.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                    <span class="game__score_name">Blue</span>
+                  </span>
+                  <span class="game__score_value" id="blue_score_value">0</span>
+                </div>
+                <div class="game__score game__score_orange" id="orange_score" role="group" aria-label="Orange player score: 0">
+                  <span class="game__score_identity">
+                    <img class="game__score_icon" id="orange_score_icon" src="/assets/icons/orange_player_arrow.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                    <span class="game__score_name">Orange</span>
+                  </span>
+                  <span class="game__score_value" id="orange_score_value">0</span>
+                </div>
+              </div>
+              <div class="game__current_player">
+                <p class="game__current_player_text">Current player:</p>
+                <img
+                  class="game__current_player_icon"
+                  id="current_player_icon"
+                  src="/assets/icons/blue_player_arrow.svg"
+                  alt="Blue, Player 1"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p class="visually_hidden" id="game_status" role="status" aria-live="polite"></p>
+            </div>
+            <button
+              class="game__exit_button"
+              id="exit_button"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="quit_dialog"
+            >
+              <span class="game__exit_icon_container" aria-hidden="true">
+                <img
+                  class="game__exit_icon"
+                  id="game_exit_icon"
+                  src="/assets/icons/exit_game_white_icon.svg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="game__exit_label">Exit game</span>
+            </button>
+          </header>
+          <section
+            class="game__board"
+            id="game_board"
+            aria-labelledby="game_board_title"
+          >
+            <h2 class="visually_hidden" id="game_board_title">Memory cards</h2>
+            <ol class="game__card_list" id="game_card_list"></ol>
+          </section>
+        </section>
+      </section>
+      <dialog class="quit_dialog" id="quit_dialog" aria-labelledby="quit_title">
+        <div class="quit_dialog__content">
+          <h2 class="quit_dialog__title" id="quit_title" tabindex="-1">
+            Are you sure you want to
+            <span class="quit_dialog__title_da_last_line">quit the game?</span>
+          </h2>
+          <div class="quit_dialog__actions">
+            <button class="quit_dialog__back" id="back_to_game" type="button">
+              <span class="quit_dialog__back_label">Back to game</span>
+            </button>
+            <button class="quit_dialog__exit" id="confirm_exit" type="button">
+              <span class="quit_dialog__exit_label">Exit Game</span>
+            </button>
+          </div>
+        </div>
+      </dialog>
+    </main>
+
+    <script type="module" src="/src/game-page.ts"></script>
+  </body>
+</html>

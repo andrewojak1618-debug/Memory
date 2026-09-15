@@ -1,14 +1,5 @@
 @use 'variables' as *;
 
-@media (max-width: 1100px) {
-  .home__title {
-    width: auto;
-    height: auto;
-    font-size: clamp(4.5rem, 12vw, 8.5rem);
-    line-height: 1;
-  }
-}
-
 @media (min-width: 1104px) and (max-height: 744px) {
   .settings__header {
     margin-top: max(
@@ -110,22 +101,6 @@
 }
 
 @media (max-width: 560px) {
-  .home {
-    &__content {
-      width: min(86%, 28rem);
-      transform: translateY(-2rem);
-    }
-
-    &__title {
-      width: auto;
-      height: auto;
-      font-size: clamp(3.25rem, 16vw, 4.5rem);
-      line-height: 0.95;
-      white-space: normal;
-    }
-
-  }
-
   .settings {
     &__step_list {
       display: grid;
@@ -166,17 +141,5 @@
 
   #board_step {
     grid-column: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home__controller {
-    animation: none;
-  }
-
-  .play_button,
-  .play_button__icon,
-  .play_button__arrow {
-    transition: none;
   }
 }

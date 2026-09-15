@@ -1,0 +1,18 @@
+@use 'base';
+@use 'game-result';
+@use 'winner-confetti';
+
+@media (min-width: 1440px) {
+  .game_result__winner_content,
+  .game_result_da_projects .game_result__winner_content {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+  }
+
+  .game_result__confetti {
+    width: 3216px;
+    max-width: 100%;
+  }
+}

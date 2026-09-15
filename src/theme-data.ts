@@ -1,7 +1,8 @@
 import type { CardSymbol } from './card-data';
+import { THEME_LABELS } from './theme-options';
+import type { GameTheme, PlayerColor } from './theme-options';
 
-export type GameTheme = 'code_vibes' | 'da_projects';
-export type PlayerColor = 'blue' | 'orange';
+export type { GameTheme, PlayerColor } from './theme-options';
 
 export interface GameThemeConfig {
   readonly label: string;
@@ -11,8 +12,6 @@ export interface GameThemeConfig {
   readonly currentPlayerIcons: Readonly<Record<PlayerColor, string>>;
   readonly exitIconFileName: string;
 }
-
-export const GAME_THEMES: readonly GameTheme[] = ['code_vibes', 'da_projects'];
 
 const CODE_VIBES_SYMBOLS: readonly CardSymbol[] = [
   { name: 'Angular', fileName: 'angular_logo.png' },
@@ -58,7 +57,7 @@ const DA_PROJECTS_SYMBOLS: readonly CardSymbol[] = [
 
 export const THEME_CONFIGS: Readonly<Record<GameTheme, GameThemeConfig>> = {
   code_vibes: {
-    label: 'Code Vibes',
+    label: THEME_LABELS.code_vibes,
     cardBackFileName: 'code_vibes_card_back.png',
     symbols: CODE_VIBES_SYMBOLS,
     scoreIcons: { blue: 'blue_player_arrow.svg', orange: 'orange_player_arrow.svg' },
@@ -66,7 +65,7 @@ export const THEME_CONFIGS: Readonly<Record<GameTheme, GameThemeConfig>> = {
     exitIconFileName: 'exit_game_white_icon.svg',
   },
   da_projects: {
-    label: 'DA Projects',
+    label: THEME_LABELS.da_projects,
     cardBackFileName: 'da_projects_card_back.png',
     symbols: DA_PROJECTS_SYMBOLS,
     scoreIcons: { blue: 'chess_pawn_blue.svg', orange: 'chess_pawn_orange.svg' },
@@ -74,8 +73,3 @@ export const THEME_CONFIGS: Readonly<Record<GameTheme, GameThemeConfig>> = {
     exitIconFileName: 'exit_game_blue_icon.svg',
   },
 };
-
-/** Narrows a form value to one supported game theme. */
-export function isGameTheme(value: string): value is GameTheme {
-  return GAME_THEMES.some((theme: GameTheme): boolean => theme === value);
-}
