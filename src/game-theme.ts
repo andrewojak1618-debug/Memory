@@ -7,7 +7,10 @@ const GAME_CONTAINER: HTMLElement | null = document.getElementById('game_contain
 const GAME_TITLE: HTMLElement | null = document.getElementById('game_title');
 const EXIT_ICON: HTMLElement | null = document.getElementById('game_exit_icon');
 
-/** Applies text, assets and modifier classes for one selected theme. */
+/**
+ * Applies text, assets and modifier classes for one selected theme.
+ * @param theme - The theme selected in Settings.
+ */
 export function applyGameTheme(theme: GameTheme): void {
   const config: GameThemeConfig = THEME_CONFIGS[theme];
   if (GAME_CONTAINER) GAME_CONTAINER.className = `game__container game__container_${theme}`;
@@ -17,25 +20,41 @@ export function applyGameTheme(theme: GameTheme): void {
   updateScoreIcons(config);
 }
 
-/** Returns the icon file for the selected player and theme. */
+/**
+ * Returns the icon file for the selected player and theme.
+ * @param theme - The active visual theme.
+ * @param color - The player color whose turn icon is requested.
+ * @returns The matching icon file name.
+ */
 export function getCurrentPlayerIcon(theme: GameTheme, color: PlayerColor): string {
   return THEME_CONFIGS[theme].currentPlayerIcons[color];
 }
 
-/** Sets the accessible name for the active game. */
+/**
+ * Sets the accessible name for the active game.
+ * @param themeLabel - The visible name of the active theme.
+ */
 function updateGameText(themeLabel: string): void {
   const gameName: string = `${themeLabel} memory game`;
   if (GAME_TITLE) GAME_TITLE.textContent = gameName;
   GAME_VIEW?.setAttribute('aria-label', gameName);
 }
 
-/** Applies both theme-specific score symbols. */
+/**
+ * Applies both theme-specific score symbols.
+ * @param config - The active theme's asset configuration.
+ */
 function updateScoreIcons(config: GameThemeConfig): void {
   updateImage(document.getElementById('blue_score_icon'), config.scoreIcons.blue, '');
   updateImage(document.getElementById('orange_score_icon'), config.scoreIcons.orange, '');
 }
 
-/** Updates one image without duplicating path handling. */
+/**
+ * Updates one image without duplicating path handling.
+ * @param element - The image element to update, if present.
+ * @param fileName - The asset file name inside the image directory.
+ * @param alt - The image's accessible alternative text.
+ */
 function updateImage(element: HTMLElement | null, fileName: string, alt: string): void {
   if (!(element instanceof HTMLImageElement)) return;
   element.src = `${ICON_DIRECTORY}/${fileName}`;

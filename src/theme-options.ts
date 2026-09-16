@@ -9,6 +9,7 @@ export const THEME_LABELS: Readonly<Record<GameTheme, string>> = {
 
 /** Narrows a form value to one supported theme.
  * @param value - The unchecked value from the settings form.
+ * @returns Whether the value is a supported game theme.
  */
 export function isGameTheme(value: string): value is GameTheme {
   return GAME_THEMES.some((theme: GameTheme): boolean => theme === value);

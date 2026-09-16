@@ -63,6 +63,7 @@ function applyWinnerContent(result: GameResult): void {
 /** Uses the capitalization specified by each visual theme.
  * @param theme - The completed round's selected theme.
  * @param winner - The player with the higher final score.
+ * @returns The theme-specific winner label.
  */
 function getWinnerLabel(theme: GameTheme, winner: PlayerColor): string {
   const color: string = winner === 'blue' ? 'Blue' : 'Orange';

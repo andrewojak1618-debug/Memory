@@ -27,7 +27,10 @@ function init(): void {
   prepareGameView(setup);
 }
 
-/** Prevents browser history from silently resetting a completed round. */
+/**
+ * Prevents browser history from silently resetting a completed round.
+ * @returns Whether navigation to a stored result page was started.
+ */
 function redirectCompletedResult(): boolean {
   const result: GameResult | null = loadGameResult();
   if (!result) return false;
@@ -55,7 +58,10 @@ function leaveGame(): void {
   window.location.assign('./settings.html');
 }
 
-/** Keeps existing draw debug links usable without loading result markup here. */
+/**
+ * Keeps existing draw debug links usable without loading result markup here.
+ * @returns Whether navigation to a draw preview was started.
+ */
 function redirectDevelopmentDraw(): boolean {
   if (!import.meta.env.DEV) return false;
   const query: URLSearchParams = new URLSearchParams(window.location.search);

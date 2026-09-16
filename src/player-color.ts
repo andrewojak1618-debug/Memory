@@ -2,6 +2,7 @@ import type { PlayerColor } from './theme-data';
 
 /** Narrows a form value to one supported player color.
  * @param value - The unchecked value from the settings form.
+ * @returns Whether the value is a supported player color.
  */
 export function isPlayerColor(value: string): value is PlayerColor {
   return value === 'blue' || value === 'orange';
@@ -9,6 +10,7 @@ export function isPlayerColor(value: string): value is PlayerColor {
 
 /** Returns the color assigned to Player 2.
  * @param playerOne - The color selected for Player 1.
+ * @returns The remaining player color.
  */
 export function getOpponentColor(playerOne: PlayerColor): PlayerColor {
   return playerOne === 'blue' ? 'orange' : 'blue';
@@ -16,6 +18,7 @@ export function getOpponentColor(playerOne: PlayerColor): PlayerColor {
 
 /** Converts a player color to its visible label.
  * @param color - The player color to name.
+ * @returns The capitalized color label.
  */
 export function getColorLabel(color: PlayerColor): string {
   return color === 'blue' ? 'Blue' : 'Orange';

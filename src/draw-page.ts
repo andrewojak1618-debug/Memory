@@ -50,6 +50,7 @@ function handleHomeClick(event: MouseEvent): void {
 
 /** Keeps both choices reachable without hover on touch screens.
  * @param event - The pointer-backed button click.
+ * @returns Whether the first touch was used only to reveal Revanche.
  */
 function revealRevancheOnTouch(event: MouseEvent): boolean {
   if (!('pointerType' in event) || event.pointerType !== 'touch') return false;

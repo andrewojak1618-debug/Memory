@@ -26,6 +26,7 @@ const DRAW_DEBUG_SCORE: number = 4;
 
 /** Supplies typed previews without entering fake scores into normal play.
  * @param view - The result page that requested a development preview.
+ * @returns A matching preview result, or `null` outside debug mode.
  */
 export function getDevelopmentResult(view: DebugResultView): GameResult | null {
   if (!import.meta.env.DEV) return null;
@@ -42,6 +43,7 @@ export function getDevelopmentResult(view: DebugResultView): GameResult | null {
 
 /** Keeps sample scores consistent with the requested outcome.
  * @param winner - The previewed winning color, or no color for a draw.
+ * @returns A fixed score pair representing the requested outcome.
  */
 function getDebugScores(winner: PlayerColor | null): Readonly<Record<PlayerColor, number>> {
   if (!winner) return { blue: DRAW_DEBUG_SCORE, orange: DRAW_DEBUG_SCORE };

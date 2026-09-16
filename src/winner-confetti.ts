@@ -30,7 +30,11 @@ export function initWinnerConfetti(): void {
   CONFETTI_CONTAINER.append(fragment);
 }
 
-/** Creates one typed decorative confetti piece. */
+/**
+ * Creates one typed decorative confetti piece.
+ * @param index - The piece index used to alternate visual variants.
+ * @returns A configured confetti span.
+ */
 function createConfettiPiece(index: number): HTMLSpanElement {
   const piece: HTMLSpanElement = document.createElement('span');
   piece.className = 'game_result__confetti_piece';
@@ -38,7 +42,11 @@ function createConfettiPiece(index: number): HTMLSpanElement {
   return piece;
 }
 
-/** Creates one larger curved confetti ribbon. */
+/**
+ * Creates one larger curved confetti ribbon.
+ * @param index - The ribbon index used to alternate visual variants.
+ * @returns A configured ribbon span.
+ */
 function createConfettiRibbon(index: number): HTMLSpanElement {
   const ribbon: HTMLSpanElement = document.createElement('span');
   ribbon.className = 'game_result__confetti_ribbon';
@@ -46,7 +54,12 @@ function createConfettiRibbon(index: number): HTMLSpanElement {
   return ribbon;
 }
 
-/** Produces bounded animation values for one confetti piece. */
+/**
+ * Produces bounded animation values for one confetti piece.
+ * @param index - The piece index used to alternate the fallback colors.
+ * @param colors - The color sequence available to this piece type.
+ * @returns The bounded CSS animation values for one piece.
+ */
 function createConfettiStyle(
   index: number,
   colors: readonly string[] = CONFETTI_COLORS,
@@ -60,7 +73,11 @@ function createConfettiStyle(
   };
 }
 
-/** Transfers typed values to the CSS animation properties. */
+/**
+ * Transfers typed values to the CSS animation properties.
+ * @param piece - The confetti element whose custom properties are set.
+ * @param style - The generated animation values to apply.
+ */
 function applyConfettiStyle(piece: HTMLSpanElement, style: ConfettiStyle): void {
   piece.style.setProperty('--confetti_color', style.color);
   piece.style.setProperty('--confetti_delay', `${style.delay}s`);
@@ -69,7 +86,12 @@ function applyConfettiStyle(piece: HTMLSpanElement, style: ConfettiStyle): void 
   piece.style.setProperty('--confetti_left', `${style.left}%`);
 }
 
-/** Returns a random decimal within the supplied boundaries. */
+/**
+ * Returns a random decimal within the supplied boundaries.
+ * @param minimum - The inclusive lower boundary.
+ * @param maximum - The exclusive upper boundary.
+ * @returns A random decimal within the supplied range.
+ */
 function randomBetween(minimum: number, maximum: number): number {
   return Math.random() * (maximum - minimum) + minimum;
 }

@@ -39,7 +39,11 @@ export function initGameBoard(): void {
   CARD_LIST?.addEventListener('click', handleCardClick);
 }
 
-/** Creates paired cards for the selected theme and board size. */
+/**
+ * Creates paired cards for the selected theme and board size.
+ * @param theme - The selected card theme.
+ * @param boardSize - The selected grid size.
+ */
 export function renderGameBoard(theme: GameTheme, boardSize: BoardSize): void {
   if (!CARD_LIST) return;
   const config: GameThemeConfig = THEME_CONFIGS[theme];
@@ -57,7 +61,11 @@ export function resetGameBoard(): void {
   if (GAME_STATUS) GAME_STATUS.textContent = '';
 }
 
-/** Replaces the shared board with its configured card buttons. */
+/**
+ * Replaces the shared board with its configured card buttons.
+ * @param cards - The shuffled cards to render.
+ * @param backFileName - The selected theme's card-back file.
+ */
 function renderCards(cards: readonly MemoryCard[], backFileName: string): void {
   if (!CARD_LIST) return;
   CARD_LIST.innerHTML = '';
@@ -66,7 +74,10 @@ function renderCards(cards: readonly MemoryCard[], backFileName: string): void {
   });
 }
 
-/** Applies one consistent set of board-size modifiers. */
+/**
+ * Applies one consistent set of board-size modifiers.
+ * @param boardSize - The selected grid size.
+ */
 function updateBoardClasses(boardSize: BoardSize): void {
   if (GAME_BOARD) GAME_BOARD.className = `game__board game__board_${boardSize}`;
   if (CARD_LIST) CARD_LIST.className = `game__card_list game__card_list_${boardSize}`;
@@ -75,13 +86,22 @@ function updateBoardClasses(boardSize: BoardSize): void {
   updateGameSpacing(boardSize);
 }
 
-/** Applies the page spacing belonging to one board size. */
+/**
+ * Applies the page spacing belonging to one board size.
+ * @param boardSize - The selected grid size.
+ */
 function updateGameSpacing(boardSize: BoardSize): void {
   GAME_VIEW?.classList.remove('game_4x6', 'game_6x6');
   if (boardSize !== DEFAULT_BOARD_SIZE) GAME_VIEW?.classList.add(`game_${boardSize}`);
 }
 
-/** Creates one semantic list item containing a card button. */
+/**
+ * Creates one semantic list item containing a card button.
+ * @param card - The card data represented by the item.
+ * @param index - The card's zero-based board position.
+ * @param backFileName - The selected theme's card-back file.
+ * @returns A list item containing the accessible card button.
+ */
 function createCardItem(card: MemoryCard, index: number, backFileName: string): HTMLLIElement {
   const item: HTMLLIElement = document.createElement('li');
   item.className = 'game__card_item';
@@ -89,7 +109,13 @@ function createCardItem(card: MemoryCard, index: number, backFileName: string): 
   return item;
 }
 
-/** Creates an accessible two-sided memory card. */
+/**
+ * Creates an accessible two-sided memory card.
+ * @param card - The card data represented by the button.
+ * @param position - The card's one-based position for its accessible name.
+ * @param backFileName - The selected theme's card-back file.
+ * @returns A configured memory-card button.
+ */
 function createCardButton(card: MemoryCard, position: number, backFileName: string): HTMLButtonElement {
   const button: HTMLButtonElement = document.createElement('button');
   button.className = 'game__card';
@@ -102,7 +128,12 @@ function createCardButton(card: MemoryCard, position: number, backFileName: stri
   return button;
 }
 
-/** Creates the rotating element with both card faces. */
+/**
+ * Creates the rotating element with both card faces.
+ * @param symbol - The motif displayed on the card front.
+ * @param backFileName - The selected theme's card-back file.
+ * @returns A span containing the front and back faces.
+ */
 function createCardInner(symbol: CardSymbol, backFileName: string): HTMLSpanElement {
   const inner: HTMLSpanElement = document.createElement('span');
   inner.className = 'game__card_inner';
@@ -111,7 +142,12 @@ function createCardInner(symbol: CardSymbol, backFileName: string): HTMLSpanElem
   return inner;
 }
 
-/** Creates one decorative image face inside an accessible button. */
+/**
+ * Creates one decorative image face inside an accessible button.
+ * @param side - The face modifier, either front or back.
+ * @param source - The image asset path for this face.
+ * @returns A card-face span containing a decorative image.
+ */
 function createCardFace(side: string, source: string): HTMLSpanElement {
   const face: HTMLSpanElement = document.createElement('span');
   const image: HTMLImageElement = document.createElement('img');
@@ -124,7 +160,10 @@ function createCardFace(side: string, source: string): HTMLSpanElement {
   return face;
 }
 
-/** Opens an available card and evaluates every completed selection. */
+/**
+ * Opens an available card and evaluates every completed selection.
+ * @param event - The delegated click event from the card list.
+ */
 function handleCardClick(event: MouseEvent): void {
   const card: HTMLButtonElement | null = getClickedCard(event);
   if (!canFlipCard(card)) return;
@@ -133,13 +172,21 @@ function handleCardClick(event: MouseEvent): void {
   if (OPEN_CARDS.length === CARDS_PER_PAIR) resolveSelectedPair();
 }
 
-/** Finds a card button from any clicked element inside it. */
+/**
+ * Finds a card button from any clicked element inside it.
+ * @param event - The delegated click event to inspect.
+ * @returns The clicked card button, or `null` outside a card.
+ */
 function getClickedCard(event: MouseEvent): HTMLButtonElement | null {
   if (!(event.target instanceof Element)) return null;
   return event.target.closest<HTMLButtonElement>('.game__card');
 }
 
-/** Allows only one unopened card from the active, unlocked board. */
+/**
+ * Allows only one unopened card from the active, unlocked board.
+ * @param card - The possible card button to validate.
+ * @returns Whether the value is an available card button.
+ */
 function canFlipCard(card: HTMLButtonElement | null): card is HTMLButtonElement {
   if (!card || !CARD_LIST?.contains(card) || boardLocked) return false;
   return !card.disabled && !card.classList.contains('is_flipped');
@@ -154,7 +201,12 @@ function resolveSelectedPair(): void {
   else scheduleMismatch();
 }
 
-/** Checks whether both selected cards contain the same motif. */
+/**
+ * Checks whether both selected cards contain the same motif.
+ * @param firstCard - The first revealed card.
+ * @param secondCard - The second revealed card.
+ * @returns Whether both cards share the same motif name.
+ */
 function cardsMatch(firstCard: HTMLButtonElement, secondCard: HTMLButtonElement): boolean {
   return firstCard.dataset.card_name === secondCard.dataset.card_name;
 }
@@ -176,7 +228,10 @@ function showResultWhenComplete(): void {
   showCompletedResult();
 }
 
-/** Checks whether no unmatched card remains on the board. */
+/**
+ * Checks whether no unmatched card remains on the board.
+ * @returns Whether every rendered card has been matched.
+ */
 function isBoardComplete(): boolean {
   if (!CARD_LIST) return false;
   return CARD_LIST.querySelector('.game__card:not(.is_matched)') === null;
@@ -198,7 +253,11 @@ function finishMismatch(): void {
   if (nextPlayer) announce(`${getColorLabel(nextPlayer)} player's turn.`);
 }
 
-/** Applies the visual, interactive, and spoken state of one card. */
+/**
+ * Applies the visual, interactive, and spoken state of one card.
+ * @param card - The card button to update.
+ * @param state - The new visual and interactive card state.
+ */
 function setCardState(card: HTMLButtonElement, state: CardState): void {
   const isFaceUp: boolean = state !== 'face_down';
   card.classList.toggle('is_flipped', isFaceUp);
@@ -207,7 +266,11 @@ function setCardState(card: HTMLButtonElement, state: CardState): void {
   updateCardAccessibility(card, state);
 }
 
-/** Keeps the spoken card state synchronized with the visual state. */
+/**
+ * Keeps the spoken card state synchronized with the visual state.
+ * @param card - The card button whose accessible state is updated.
+ * @param state - The new card state to announce.
+ */
 function updateCardAccessibility(card: HTMLButtonElement, state: CardState): void {
   const name: string = card.dataset.card_name ?? 'Memory symbol';
   const position: string = card.dataset.card_position ?? '';
@@ -216,7 +279,13 @@ function updateCardAccessibility(card: HTMLButtonElement, state: CardState): voi
   card.setAttribute('aria-label', label);
 }
 
-/** Builds the accessible label belonging to one card state. */
+/**
+ * Builds the accessible label belonging to one card state.
+ * @param name - The card motif name.
+ * @param position - The card's one-based board position.
+ * @param state - The visual state represented by the label.
+ * @returns The accessible label for this card state.
+ */
 function getCardLabel(name: string, position: string, state: CardState): string {
   if (state === 'matched') return `${name}, matched card ${position}`;
   if (state === 'face_up') return `${name}, card ${position}`;
@@ -243,13 +312,20 @@ function announceStartingPlayer(): void {
   if (player) announce(`${getColorLabel(player)} player starts.`);
 }
 
-/** Announces a match, its score, and the retained turn. */
+/**
+ * Announces a match, its score, and the retained turn.
+ * @param player - The player who found the pair.
+ * @param score - That player's updated score.
+ */
 function announcePair(player: PlayerColor, score: number): void {
   const label: string = getColorLabel(player);
   announce(`${label} found a pair. Score: ${score}. ${label} plays again.`);
 }
 
-/** Sends one concise game update to assistive technology. */
+/**
+ * Sends one concise game update to assistive technology.
+ * @param message - The game status to announce.
+ */
 function announce(message: string): void {
   if (GAME_STATUS) GAME_STATUS.textContent = message;
 }

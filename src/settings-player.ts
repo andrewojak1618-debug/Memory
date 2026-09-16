@@ -3,7 +3,10 @@ import type { PlayerColor } from './theme-data';
 
 const PLAYER_ASSIGNMENT_STATUS: HTMLElement | null = document.getElementById('player_assignment');
 
-/** Reads the player color selected in the settings form. */
+/**
+ * Reads the player color selected in the settings form.
+ * @returns The selected player color, or `null` before selection.
+ */
 export function getSelectedPlayerColor(): PlayerColor | null {
   const selected: Element | null = document.querySelector('input[name="player"]:checked');
   if (!(selected instanceof HTMLInputElement)) return null;

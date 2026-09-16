@@ -18,7 +18,10 @@ export function saveGameSetup(setup: GameSetup): void {
   sessionStorage.setItem(GAME_SETUP_KEY, JSON.stringify(setup));
 }
 
-/** Validates stored settings before the game page uses them. */
+/**
+ * Validates stored settings before the game page uses them.
+ * @returns The stored setup, or `null` when it is missing or invalid.
+ */
 export function loadGameSetup(): GameSetup | null {
   const stored: string | null = sessionStorage.getItem(GAME_SETUP_KEY);
   if (!stored) return null;
@@ -37,6 +40,7 @@ export function clearGameSetup(): void {
 
 /** Rejects missing and unsupported values from storage.
  * @param value - Parsed storage content whose shape is not trusted.
+ * @returns Whether the value is a complete supported game setup.
  */
 export function isGameSetup(value: unknown): value is GameSetup {
   if (typeof value !== 'object' || value === null) return false;

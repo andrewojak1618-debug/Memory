@@ -19,7 +19,10 @@ export function saveGameResult(result: GameResult): void {
   sessionStorage.setItem(GAME_RESULT_KEY, JSON.stringify(result));
 }
 
-/** Returns only a validated result saved by this browser tab. */
+/**
+ * Returns only a validated result saved by this browser tab.
+ * @returns The stored game result, or `null` when missing or invalid.
+ */
 export function loadGameResult(): GameResult | null {
   const stored: string | null = sessionStorage.getItem(GAME_RESULT_KEY);
   if (!stored) return null;
@@ -38,6 +41,7 @@ export function clearGameResult(): void {
 
 /** Rejects incomplete scores and inconsistent winners.
  * @param value - Parsed storage content whose shape is not trusted.
+ * @returns Whether the value is a consistent completed game result.
  */
 export function isGameResult(value: unknown): value is GameResult {
   if (typeof value !== 'object' || value === null) return false;
@@ -51,6 +55,7 @@ export function isGameResult(value: unknown): value is GameResult {
 
 /** Validates the two nonnegative whole-number scores.
  * @param value - The unchecked score pair from storage.
+ * @returns Whether both player scores are valid.
  */
 function isScores(value: unknown): value is Readonly<Record<PlayerColor, number>> {
   if (typeof value !== 'object' || value === null) return false;
@@ -60,6 +65,7 @@ function isScores(value: unknown): value is Readonly<Record<PlayerColor, number>
 
 /** Rejects fractional, negative, and nonnumeric scores.
  * @param value - One unchecked player score.
+ * @returns Whether the value is a nonnegative whole-number score.
  */
 function isScore(value: unknown): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= MINIMUM_SCORE;
@@ -67,6 +73,7 @@ function isScore(value: unknown): value is number {
 
 /** Derives the winner solely from the final numbers.
  * @param scores - The validated scores for both players.
+ * @returns The leading player color, or `null` for a tie.
  */
 function getScoreWinner(scores: Readonly<Record<PlayerColor, number>>): PlayerColor | null {
   if (scores.blue === scores.orange) return null;

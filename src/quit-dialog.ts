@@ -5,7 +5,10 @@ const CONFIRM_EXIT: HTMLElement | null = document.getElementById('confirm_exit')
 const GAME_VIEW: HTMLElement | null = document.getElementById('game_view');
 let leaveGame: (() => void) | null = null;
 
-/** Connects the confirmation without ending the game prematurely. */
+/**
+ * Connects the confirmation without ending the game prematurely.
+ * @param onConfirmExit - The action run only after exit is confirmed.
+ */
 export function initQuitDialog(onConfirmExit: () => void): void {
   leaveGame = onConfirmExit;
   EXIT_BUTTON?.addEventListener('click', openQuitDialog);
@@ -15,7 +18,10 @@ export function initQuitDialog(onConfirmExit: () => void): void {
   QUIT_DIALOG?.addEventListener('keydown', trapDialogFocus);
 }
 
-/** Keeps forward and backward keyboard navigation inside the modal. */
+/**
+ * Keeps forward and backward keyboard navigation inside the modal.
+ * @param event - The dialog keyboard event to handle.
+ */
 function trapDialogFocus(event: KeyboardEvent): void {
   if (event.key !== 'Tab' || !BACK_TO_GAME || !CONFIRM_EXIT) return;
   const movesBackward: boolean = event.shiftKey && document.activeElement === BACK_TO_GAME;

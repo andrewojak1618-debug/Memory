@@ -71,7 +71,10 @@ function startSelectedGame(): void {
   window.location.assign('./game.html');
 }
 
-/** Reads the complete, supported selection without retaining the form. */
+/**
+ * Reads the complete, supported selection without retaining the form.
+ * @returns The complete setup, or `null` while a category is missing.
+ */
 function getCompleteSetup(): GameSetup | null {
   const theme: GameTheme | null = getSelectedTheme();
   const player: PlayerColor | null = getSelectedPlayerColor();
@@ -79,7 +82,10 @@ function getCompleteSetup(): GameSetup | null {
   return theme && player && boardSize ? { theme, player, boardSize } : null;
 }
 
-/** Reads one supported board-size value from the setup form. */
+/**
+ * Reads one supported board-size value from the setup form.
+ * @returns The selected board size, or `null` before a valid selection.
+ */
 function getSelectedBoardSize(): BoardSize | null {
   const selected: Element | null = document.querySelector('input[name="board_size"]:checked');
   if (!(selected instanceof HTMLInputElement)) return null;
@@ -100,14 +106,20 @@ function updateSettingsState(): void {
   updateStartButtonState(hasTheme && hasPlayer && hasBoard);
 }
 
-/** Unlocks dependent settings after a game theme has been selected. */
+/**
+ * Unlocks dependent settings after a game theme has been selected.
+ * @param hasTheme - Whether the required theme category is complete.
+ */
 function updateDependentSettings(hasTheme: boolean): void {
   DEPENDENT_SETTING_GROUPS.forEach((group: HTMLFieldSetElement): void => {
     group.disabled = !hasTheme;
   });
 }
 
-/** Keeps the start control operable for accessible validation feedback. */
+/**
+ * Keeps the start control operable for accessible validation feedback.
+ * @param isEnabled - Whether all required settings are selected.
+ */
 function updateStartButtonState(isEnabled: boolean): void {
   if (!(START_BUTTON instanceof HTMLButtonElement)) return;
   START_BUTTON.classList.toggle('is_unavailable', !isEnabled);
@@ -117,14 +129,20 @@ function updateStartButtonState(isEnabled: boolean): void {
   else if (!SETTINGS_VALIDATION_MESSAGE?.hidden) showValidationMessage(getMissingSettings());
 }
 
-/** Returns the visible names of every setup category that is still empty. */
+/**
+ * Returns the visible names of every setup category that is still empty.
+ * @returns The labels of all incomplete settings categories.
+ */
 function getMissingSettings(): string[] {
   return REQUIRED_SETTINGS
     .filter((setting: SettingRequirement): boolean => !isSettingSelected(setting.name))
     .map((setting: SettingRequirement): string => setting.label);
 }
 
-/** Announces and displays the incomplete setup without changing the layout. */
+/**
+ * Announces and displays the incomplete setup without changing the layout.
+ * @param missingSettings - The visible labels of incomplete categories.
+ */
 function showValidationMessage(missingSettings: readonly string[]): void {
   if (!SETTINGS_VALIDATION_MESSAGE) return;
   SETTINGS_VALIDATION_MESSAGE.textContent = `Please select: ${missingSettings.join(', ')}.`;
@@ -146,7 +164,10 @@ function updateFooterState(): void {
   SETTINGS_FOOTER?.classList.toggle('is_unselected', selectionCount < MIN_VISIBLE_SELECTION_COUNT);
 }
 
-/** Counts completed categories without changing their radio states. */
+/**
+ * Counts completed categories without changing their radio states.
+ * @returns The number of selected settings categories.
+ */
 function getSelectedSettingCount(): number {
   return REQUIRED_SETTINGS.filter(
     (setting: SettingRequirement): boolean => isSettingSelected(setting.name),
@@ -160,7 +181,10 @@ function updateThemePreview(): void {
   if (DA_PROJECTS_PREVIEW) DA_PROJECTS_PREVIEW.hidden = !showDaProjects;
 }
 
-/** Reads and validates the selected game theme. */
+/**
+ * Reads and validates the selected game theme.
+ * @returns The selected theme, or `null` before a valid selection.
+ */
 function getSelectedTheme(): GameTheme | null {
   const selectedTheme: Element | null = document.querySelector('input[name="theme"]:checked');
   if (!(selectedTheme instanceof HTMLInputElement)) return null;
@@ -171,6 +195,7 @@ function getSelectedTheme(): GameTheme | null {
  * @param stepId - The footer step to update.
  * @param inputName - The related radio group.
  * @param showSelectedSteps - Whether completed categories are visible yet.
+ * @returns Whether this category currently has a selected option.
  */
 function setStepState(stepId: string, inputName: string, showSelectedSteps: boolean): boolean {
   const step: HTMLElement | null = document.getElementById(stepId);
@@ -184,6 +209,7 @@ function setStepState(stepId: string, inputName: string, showSelectedSteps: bool
 
 /** Returns the neutral footer label before progress is displayed.
  * @param stepId - The footer step whose label is requested.
+ * @returns The neutral label for the requested footer step.
  */
 function getInitialStepLabel(stepId: string): string {
   if (stepId === 'theme_step') return 'Theme';
@@ -191,7 +217,11 @@ function getInitialStepLabel(stepId: string): string {
   return 'Board size';
 }
 
-/** Returns the shorter initial label used before the theme is selected. */
+/**
+ * Returns the shorter initial label used before the theme is selected.
+ * @param stepId - The footer step whose current label is requested.
+ * @returns The selected value label or its neutral fallback.
+ */
 function getStepLabel(stepId: string): string {
   const theme: GameTheme | null = getSelectedTheme();
   const player: PlayerColor | null = getSelectedPlayerColor();
@@ -200,7 +230,10 @@ function getStepLabel(stepId: string): string {
   return getSelectedBoardLabel();
 }
 
-/** Returns the selected number of cards for the setup summary. */
+/**
+ * Returns the selected number of cards for the setup summary.
+ * @returns The board summary or its neutral label before selection.
+ */
 function getSelectedBoardLabel(): string {
   const selected: Element | null = document.querySelector('input[name="board_size"]:checked');
   if (!(selected instanceof HTMLInputElement) || !isBoardSize(selected.value)) return 'Board size';
@@ -208,7 +241,11 @@ function getSelectedBoardLabel(): string {
   return `Board - ${CARD_COUNTS[boardSize]} Cards`;
 }
 
-/** Checks whether one settings radio group has a selected option. */
+/**
+ * Checks whether one settings radio group has a selected option.
+ * @param inputName - The radio-group name to inspect.
+ * @returns Whether that group contains a checked option.
+ */
 function isSettingSelected(inputName: string): boolean {
   const selector: string = `input[name="${inputName}"]:checked`;
   return document.querySelector(selector) !== null;
