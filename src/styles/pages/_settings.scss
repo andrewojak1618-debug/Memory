@@ -301,7 +301,8 @@ $settings-start-hover-growth: 14px;
   }
 
   > input:checked,
-  .setting_group_theme &:hover > input:not(:checked) {
+  &:hover > input:not(:checked):not(:disabled),
+  &:focus-within > input:not(:checked):not(:disabled) {
     border-width: 1px;
     background-color: $color-settings-text;
     box-shadow: inset 0 0 0 4px $color-white;
@@ -313,7 +314,8 @@ $settings-start-hover-growth: 14px;
   }
 
   > input:checked + span,
-  .setting_group_theme &:hover > input + span {
+  &:hover > input:not(:disabled) + span,
+  &:focus-within > input:not(:disabled) + span {
     position: relative;
     font-weight: 700;
 
@@ -347,7 +349,8 @@ $settings-start-hover-growth: 14px;
 }
 
 .setting_group_theme .setting_option > input:checked + span,
-.setting_group_theme .setting_option:hover > input + span {
+.setting_group_theme .setting_option:hover > input:not(:disabled) + span,
+.setting_group_theme .setting_option:focus-within > input:not(:disabled) + span {
   &::after {
     width: 54px;
     border-top-width: 4px;
@@ -355,36 +358,6 @@ $settings-start-hover-growth: 14px;
 
   &::before {
     left: calc(100% + 68px);
-  }
-}
-
-.setting_group_theme .setting_options:hover .setting_option > input:checked {
-  border-width: 2px;
-  background-color: $color-white;
-  box-shadow: none;
-}
-
-.setting_group_theme .setting_options:hover .setting_option > input:checked + span {
-  font-weight: 400;
-
-  &::before,
-  &::after {
-    content: none;
-  }
-}
-
-.setting_group_theme .setting_options:hover .setting_option:hover > input:checked {
-  border-width: 1px;
-  background-color: $color-settings-text;
-  box-shadow: inset 0 0 0 4px $color-white;
-}
-
-.setting_group_theme .setting_options:hover .setting_option:hover > input:checked + span {
-  font-weight: 700;
-
-  &::before,
-  &::after {
-    content: '';
   }
 }
 
