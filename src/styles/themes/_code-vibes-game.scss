@@ -1,5 +1,7 @@
 @use '../abstracts/variables' as *;
 
+$game-notebook-header-spacing: 20px;
+
 .game__container_code_vibes {
   width: 1217px;
   height: 644px;
@@ -183,6 +185,13 @@
   grid-template-columns: repeat(6, 120px);
   grid-auto-rows: 120px;
   gap: 6px;
+}
+
+@media (max-width: 1024px) {
+  .game__container_code_vibes .game__header {
+    width: calc(100% - (2 * $game-notebook-header-spacing));
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 920px) {

@@ -80,7 +80,7 @@
 }
 
 .quit_dialog_da_projects .quit_dialog__exit:hover {
-  background-color: #ed5b50;
+  background-color: $color-da-projects-exit-button-hover;
   box-shadow: none;
   filter: none;
 }
@@ -175,8 +175,8 @@
 }
 
 .quit_dialog:not(.quit_dialog_da_projects) .quit_dialog__back:hover {
-  border: 3px solid #3abca4;
-  background-color: #66cfbcb2;
+  border: 3px solid $color-code-vibes-dialog-hover-border;
+  background-color: $color-code-vibes-dialog-hover-background;
   filter: none;
 }
 

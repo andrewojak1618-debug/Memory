@@ -11,6 +11,7 @@ $settings-start-hover-growth: 14px;
   justify-content: center;
   row-gap: $settings-row-gap;
   min-height: 100vh;
+  padding-inline: $settings-page-inline-padding;
   color: $color-settings-text;
   background-color: $color-white;
 
@@ -173,7 +174,7 @@ $settings-start-hover-growth: 14px;
   width: $settings-complete-footer-width;
 }
 
-@media (min-width: 1104px) {
+@media (min-width: $settings-wide-layout-min-width + 1px) {
   .settings__footer.selection_count_3.is_start_hovered {
     right: -$settings-start-hover-growth;
   }
@@ -284,10 +285,6 @@ $settings-start-hover-growth: 14px;
   gap: 0.6rem;
   border-radius: 0.25rem;
   cursor: pointer;
-
-  &:hover {
-    background-color: rgba($color-focus, 0.12);
-  }
 
   > input {
     appearance: none;

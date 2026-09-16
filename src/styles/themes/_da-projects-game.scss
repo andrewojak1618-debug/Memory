@@ -120,7 +120,7 @@
     border: 0;
     color: $color-white;
     background-color: $color-da-projects-blue-dark;
-    box-shadow: 0 4px 8px #2f2e2e33;
+    box-shadow: 0 4px 8px $color-da-projects-exit-shadow;
   }
 
   &:hover .game__exit_label {

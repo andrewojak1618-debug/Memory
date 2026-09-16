@@ -1,8 +1,13 @@
 @use '../abstracts/variables' as *;
 
+$game-over-compact-height: 689px;
+
 .game_over {
+  display: flow-root;
   width: 100%;
+  height: 100vh;
   min-height: 100vh;
+  overflow: hidden;
   background-color: $color-background;
 }
 
@@ -39,7 +44,6 @@
   font-style: normal;
   font-weight: 800;
   line-height: 156px;
-  outline: none;
   text-shadow: 0 4px 4px $color-da-projects-game-over-shadow;
   white-space: nowrap;
 }
@@ -143,9 +147,14 @@
   font-weight: 800;
   font-stretch: expanded;
   line-height: 121px;
-  outline: none;
   text-align: center;
   white-space: nowrap;
+}
+
+.game_over__da_projects_title,
+.game_over__title {
+  border: 0;
+  outline: none;
 }
 
 .game_over__title_text {
@@ -244,4 +253,18 @@
   width: 143px;
   height: 28px;
   margin: 17px 20px;
+}
+
+@media (max-height: $game-over-compact-height) {
+  .game_over,
+  .game_over.game_result_da_projects {
+    display: grid;
+    padding-top: 0;
+    place-items: center;
+  }
+
+  .game_over__content,
+  .game_over.game_result_da_projects .game_over__da_projects_content {
+    margin: 0;
+  }
 }
