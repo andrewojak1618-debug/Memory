@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { isGameSetup } from '../src/game-setup.ts';
+import { isGameSetup } from '../src/game/game-setup.ts';
 
 test('accepts one complete supported game setup', (): void => {
   assert.equal(isGameSetup({ theme: 'da_projects', player: 'orange', boardSize: '4x6' }), true);

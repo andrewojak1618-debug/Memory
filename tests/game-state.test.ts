@@ -6,8 +6,8 @@ import {
   getWinner,
   hasTie,
   switchPlayer,
-} from '../src/game-state.ts';
-import type { GameState } from '../src/game-state.ts';
+} from '../src/game/game-state.ts';
+import type { GameState } from '../src/game/game-state.ts';
 
 test('starts with the selected player and a tied zero score', (): void => {
   const state: GameState = createGameState('orange');

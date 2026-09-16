@@ -1,0 +1,15 @@
+@use '../base/base';
+@use '../pages/settings';
+@use '../components/da-projects-preview';
+@use '../components/theme-preview';
+@use '../responsive/responsive';
+
+@media (min-width: 1440px) {
+  .settings {
+    align-content: center;
+  }
+
+  .settings__header {
+    margin-top: 0;
+  }
+}

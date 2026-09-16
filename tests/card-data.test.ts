@@ -6,8 +6,8 @@ import {
   CARDS_PER_PAIR,
   createCards,
   shuffleCards,
-} from '../src/card-data.ts';
-import type { BoardSize, CardSymbol, MemoryCard } from '../src/card-data.ts';
+} from '../src/game/card-data.ts';
+import type { BoardSize, CardSymbol, MemoryCard } from '../src/game/card-data.ts';
 
 const SYMBOL_COUNT: number = 18;
 const INCOMPLETE_SYMBOL_COUNT: number = 7;
@@ -21,7 +21,12 @@ const SYMBOLS: readonly CardSymbol[] = Array.from(
   }),
 );
 
-/** Counts every occurrence of one motif in a generated deck. */
+/**
+ * Counts every occurrence of one motif in a generated deck.
+ * @param cards - The generated cards to inspect.
+ * @param name - The motif name whose copies are counted.
+ * @returns The number of cards with the requested motif.
+ */
 function countCards(cards: readonly MemoryCard[], name: string): number {
   return cards.filter((card: MemoryCard): boolean => card.symbol.name === name).length;
 }

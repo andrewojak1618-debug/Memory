@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { isGameResult } from '../src/result-data.ts';
+import { isGameResult } from '../src/results/result-data.ts';
 
 const SETUP: Readonly<{ theme: string; player: string; boardSize: string }> = {
   theme: 'code_vibes', player: 'blue', boardSize: '4x4',

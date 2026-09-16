@@ -1,0 +1,240 @@
+@use '../abstracts/variables' as *;
+
+.game__container_code_vibes {
+  width: 1217px;
+  height: 644px;
+}
+
+.game__container_code_vibes.game__container_6x6 {
+  height: 866px;
+}
+
+.game__container_code_vibes .game__header,
+.game__container_code_vibes .game__status,
+.game__container_code_vibes .game__score_panel {
+  height: $game-header-height;
+}
+
+.game__container_code_vibes .game__status {
+  justify-content: space-between;
+  width: 687px;
+  max-width: 100%;
+}
+
+.game__container_code_vibes .game__score_panel {
+  justify-content: flex-start;
+  width: 292px;
+  max-width: 100%;
+  padding-inline: 20px;
+  background-color: $color-game-header-surface;
+}
+
+.game__container_code_vibes .game__score {
+  flex-shrink: 0;
+  height: $game-player-height;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.game__container_code_vibes .game__score_blue {
+  width: 98px;
+}
+
+.game__container_code_vibes .game__score_orange {
+  width: 134px;
+  margin-left: auto;
+}
+
+.game__container_code_vibes .game__score_identity {
+  flex-shrink: 0;
+  height: $game-player-height;
+}
+
+.game__container_code_vibes .game__score_blue .game__score_identity {
+  width: 80px;
+}
+
+.game__container_code_vibes .game__score_orange .game__score_identity {
+  width: 115px;
+}
+
+.game__container_code_vibes .game__score_icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+.game__container_code_vibes .game__score_blue,
+.game__container_code_vibes .game__score_blue .game__score_value {
+  color: $color-preview-blue;
+}
+
+.game__container_code_vibes .game__score_orange,
+.game__container_code_vibes .game__score_orange .game__score_value {
+  color: $color-preview-orange;
+}
+
+.game__container_code_vibes .game__score_value {
+  flex-shrink: 0;
+}
+
+.game__container_code_vibes .game__score_blue .game__score_value {
+  width: 14px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.game__container_code_vibes .game__score_orange .game__score_value {
+  display: flex;
+  align-items: center;
+  width: 15px;
+  height: 24px;
+}
+
+.game__container_code_vibes .game__current_player {
+  gap: 16px;
+  flex-shrink: 0;
+  width: 224px;
+  height: 32px;
+  margin-block: 8px;
+}
+
+.game__container_code_vibes .game__current_player_text {
+  width: auto;
+  height: 32px;
+  margin: 0;
+  color: $color-white;
+  font-size: 26px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.game__container_code_vibes .game__current_player_icon {
+  flex-shrink: 0;
+  width: 29px;
+  height: 24px;
+}
+
+.game__container_code_vibes .game__exit_button {
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 207px;
+  height: $game-header-height;
+  border: 1px solid $color-preview-border;
+  color: $color-white;
+  font-size: 24px;
+
+  &:hover {
+    box-shadow: 0 4px 8px $color-draw-result-shadow;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-white;
+    outline-offset: -3px;
+  }
+}
+
+.game__container_code_vibes .game__exit_icon_container {
+  display: grid;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+}
+
+.game__container_code_vibes .game__exit_label {
+  width: 119px;
+  height: 30px;
+  font-size: 24px;
+}
+
+.game__container_code_vibes .game__board {
+  width: 529px;
+  height: 528px;
+  margin-top: auto;
+}
+
+.game__container_code_vibes .game__board_4x4 {
+  margin-top: 54px;
+}
+
+.game__container_code_vibes .game__board_4x6 {
+  width: 750px;
+  height: 498px;
+  margin-top: 54px;
+}
+
+.game__container_code_vibes .game__board_6x6 {
+  width: 750px;
+  height: 750px;
+  margin-top: 54px;
+}
+
+.game__container_code_vibes .game__card_list_4x4 {
+  grid-template-columns: repeat(4, 120px);
+  grid-auto-rows: 120px;
+  gap: 16px;
+}
+
+.game__container_code_vibes .game__card_list_4x6,
+.game__container_code_vibes .game__card_list_6x6 {
+  grid-template-columns: repeat(6, 120px);
+  grid-auto-rows: 120px;
+  gap: 6px;
+}
+
+@media (max-width: 920px) {
+  .game__container_code_vibes .game__header {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .game__container_code_vibes .game__exit_button {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .game__container_code_vibes .game__board {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .game__container_code_vibes .game__card_list_4x4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: clamp(4px, 3vw, 16px);
+  }
+
+  .game__container_code_vibes .game__card_list_4x6,
+  .game__container_code_vibes .game__card_list_6x6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: clamp(3px, 2vw, 9px);
+  }
+
+  .game__container_code_vibes .game__card_item {
+    width: auto;
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
+
+@media (max-width: 540px) {
+  .game__container_code_vibes .game__header,
+  .game__container_code_vibes .game__status {
+    height: auto;
+    min-height: $game-header-height;
+  }
+
+  .game__container_code_vibes .game__status {
+    flex-wrap: wrap;
+  }
+
+  .game__container_code_vibes .game__current_player {
+    margin-left: auto;
+  }
+}

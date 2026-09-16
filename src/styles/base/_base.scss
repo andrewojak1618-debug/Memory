@@ -1,0 +1,77 @@
+@use '../abstracts/variables' as *;
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('/assets/fonts/almarai-regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('/assets/fonts/almarai-bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Telugu';
+  src: url('/assets/fonts/anek-telugu-expanded-800.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: expanded;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Red Rose';
+  src: url('/assets/fonts/red-rose-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: $color-background;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: $color-text;
+  background-color: $color-background;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.visually_hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+button {
+  font: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
