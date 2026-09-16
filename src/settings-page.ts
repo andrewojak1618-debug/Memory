@@ -17,6 +17,9 @@ const SETTINGS_VALIDATION_MESSAGE: HTMLElement | null = document.getElementById(
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
+const DEPENDENT_SETTING_GROUPS: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll(
+  '.setting_group_player, .setting_group_board',
+);
 const FOOTER_SELECTION_CLASSES: readonly string[] = [
   'selection_count_0', 'selection_count_1', 'selection_count_2', 'selection_count_3',
 ];
@@ -90,10 +93,18 @@ function updateSettingsState(): void {
   const hasPlayer: boolean = setStepState('player_step', 'player', showSelectedSteps);
   const hasBoard: boolean = setStepState('board_step', 'board_size', showSelectedSteps);
 
+  updateDependentSettings(hasTheme);
   updateThemePreview();
   updatePlayerAssignment();
   updateFooterState();
   updateStartButtonState(hasTheme && hasPlayer && hasBoard);
+}
+
+/** Unlocks dependent settings after a game theme has been selected. */
+function updateDependentSettings(hasTheme: boolean): void {
+  DEPENDENT_SETTING_GROUPS.forEach((group: HTMLFieldSetElement): void => {
+    group.disabled = !hasTheme;
+  });
 }
 
 /** Keeps the start control operable for accessible validation feedback. */

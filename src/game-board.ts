@@ -172,6 +172,7 @@ function completeMatchingPair(): void {
 /** Opens the available result view after every card has been matched. */
 function showResultWhenComplete(): void {
   if (!isBoardComplete()) return;
+  boardLocked = true;
   showCompletedResult();
 }
 

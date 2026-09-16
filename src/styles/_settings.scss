@@ -247,7 +247,7 @@ $settings-start-hover-growth: 14px;
 
 .player_board_container {
   position: absolute;
-  bottom: 0;
+  bottom: 66px;
   left: 0;
   display: grid;
   width: 244px;
@@ -385,5 +385,14 @@ $settings-start-hover-growth: 14px;
   &::before,
   &::after {
     content: '';
+  }
+}
+
+.setting_group:disabled {
+  .setting_option, .setting_option > input {
+    cursor: not-allowed;
+  }
+  .setting_option:hover {
+    background-color: transparent;
   }
 }

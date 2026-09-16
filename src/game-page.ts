@@ -22,6 +22,7 @@ function init(): void {
     return;
   }
   initGameBoard();
+  window.addEventListener('pagehide', resetGameBoard);
   initQuitDialog(leaveGame);
   prepareGameView(setup);
 }
