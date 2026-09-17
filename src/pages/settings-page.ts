@@ -17,6 +17,9 @@ const SETTINGS_VALIDATION_MESSAGE: HTMLElement | null = document.getElementById(
 const START_BUTTON: HTMLElement | null = document.getElementById('start_button');
 const CODE_VIBES_PREVIEW: HTMLElement | null = document.getElementById('code_vibes_preview');
 const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_projects_preview');
+const THEME_OPTIONS: NodeListOf<HTMLLabelElement> = document.querySelectorAll(
+  '.setting_group_theme .setting_option',
+);
 const DEPENDENT_SETTING_GROUPS: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll(
   '.setting_group_player, .setting_group_board',
 );
@@ -40,8 +43,47 @@ function init(): void {
   START_BUTTON?.addEventListener('click', startSelectedGame);
   START_BUTTON?.addEventListener('pointerenter', updateStartHover);
   START_BUTTON?.addEventListener('pointerleave', updateStartHover);
+  THEME_OPTIONS.forEach(connectThemePreviewEvents);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+}
+
+/** Connects one theme option to temporary pointer and focus previews.
+ * @param option - The label containing one theme radio input.
+ */
+function connectThemePreviewEvents(option: HTMLLabelElement): void {
+  option.addEventListener('pointerenter', previewThemeFromEvent);
+  option.addEventListener('pointerleave', restoreSelectedThemePreview);
+  option.addEventListener('focusin', previewThemeFromEvent);
+  option.addEventListener('focusout', restoreSelectedThemePreview);
+}
+
+/** Shows the theme represented by the currently explored option.
+ * @param event - The pointer or focus event emitted by a theme label.
+ */
+function previewThemeFromEvent(event: Event): void {
+  const theme: GameTheme | null = getThemeFromOption(event.currentTarget);
+  if (theme) showThemePreview(theme);
+}
+
+/** Restores the selected preview after pointer and focus leave an option.
+ * @param event - The pointer or focus event emitted by a theme label.
+ */
+function restoreSelectedThemePreview(event: Event): void {
+  const option: EventTarget | null = event.currentTarget;
+  if (!(option instanceof HTMLLabelElement)) return;
+  if (option.matches(':hover') || option.contains(document.activeElement)) return;
+  updateThemePreview();
+}
+
+/** Reads a supported theme value from one option label.
+ * @param target - The event target expected to contain a theme input.
+ * @returns The represented theme, or `null` for an invalid target.
+ */
+function getThemeFromOption(target: EventTarget | null): GameTheme | null {
+  if (!(target instanceof HTMLLabelElement)) return null;
+  const input: HTMLInputElement | null = target.querySelector('input[name="theme"]');
+  return input && isGameTheme(input.value) ? input.value : null;
 }
 
 /** Keeps the footer aligned with the enlarged, available start control.
@@ -176,9 +218,26 @@ function getSelectedSettingCount(): number {
 
 /** Displays the preview that belongs to the selected theme. */
 function updateThemePreview(): void {
-  const showDaProjects: boolean = getSelectedTheme() === 'da_projects';
-  if (CODE_VIBES_PREVIEW) CODE_VIBES_PREVIEW.hidden = showDaProjects;
-  if (DA_PROJECTS_PREVIEW) DA_PROJECTS_PREVIEW.hidden = !showDaProjects;
+  showThemePreview(getSelectedTheme() ?? 'code_vibes');
+}
+
+/** Displays one preview without changing the selected theme.
+ * @param theme - The theme whose preview should be visible.
+ */
+function showThemePreview(theme: GameTheme): void {
+  const showDaProjects: boolean = theme === 'da_projects';
+  setPreviewVisibility(CODE_VIBES_PREVIEW, !showDaProjects);
+  setPreviewVisibility(DA_PROJECTS_PREVIEW, showDaProjects);
+}
+
+/** Synchronizes visual and assistive visibility for one preview.
+ * @param preview - The preview element to update.
+ * @param isVisible - Whether the preview belongs to the active context.
+ */
+function setPreviewVisibility(preview: HTMLElement | null, isVisible: boolean): void {
+  if (!preview) return;
+  preview.hidden = !isVisible;
+  preview.setAttribute('aria-hidden', String(!isVisible));
 }
 
 /**

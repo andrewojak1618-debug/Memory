@@ -50,7 +50,7 @@
     width: 991px;
     height: 175px;
     margin: 0;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Red Rose', Arial, Helvetica, sans-serif;
     font-size: 140px;
     font-weight: 700;
     line-height: 175px;
@@ -101,11 +101,12 @@
   font-size: 1.25rem;
   font-weight: 700;
   text-decoration: none;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: transform 220ms ease, box-shadow 180ms ease;
+  transform-origin: center;
 
   &:hover {
     box-shadow: 0 0.65rem 1.5rem rgba(0, 0, 0, 0.26);
-    transform: translateY(-0.2rem);
+    transform: scale(1.076, 1.0408);
   }
 
   &:focus-visible {
@@ -115,7 +116,7 @@
   }
 
   &:active {
-    transform: translateY(0);
+    transform: scale(1);
   }
 
   &:visited {
@@ -134,23 +135,68 @@
     width: 85px;
     height: 50px;
     align-items: center;
+    font-family: 'Red Rose', Arial, Helvetica, sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
   }
 
   &__arrow {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 33px;
     font-size: 33px;
     line-height: 1;
     transition: transform 180ms ease;
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      opacity: 0;
+      content: '';
+    }
+
+    &::before {
+      width: 36px;
+      border-top: 4px solid $color-background;
+    }
+
+    &::after {
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      border-top: 4px solid $color-background;
+      border-right: 4px solid $color-background;
+      transform: translateY(-6px) rotate(45deg);
+    }
   }
 
   &:hover &__arrow {
+    color: transparent;
     transform: translateX(0.2rem);
+
+    &::before,
+    &::after {
+      animation: play_arrow_replace 240ms ease-out forwards;
+    }
   }
 
   &:hover &__icon {
     transform: rotate(-12deg);
+  }
+}
+
+@keyframes play_arrow_replace {
+  0%,
+  35% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
@@ -194,5 +240,11 @@
   .play_button__icon,
   .play_button__arrow {
     transition: none;
+  }
+
+  .play_button:hover .play_button__arrow::before,
+  .play_button:hover .play_button__arrow::after {
+    animation: none;
+    opacity: 1;
   }
 }
