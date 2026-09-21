@@ -1,5 +1,274 @@
+@use '../abstracts/variables' as *;
 @use '../base/base';
-@use '../pages/game-over';
+
+$game-over-compact-height: 689px;
+
+.game_over {
+  display: flow-root;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: $color-background;
+}
+
+.game_over.game_result_da_projects {
+  padding-top: 292px;
+  background-color: $color-da-projects-blue-dark;
+
+  .game_over__content {
+    display: none;
+  }
+
+  .game_over__da_projects_content {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.game_over__da_projects_content {
+  position: relative;
+  display: none;
+  width: 969px;
+  height: 397px;
+}
+
+.game_over__da_projects_title {
+  display: grid;
+  width: 763px;
+  height: 156px;
+  margin: 0 auto;
+  place-items: center;
+  color: $color-da-projects-game-over;
+  font-family: 'Figtree', Arial, sans-serif;
+  font-size: 130px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 156px;
+  text-shadow: 0 4px 4px $color-da-projects-game-over-shadow;
+  white-space: nowrap;
+}
+
+.game_over__da_projects_score {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 222px;
+  height: 137px;
+  transform: translateX(-50%);
+}
+
+.game_over__da_projects_score_title {
+  width: 222px;
+  height: 37px;
+  margin: 0;
+  color: $color-white;
+  font-family: 'Figtree', Arial, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 37px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.game_over__da_projects_score_panel {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;
+  height: 76px;
+  padding-inline: 40px;
+  border-radius: 10px;
+  background-color: $color-white;
+  transform: translateX(-50%);
+}
+
+.game_over__da_projects_score_item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  width: 55px;
+  height: 46px;
+}
+
+.game_over__da_projects_score_item.is_blue .game_over__da_projects_score_value {
+  color: $color-preview-blue;
+}
+
+.game_over__da_projects_score_item.is_orange .game_over__da_projects_score_value {
+  color: $color-da-projects-orange;
+}
+
+.game_over__da_projects_score_icon {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.game_over__da_projects_score_value {
+  width: 23px;
+  height: 46px;
+  font-family: 'Figtree', Arial, sans-serif;
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 46px;
+  text-align: center;
+}
+
+.game_over__content {
+  position: relative;
+  width: 991px;
+  height: 367px;
+  margin: 303px auto 0;
+}
+
+.game_over__heading {
+  display: grid;
+  width: 991px;
+  height: 125px;
+  place-items: center;
+}
+
+.game_over__title {
+  display: grid;
+  width: 990px;
+  height: 125px;
+  margin: 0;
+  place-items: center;
+  color: $color-preview-border;
+  font-family: 'Anek Telugu', Arial, sans-serif;
+  font-size: 162px;
+  font-weight: 800;
+  font-stretch: expanded;
+  line-height: 121px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.game_over__da_projects_title,
+.game_over__title {
+  border: 0;
+  outline: none;
+}
+
+.game_over__title_text {
+  display: grid;
+  width: 990.5px;
+  height: 125px;
+  place-items: center;
+  transform: translateY(25px);
+  filter:
+    drop-shadow(-2px -2px 0 $color-white)
+    drop-shadow(-3px 5px 4px $color-draw-shadow);
+}
+
+.game_over__score {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 323px;
+  height: 118px;
+  transform: translateX(-50%);
+}
+
+.game_over__score_title {
+  display: grid;
+  width: 323px;
+  height: 32px;
+  margin: 0;
+  place-items: center;
+  font-family: 'Red Rose', Arial, sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.game_over__score_content {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 323px;
+  height: 62px;
+  background-color: $color-result-button;
+}
+
+.game_over__score_item,
+.game_over__score_player_two {
+  display: flex;
+  align-items: center;
+}
+
+.game_over__score_item {
+  width: 108px;
+  height: 28px;
+  margin: 17px 20px;
+}
+
+.game_over__score_icon {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 20px;
+}
+
+.game_over__score_label {
+  width: 87px;
+  height: 30px;
+  margin-left: 4px;
+  color: $color-preview-blue;
+  font-family: 'Red Rose', Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+.game_over__score_value {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 28px;
+  margin-left: 4px;
+  color: $color-preview-blue;
+  font-family: 'Red Rose', Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.game_over__score_content .is_orange .game_over__score_label,
+.game_over__score_content .is_orange .game_over__score_value {
+  color: $color-preview-orange;
+}
+
+.game_over__score_player_two {
+  flex: 0 0 auto;
+  width: 143px;
+  height: 28px;
+  margin: 17px 20px;
+}
+
+@media (max-height: $game-over-compact-height) {
+  .game_over,
+  .game_over.game_result_da_projects {
+    display: grid;
+    padding-top: 0;
+    place-items: center;
+  }
+
+  .game_over__content,
+  .game_over.game_result_da_projects .game_over__da_projects_content {
+    margin: 0;
+  }
+}
 
 @media (min-width: 1440px) {
   .game_over,

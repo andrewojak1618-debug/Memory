@@ -40,6 +40,8 @@ Memory verwendet separate HTML-Seiten für Home, Settings, Spiel, Game over, Une
 
 Wiederverwendete SCSS-Module sind Partials und beginnen deshalb mit einem Unterstrich. Die Dateien in `src/styles/entries` sind dagegen bewusst keine Partials: Sie werden von den jeweiligen TypeScript-Seiten direkt importiert und von Vite als eigenständige Stylesheet-Einstiegspunkte kompiliert. Ihre Dateinamen erhalten daher keinen führenden Unterstrich.
 
+Rein seitenbezogene Styles können direkt in ihrem Entry liegen, wie beim Home- und Game-over-Screen. Gemeinsam verwendete Styles und größere Seiten mit getrennten Komponenten, Themes oder responsiven Regeln bleiben als Partials bestehen. Dadurch werden unnötige Eins-zu-eins-Weiterleitungen vermieden, ohne Wiederverwendung, Kaskadenreihenfolge oder die Grenze von 400 Zeilen pro Datei zu verschlechtern.
+
 ## Lokal starten
 
 Voraussetzung ist eine aktuelle Installation von Node.js und npm.

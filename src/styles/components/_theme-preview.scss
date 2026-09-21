@@ -272,18 +272,23 @@ $start-button-hover-height: 61px;
   }
 }
 
-.start_button:not(:disabled):not(.is_unavailable) .start_button__icon {
-  animation: start_button_icon_tilt 1200ms ease-in-out infinite;
+.start_button:not(:disabled):not(.is_unavailable):hover .start_button__icon,
+.start_button:not(:disabled):not(.is_unavailable):focus-visible .start_button__icon {
+  animation: start_button_icon_tilt 600ms ease-in-out forwards;
 }
 
 @keyframes start_button_icon_tilt {
-  0%,
-  100% {
-    transform: rotate(-5deg);
+  0% {
+    transform: rotate(0);
   }
-
-  50% {
+  33% {
+    transform: rotate(-10deg);
+  }
+  66% {
     transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-10deg);
   }
 }
 
