@@ -1,6 +1,6 @@
 import '../styles/entries/game-page.scss';
 import { initGameBoard, renderGameBoard, resetGameBoard } from '../game/game-board';
-import { clearGameSetup, loadGameSetup } from '../game/game-setup';
+import { loadGameSetup } from '../game/game-setup';
 import type { GameSetup } from '../game/game-setup';
 import { applyGameTheme } from '../game/game-theme';
 import { prepareGamePlayers, resetGamePlayers } from '../game/player-settings';
@@ -47,11 +47,10 @@ function prepareGameView(setup: GameSetup): void {
   renderGameBoard(setup.theme, setup.boardSize);
 }
 
-/** Clears the abandoned setup before returning to clean settings. */
+/** Clears the abandoned round while retaining its settings for editing. */
 function leaveGame(): void {
   if (isLeaving) return;
   isLeaving = true;
-  clearGameSetup();
   clearGameResult();
   resetGameBoard();
   resetGamePlayers();

@@ -12,9 +12,18 @@ $settings-notebook-min-width: $settings-notebook-layout-width +
       $settings-minimum-top-space,
       calc(
         100vh - $settings-header-height - $settings-row-gap -
-          $settings-context-height
+          $settings-context-height - $settings-page-bottom-space
       )
     );
+  }
+}
+
+@media (min-width: $settings-notebook-min-width) and
+  (max-width: $settings-wide-layout-min-width) and
+  (min-height: 601px) and
+  (max-height: 800px) {
+  .settings {
+    row-gap: $settings-row-gap - $settings-page-bottom-space;
   }
 }
 
@@ -71,6 +80,10 @@ $settings-notebook-min-width: $settings-notebook-layout-width +
 @media (max-width: 850px) {
   .settings {
     &__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__form {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -210,6 +223,18 @@ $settings-notebook-min-width: $settings-notebook-layout-width +
 }
 
 @media (max-width: 340px) {
+  .setting_group_theme .setting_option > input:checked + span,
+  .setting_group_theme .setting_option:hover > input:not(:disabled) + span,
+  .setting_group_theme .setting_option:focus-within > input:not(:disabled) + span {
+    &::after {
+      width: 49px;
+    }
+
+    &::before {
+      left: calc(100% + 62px);
+    }
+  }
+
   .settings__step_list {
     grid-template-columns: minmax(0, 1fr);
   }

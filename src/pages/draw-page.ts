@@ -1,5 +1,5 @@
 import '../styles/entries/draw-page.scss';
-import { clearGameSetup, saveGameSetup } from '../game/game-setup';
+import { saveGameSetup } from '../game/game-setup';
 import { getDevelopmentResult } from '../results/result-debug';
 import { clearGameResult, loadGameResult } from '../results/result-data';
 import type { GameResult } from '../results/result-data';
@@ -68,12 +68,11 @@ function startRevanche(): void {
   window.location.assign('./game.html');
 }
 
-/** Clears the previous round before opening the settings form. */
+/** Clears the result while retaining its setup for another game. */
 function returnToSettings(): void {
   if (isNavigating) return;
   isNavigating = true;
   clearGameResult();
-  clearGameSetup();
   window.location.assign('./settings.html');
 }
 

@@ -46,7 +46,7 @@ function closeQuitDialog(): void {
   if (QUIT_DIALOG instanceof HTMLDialogElement) QUIT_DIALOG.close();
 }
 
-/** Leaves the game view and clears the abandoned game configuration. */
+/** Leaves the game view while retaining its settings for editing. */
 function returnToSettings(): void {
   closeQuitDialog();
   leaveGame?.();

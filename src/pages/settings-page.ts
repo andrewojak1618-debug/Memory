@@ -1,7 +1,7 @@
 import '../styles/entries/settings-page.scss';
 import { CARD_COUNTS, isBoardSize } from '../game/card-data';
 import type { BoardSize } from '../game/card-data';
-import { saveGameSetup } from '../game/game-setup';
+import { loadGameSetup, saveGameSetup } from '../game/game-setup';
 import type { GameSetup } from '../game/game-setup';
 import { getColorLabel } from '../shared/player-color';
 import { clearGameResult } from '../results/result-data';
@@ -37,12 +37,35 @@ let isNavigating: boolean = false;
 
 /** Connects the setup form to its progress and start controls. */
 function init(): void {
+  restoreStoredSetup();
   START_BUTTON?.addEventListener('click', startSelectedGame);
   START_BUTTON?.addEventListener('pointerenter', updateStartHover);
   START_BUTTON?.addEventListener('pointerleave', updateStartHover);
   THEME_OPTIONS.forEach(connectThemePreviewEvents);
   SETTINGS_FORM?.addEventListener('change', updateSettingsState);
   updateSettingsState();
+}
+
+/** Restores the previous choices after a confirmed game exit. */
+function restoreStoredSetup(): void {
+  const setup: GameSetup | null = loadGameSetup();
+  if (!setup) return;
+  selectSetting('theme', setup.theme);
+  selectSetting('player', setup.player);
+  selectSetting('board_size', setup.boardSize);
+}
+
+/** Selects one matching radio option from a settings group.
+ * @param name - The radio-group name to update.
+ * @param value - The stored value that should be selected.
+ */
+function selectSetting(name: string, value: string): void {
+  const inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll(
+    `input[name="${name}"]`,
+  );
+  inputs.forEach((input: HTMLInputElement): void => {
+    input.checked = input.value === value;
+  });
 }
 
 /** Connects one theme option to temporary pointer and focus previews.

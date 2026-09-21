@@ -36,6 +36,10 @@ Die ausgewählte Spielerfarbe beginnt. Ein gefundenes Paar bleibt sichtbar, zäh
 
 Memory verwendet separate HTML-Seiten für Home, Settings, Spiel, Game over, Unentschieden und Gewinneransicht. Ihre Einstiegspunkte sind in `vite.config.ts` unter `input` eingetragen. Dieser Aufbau folgt der offiziellen Vite-Dokumentation zu [Mehrseitenprojekten](https://vite.dev/guide/build#multi-page-app) und zur [Konfigurationsoption `input`](https://vite.dev/config/shared-options#input).
 
+## SCSS-Struktur
+
+Wiederverwendete SCSS-Module sind Partials und beginnen deshalb mit einem Unterstrich. Die Dateien in `src/styles/entries` sind dagegen bewusst keine Partials: Sie werden von den jeweiligen TypeScript-Seiten direkt importiert und von Vite als eigenständige Stylesheet-Einstiegspunkte kompiliert. Ihre Dateinamen erhalten daher keinen führenden Unterstrich.
+
 ## Lokal starten
 
 Voraussetzung ist eine aktuelle Installation von Node.js und npm.

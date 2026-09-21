@@ -1,5 +1,4 @@
 import '../styles/entries/winner-page.scss';
-import { clearGameSetup } from '../game/game-setup';
 import { getDevelopmentResult } from '../results/result-debug';
 import { clearGameResult, loadGameResult } from '../results/result-data';
 import type { GameResult } from '../results/result-data';
@@ -70,12 +69,11 @@ function getWinnerLabel(theme: GameTheme, winner: PlayerColor): string {
   return theme === 'da_projects' ? `${color} Player` : `${color.toUpperCase()} PLAYER`;
 }
 
-/** Clears the completed game before returning to empty Settings. */
+/** Clears the completed result while retaining its setup for another game. */
 function returnToSettings(): void {
   if (isNavigating) return;
   isNavigating = true;
   clearGameResult();
-  clearGameSetup();
   window.location.assign('./settings.html');
 }
 
