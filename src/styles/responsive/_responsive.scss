@@ -152,13 +152,10 @@ $settings-notebook-min-width: $settings-notebook-layout-width +
   .settings__footer.is_unselected,
   .settings__footer.is_unselected .settings__steps,
   .settings__footer.selection_count_1,
-  .settings__footer.selection_count_1 .settings__steps {
-    width: 492px;
-  }
-
+  .settings__footer.selection_count_1 .settings__steps,
   .settings__footer.selection_count_2,
   .settings__footer.selection_count_2 .settings__steps {
-    width: 604px;
+    width: 492px;
   }
 
   .settings__footer.selection_count_3,

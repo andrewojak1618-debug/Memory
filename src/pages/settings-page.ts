@@ -20,13 +20,10 @@ const DA_PROJECTS_PREVIEW: HTMLElement | null = document.getElementById('da_proj
 const THEME_OPTIONS: NodeListOf<HTMLLabelElement> = document.querySelectorAll(
   '.setting_group_theme .setting_option',
 );
-const DEPENDENT_SETTING_GROUPS: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll(
-  '.setting_group_player, .setting_group_board',
-);
 const FOOTER_SELECTION_CLASSES: readonly string[] = [
   'selection_count_0', 'selection_count_1', 'selection_count_2', 'selection_count_3',
 ];
-const MIN_VISIBLE_SELECTION_COUNT: number = 2;
+const MIN_VISIBLE_SELECTION_COUNT: number = 3;
 interface SettingRequirement {
   readonly name: string;
   readonly label: string;
@@ -141,21 +138,10 @@ function updateSettingsState(): void {
   const hasPlayer: boolean = setStepState('player_step', 'player', showSelectedSteps);
   const hasBoard: boolean = setStepState('board_step', 'board_size', showSelectedSteps);
 
-  updateDependentSettings(hasTheme);
   updateThemePreview();
   updatePlayerAssignment();
   updateFooterState();
   updateStartButtonState(hasTheme && hasPlayer && hasBoard);
-}
-
-/**
- * Unlocks dependent settings after a game theme has been selected.
- * @param hasTheme - Whether the required theme category is complete.
- */
-function updateDependentSettings(hasTheme: boolean): void {
-  DEPENDENT_SETTING_GROUPS.forEach((group: HTMLFieldSetElement): void => {
-    group.disabled = !hasTheme;
-  });
 }
 
 /**
@@ -198,7 +184,7 @@ function hideValidationMessage(): void {
   SETTINGS_VALIDATION_MESSAGE.textContent = '';
 }
 
-/** Keeps the footer compact until two setup categories are selected. */
+/** Keeps the footer compact until all setup categories are selected. */
 function updateFooterState(): void {
   const selectionCount: number = getSelectedSettingCount();
   SETTINGS_FOOTER?.classList.remove(...FOOTER_SELECTION_CLASSES);
